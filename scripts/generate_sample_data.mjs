@@ -60,30 +60,53 @@ export function generate(){
     f.carcassWt=Math.round(400+skill*110+gauss()*20); f.price=Math.round(1950+skill*520+gauss()*90);
     f.dg=Math.round(760+skill*230+gauss()*40); f.mort=+(5.5-skill*3.8+Math.abs(gauss())*1.2).toFixed(1);
     f.fatDays=Math.round(690-skill*130+gauss()*30);
-    // 経営指標（生産KPIと同一の skill から連動導出 → 生産と経営が矛盾しない）
-    f.sales=Math.round(head*(1.0+skill*0.35)); // 百万円
-    f.ebitdaM=+(6+skill*15+gauss()*2.4).toFixed(1); f.invTurn=+(0.42+skill*0.32+gauss()*0.03).toFixed(2);
-    f.capTurn=+(0.42+skill*0.42+gauss()*0.04).toFixed(2); f.equity=Math.max(3,Math.round(8+skill*52+gauss()*8));
-    f.ordP=+(-2+skill*9+gauss()*1.4).toFixed(1);
-    f.debt=Math.round(f.sales*(1.5-skill*0.85+Math.abs(gauss())*0.3)); // 百万円
-    const eb=Math.max(1,f.sales*f.ebitdaM/100); f.debtEbitda=+(f.debt/eb).toFixed(1);
     // コンテキスト（前提条件）
     f.barnCap=Math.round(head*(1.03+rnd()*0.32)); f.workers=Math.max(1,Math.round(head/70+rnd()*2));
     f.calfSrc=(f.ku==='肥育')?'市場購入':'自家産'; f.feedSelf=Math.round(rnd()*45);
     f.age=Math.round(42+rnd()*30); f.succ=rnd()<0.55?'あり':'未定';
+    // 財務体質（資本構成は経営履歴に依存するため skill 連動＋ノイズで生成）
+    f.equity=Math.max(3,Math.round(8+skill*52+gauss()*8));
+    f.debtMult=1.2+(1-skill)*4+Math.abs(gauss())*0.8; // EBITDA倍率ベースの借入水準
+    f.calfNoise=(rnd()-0.5)*0.06; f.feedNoise=(rnd()-0.5)*0.08;
     farms.push(f); id++;
   }
-  // 意図した異常値2件（デモの山場）
-  farms[5].head=880;farms[5].barnCap=900;farms[5].ebitdaM=8.2;farms[5].name='巨牛ファーム';farms[5].debtEbitda=7.4;
-  farms[12].ebitdaM=23.5;farms[12].price=2680;farms[12].head=55;farms[12].barnCap=58;farms[12].name='匠牧場';farms[12].debtEbitda=1.4;
-  // 上書きした頭数・負債倍率に合わせ、売上・労働力・負債残高を1頭経済モデルで再導出する
-  // （ワイヤーでは未再計算のため「負債残高とEBITDA倍率が矛盾する」表示になっていた。整合性要件を優先）
-  function refit(f,intensity){
-    f.sales=Math.round(f.head*intensity);
-    f.workers=Math.max(1,Math.round(f.head/70));
-    f.debt=Math.round(f.debtEbitda*(f.sales*f.ebitdaM/100));
-  }
-  refit(farms[5],1.05); refit(farms[12],1.35);
+  // 意図した異常値2件（デモの山場）。出力値の直接上書きではなく「入力（生産条件・財務条件）」で作り、
+  // 経営指標は下の1頭経済モデルから他農場と同じ算式で導出する（整合性要件）。
+  Object.assign(farms[5],{name:'巨牛ファーム',head:880,barnCap:900,workers:13,
+    carcassWt:470,price:2130,fatDays:706,mort:4.8,dg:790,feedSelf:5,calfNoise:0.02,feedNoise:-0.02,
+    skill:0.35,debtTarget:7.4});   // 規模突出だが薄利・高負債
+  Object.assign(farms[12],{name:'匠牧場',head:55,barnCap:58,workers:2,
+    carcassWt:472,price:2680,fatDays:566,mort:1.2,dg:960,feedSelf:35,calfSrc:'自家産',calfNoise:-0.02,feedNoise:-0.03,
+    skill:0.95,debtTarget:1.4});   // 小規模だが高収益・低負債
+
+  // ---- 1頭経済モデル：生産KPI → 売上・原価 → EBITDA → 資本効率（生産と経営が矛盾しない導出） ----
+  // 係数はサンプル（実勢の桁感に合わせたスタイライズ値）。単位：百万円。
+  farms.forEach(f=>{
+    const shipped=f.head*365/f.fatDays*(1-f.mort/100);        // 年間出荷頭数
+    f.invTurn=+(shipped/f.head).toFixed(2);                   // 在庫回転＝年間出荷頭数÷平均飼養頭数
+    const salesM=shipped*f.carcassWt*f.price/1e6;             // 売上＝出荷頭数×枝肉重量×枝肉単価（円→百万円）
+    const calf=(0.26+0.32*f.skill+f.calfNoise)*(f.calfSrc==='自家産'?0.82:1); // 素牛費/頭（上位ほど良質素牛）
+    const feedDay=(560-30*f.skill)*(1-0.35*f.feedSelf/100)*(1+f.feedNoise);  // 飼料費 円/日・頭
+    const feedPerHead=f.fatDays*feedDay/1e6;
+    const cogs=shipped*(calf+feedPerHead);                    // 原価＝素牛費＋飼料費
+    const labor=f.workers*4.0, other=salesM*0.05+f.head*0.005;
+    let ebitda=salesM-cogs-labor-other;
+    // サンプルの下限処理：赤字圏は 0.5〜4% へ滑らかに圧縮（プラトーを作らない）
+    let raw=ebitda/salesM;
+    if(raw<0.04) raw=Math.max(0.005,0.04-(0.04-raw)*0.25);
+    ebitda=salesM*raw;
+    f.sales=Math.round(salesM);
+    f.ebitdaM=+(raw*100).toFixed(1);
+    // 資本効率：総資産＝牛群簿価＋固定資産（牛舎）＋運転資金
+    const cattle=f.head*(calf+feedPerHead*0.5), fixed=f.barnCap*0.55, cash=salesM*0.08;
+    const assets=cattle+fixed+cash;
+    f.capTurn=+(salesM/assets).toFixed(2);
+    f.debt=Math.round((f.debtTarget||f.debtMult)*ebitda);
+    f.debtEbitda=+(f.debt/ebitda).toFixed(1);                 // 有利子負債/EBITDA
+    // 経常利益率＝EBITDAマージン −（減価償却＋支払利息）/売上
+    f.ordP=+((ebitda-fixed*0.055-f.debt*0.02)/salesM*100).toFixed(1);
+    delete f.debtMult; delete f.debtTarget; delete f.calfNoise; delete f.feedNoise;
+  });
 
   // ---- 時系列（36ヶ月・月次） ----
   function mkTS(base,add){const drift=(rnd()-0.45)*0.24,a=[];for(let t=0;t<36;t++){const p=(35-t)/35;

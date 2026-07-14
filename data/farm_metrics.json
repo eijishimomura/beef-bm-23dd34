@@ -32,193 +32,193 @@
  {
   "farm_id": 0,
   "metric_id": "ebitdaM",
-  "value": 14.3,
+  "value": 18.5,
   "period": "2026-06"
  },
  {
   "farm_id": 0,
-  "metric_id": "invTurn",
-  "value": 0.62,
-  "period": "2026-06"
- },
- {
-  "farm_id": 0,
-  "metric_id": "capTurn",
-  "value": 0.66,
-  "period": "2026-06"
- },
- {
-  "farm_id": 0,
-  "metric_id": "equity",
-  "value": 39,
-  "period": "2026-06"
- },
- {
-  "farm_id": 0,
-  "metric_id": "ordP",
-  "value": 3.8,
-  "period": "2026-06"
- },
- {
-  "farm_id": 0,
-  "metric_id": "debtEbitda",
-  "value": 7.3,
-  "period": "2026-06"
- },
- {
-  "farm_id": 1,
-  "metric_id": "carcassWt",
-  "value": 493,
-  "period": "2026-06"
- },
- {
-  "farm_id": 1,
-  "metric_id": "price",
-  "value": 2364,
-  "period": "2026-06"
- },
- {
-  "farm_id": 1,
-  "metric_id": "dg",
-  "value": 941,
-  "period": "2026-06"
- },
- {
-  "farm_id": 1,
-  "metric_id": "mort",
-  "value": 2.9,
-  "period": "2026-06"
- },
- {
-  "farm_id": 1,
-  "metric_id": "fatDays",
-  "value": 590,
-  "period": "2026-06"
- },
- {
-  "farm_id": 1,
-  "metric_id": "ebitdaM",
-  "value": 18.8,
-  "period": "2026-06"
- },
- {
-  "farm_id": 1,
-  "metric_id": "invTurn",
-  "value": 0.67,
-  "period": "2026-06"
- },
- {
-  "farm_id": 1,
-  "metric_id": "capTurn",
-  "value": 0.77,
-  "period": "2026-06"
- },
- {
-  "farm_id": 1,
-  "metric_id": "equity",
-  "value": 48,
-  "period": "2026-06"
- },
- {
-  "farm_id": 1,
-  "metric_id": "ordP",
-  "value": 4.9,
-  "period": "2026-06"
- },
- {
-  "farm_id": 1,
-  "metric_id": "debtEbitda",
-  "value": 4.9,
-  "period": "2026-06"
- },
- {
-  "farm_id": 2,
-  "metric_id": "carcassWt",
-  "value": 453,
-  "period": "2026-06"
- },
- {
-  "farm_id": 2,
-  "metric_id": "price",
-  "value": 2179,
-  "period": "2026-06"
- },
- {
-  "farm_id": 2,
-  "metric_id": "dg",
-  "value": 894,
-  "period": "2026-06"
- },
- {
-  "farm_id": 2,
-  "metric_id": "mort",
-  "value": 3.7,
-  "period": "2026-06"
- },
- {
-  "farm_id": 2,
-  "metric_id": "fatDays",
-  "value": 632,
-  "period": "2026-06"
- },
- {
-  "farm_id": 2,
-  "metric_id": "ebitdaM",
-  "value": 15,
-  "period": "2026-06"
- },
- {
-  "farm_id": 2,
   "metric_id": "invTurn",
   "value": 0.58,
   "period": "2026-06"
  },
  {
+  "farm_id": 0,
+  "metric_id": "capTurn",
+  "value": 0.47,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 0,
+  "metric_id": "equity",
+  "value": 40,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 0,
+  "metric_id": "ordP",
+  "value": 11,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 0,
+  "metric_id": "debtEbitda",
+  "value": 3,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 1,
+  "metric_id": "carcassWt",
+  "value": 447,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 1,
+  "metric_id": "price",
+  "value": 2217,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 1,
+  "metric_id": "dg",
+  "value": 895,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 1,
+  "metric_id": "mort",
+  "value": 4.2,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 1,
+  "metric_id": "fatDays",
+  "value": 635,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 1,
+  "metric_id": "ebitdaM",
+  "value": 8.1,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 1,
+  "metric_id": "invTurn",
+  "value": 0.55,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 1,
+  "metric_id": "capTurn",
+  "value": 0.46,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 1,
+  "metric_id": "equity",
+  "value": 34,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 1,
+  "metric_id": "ordP",
+  "value": 1.3,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 1,
+  "metric_id": "debtEbitda",
+  "value": 3.4,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 2,
+  "metric_id": "carcassWt",
+  "value": 472,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 2,
+  "metric_id": "price",
+  "value": 2268,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 2,
+  "metric_id": "dg",
+  "value": 919,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 2,
+  "metric_id": "mort",
+  "value": 3.1,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 2,
+  "metric_id": "fatDays",
+  "value": 617,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 2,
+  "metric_id": "ebitdaM",
+  "value": 22,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 2,
+  "metric_id": "invTurn",
+  "value": 0.57,
+  "period": "2026-06"
+ },
+ {
   "farm_id": 2,
   "metric_id": "capTurn",
-  "value": 0.66,
+  "value": 0.49,
   "period": "2026-06"
  },
  {
   "farm_id": 2,
   "metric_id": "equity",
-  "value": 33,
+  "value": 39,
   "period": "2026-06"
  },
  {
   "farm_id": 2,
   "metric_id": "ordP",
-  "value": 2.6,
+  "value": 14.6,
   "period": "2026-06"
  },
  {
   "farm_id": 2,
   "metric_id": "debtEbitda",
-  "value": 7.6,
+  "value": 2.9,
   "period": "2026-06"
  },
  {
   "farm_id": 3,
   "metric_id": "carcassWt",
-  "value": 460,
+  "value": 465,
   "period": "2026-06"
  },
  {
   "farm_id": 3,
   "metric_id": "price",
-  "value": 2212,
+  "value": 2285,
   "period": "2026-06"
  },
  {
   "farm_id": 3,
   "metric_id": "dg",
-  "value": 881,
+  "value": 898,
   "period": "2026-06"
  },
  {
   "farm_id": 3,
   "metric_id": "mort",
-  "value": 4,
+  "value": 3.4,
   "period": "2026-06"
  },
  {
@@ -230,163 +230,163 @@
  {
   "farm_id": 3,
   "metric_id": "ebitdaM",
-  "value": 13.6,
+  "value": 13.8,
   "period": "2026-06"
  },
  {
   "farm_id": 3,
   "metric_id": "invTurn",
-  "value": 0.59,
+  "value": 0.57,
   "period": "2026-06"
  },
  {
   "farm_id": 3,
   "metric_id": "capTurn",
-  "value": 0.67,
+  "value": 0.44,
   "period": "2026-06"
  },
  {
   "farm_id": 3,
   "metric_id": "equity",
-  "value": 38,
+  "value": 41,
   "period": "2026-06"
  },
  {
   "farm_id": 3,
   "metric_id": "ordP",
+  "value": 6.4,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 3,
+  "metric_id": "debtEbitda",
+  "value": 3.1,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 4,
+  "metric_id": "carcassWt",
+  "value": 459,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 4,
+  "metric_id": "price",
+  "value": 2232,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 4,
+  "metric_id": "dg",
+  "value": 877,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 4,
+  "metric_id": "mort",
+  "value": 3.6,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 4,
+  "metric_id": "fatDays",
+  "value": 619,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 4,
+  "metric_id": "ebitdaM",
+  "value": 2,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 4,
+  "metric_id": "invTurn",
+  "value": 0.57,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 4,
+  "metric_id": "capTurn",
+  "value": 0.47,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 4,
+  "metric_id": "equity",
+  "value": 36,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 4,
+  "metric_id": "ordP",
+  "value": -3.4,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 4,
+  "metric_id": "debtEbitda",
   "value": 2.6,
   "period": "2026-06"
  },
  {
-  "farm_id": 3,
-  "metric_id": "debtEbitda",
-  "value": 7.7,
-  "period": "2026-06"
- },
- {
-  "farm_id": 4,
-  "metric_id": "carcassWt",
-  "value": 451,
-  "period": "2026-06"
- },
- {
-  "farm_id": 4,
-  "metric_id": "price",
-  "value": 2144,
-  "period": "2026-06"
- },
- {
-  "farm_id": 4,
-  "metric_id": "dg",
-  "value": 834,
-  "period": "2026-06"
- },
- {
-  "farm_id": 4,
-  "metric_id": "mort",
-  "value": 4.2,
-  "period": "2026-06"
- },
- {
-  "farm_id": 4,
-  "metric_id": "fatDays",
-  "value": 639,
-  "period": "2026-06"
- },
- {
-  "farm_id": 4,
-  "metric_id": "ebitdaM",
-  "value": 12.2,
-  "period": "2026-06"
- },
- {
-  "farm_id": 4,
-  "metric_id": "invTurn",
-  "value": 0.55,
-  "period": "2026-06"
- },
- {
-  "farm_id": 4,
-  "metric_id": "capTurn",
-  "value": 0.57,
-  "period": "2026-06"
- },
- {
-  "farm_id": 4,
-  "metric_id": "equity",
-  "value": 27,
-  "period": "2026-06"
- },
- {
-  "farm_id": 4,
-  "metric_id": "ordP",
-  "value": 2.2,
-  "period": "2026-06"
- },
- {
-  "farm_id": 4,
-  "metric_id": "debtEbitda",
-  "value": 10.5,
-  "period": "2026-06"
- },
- {
   "farm_id": 5,
   "metric_id": "carcassWt",
-  "value": 441,
+  "value": 470,
   "period": "2026-06"
  },
  {
   "farm_id": 5,
   "metric_id": "price",
-  "value": 2137,
+  "value": 2130,
   "period": "2026-06"
  },
  {
   "farm_id": 5,
   "metric_id": "dg",
-  "value": 849,
+  "value": 790,
   "period": "2026-06"
  },
  {
   "farm_id": 5,
   "metric_id": "mort",
-  "value": 4.5,
+  "value": 4.8,
   "period": "2026-06"
  },
  {
   "farm_id": 5,
   "metric_id": "fatDays",
-  "value": 643,
+  "value": 706,
   "period": "2026-06"
  },
  {
   "farm_id": 5,
   "metric_id": "ebitdaM",
-  "value": 8.2,
+  "value": 5.5,
   "period": "2026-06"
  },
  {
   "farm_id": 5,
   "metric_id": "invTurn",
-  "value": 0.57,
+  "value": 0.49,
   "period": "2026-06"
  },
  {
   "farm_id": 5,
   "metric_id": "capTurn",
-  "value": 0.59,
+  "value": 0.42,
   "period": "2026-06"
  },
  {
   "farm_id": 5,
   "metric_id": "equity",
-  "value": 31,
+  "value": 24,
   "period": "2026-06"
  },
  {
   "farm_id": 5,
   "metric_id": "ordP",
-  "value": 1.7,
+  "value": -1.6,
   "period": "2026-06"
  },
  {
@@ -398,403 +398,403 @@
  {
   "farm_id": 6,
   "metric_id": "carcassWt",
-  "value": 467,
-  "period": "2026-06"
- },
- {
-  "farm_id": 6,
-  "metric_id": "price",
-  "value": 2273,
-  "period": "2026-06"
- },
- {
-  "farm_id": 6,
-  "metric_id": "dg",
-  "value": 924,
-  "period": "2026-06"
- },
- {
-  "farm_id": 6,
-  "metric_id": "mort",
-  "value": 3.4,
-  "period": "2026-06"
- },
- {
-  "farm_id": 6,
-  "metric_id": "fatDays",
-  "value": 608,
-  "period": "2026-06"
- },
- {
-  "farm_id": 6,
-  "metric_id": "ebitdaM",
-  "value": 16,
-  "period": "2026-06"
- },
- {
-  "farm_id": 6,
-  "metric_id": "invTurn",
-  "value": 0.63,
-  "period": "2026-06"
- },
- {
-  "farm_id": 6,
-  "metric_id": "capTurn",
-  "value": 0.71,
-  "period": "2026-06"
- },
- {
-  "farm_id": 6,
-  "metric_id": "equity",
-  "value": 41,
-  "period": "2026-06"
- },
- {
-  "farm_id": 6,
-  "metric_id": "ordP",
-  "value": 4.5,
-  "period": "2026-06"
- },
- {
-  "farm_id": 6,
-  "metric_id": "debtEbitda",
-  "value": 6,
-  "period": "2026-06"
- },
- {
-  "farm_id": 7,
-  "metric_id": "carcassWt",
-  "value": 499,
-  "period": "2026-06"
- },
- {
-  "farm_id": 7,
-  "metric_id": "price",
-  "value": 2382,
-  "period": "2026-06"
- },
- {
-  "farm_id": 7,
-  "metric_id": "dg",
-  "value": 968,
-  "period": "2026-06"
- },
- {
-  "farm_id": 7,
-  "metric_id": "mort",
-  "value": 2.5,
-  "period": "2026-06"
- },
- {
-  "farm_id": 7,
-  "metric_id": "fatDays",
-  "value": 579,
-  "period": "2026-06"
- },
- {
-  "farm_id": 7,
-  "metric_id": "ebitdaM",
-  "value": 17.6,
-  "period": "2026-06"
- },
- {
-  "farm_id": 7,
-  "metric_id": "invTurn",
-  "value": 0.68,
-  "period": "2026-06"
- },
- {
-  "farm_id": 7,
-  "metric_id": "capTurn",
-  "value": 0.78,
-  "period": "2026-06"
- },
- {
-  "farm_id": 7,
-  "metric_id": "equity",
-  "value": 49,
-  "period": "2026-06"
- },
- {
-  "farm_id": 7,
-  "metric_id": "ordP",
-  "value": 6,
-  "period": "2026-06"
- },
- {
-  "farm_id": 7,
-  "metric_id": "debtEbitda",
-  "value": 4.8,
-  "period": "2026-06"
- },
- {
-  "farm_id": 8,
-  "metric_id": "carcassWt",
-  "value": 476,
-  "period": "2026-06"
- },
- {
-  "farm_id": 8,
-  "metric_id": "price",
-  "value": 2339,
-  "period": "2026-06"
- },
- {
-  "farm_id": 8,
-  "metric_id": "dg",
-  "value": 936,
-  "period": "2026-06"
- },
- {
-  "farm_id": 8,
-  "metric_id": "mort",
-  "value": 2.7,
-  "period": "2026-06"
- },
- {
-  "farm_id": 8,
-  "metric_id": "fatDays",
-  "value": 590,
-  "period": "2026-06"
- },
- {
-  "farm_id": 8,
-  "metric_id": "ebitdaM",
-  "value": 17.3,
-  "period": "2026-06"
- },
- {
-  "farm_id": 8,
-  "metric_id": "invTurn",
-  "value": 0.65,
-  "period": "2026-06"
- },
- {
-  "farm_id": 8,
-  "metric_id": "capTurn",
-  "value": 0.74,
-  "period": "2026-06"
- },
- {
-  "farm_id": 8,
-  "metric_id": "equity",
-  "value": 48,
-  "period": "2026-06"
- },
- {
-  "farm_id": 8,
-  "metric_id": "ordP",
-  "value": 4.5,
-  "period": "2026-06"
- },
- {
-  "farm_id": 8,
-  "metric_id": "debtEbitda",
-  "value": 5.2,
-  "period": "2026-06"
- },
- {
-  "farm_id": 9,
-  "metric_id": "carcassWt",
   "value": 471,
   "period": "2026-06"
  },
  {
-  "farm_id": 9,
+  "farm_id": 6,
   "metric_id": "price",
-  "value": 2258,
+  "value": 2299,
   "period": "2026-06"
  },
  {
-  "farm_id": 9,
+  "farm_id": 6,
   "metric_id": "dg",
-  "value": 906,
+  "value": 918,
   "period": "2026-06"
  },
  {
-  "farm_id": 9,
+  "farm_id": 6,
   "metric_id": "mort",
-  "value": 3.3,
-  "period": "2026-06"
- },
- {
-  "farm_id": 9,
-  "metric_id": "fatDays",
-  "value": 602,
-  "period": "2026-06"
- },
- {
-  "farm_id": 9,
-  "metric_id": "ebitdaM",
-  "value": 15.4,
-  "period": "2026-06"
- },
- {
-  "farm_id": 9,
-  "metric_id": "invTurn",
-  "value": 0.61,
-  "period": "2026-06"
- },
- {
-  "farm_id": 9,
-  "metric_id": "capTurn",
-  "value": 0.65,
-  "period": "2026-06"
- },
- {
-  "farm_id": 9,
-  "metric_id": "equity",
-  "value": 38,
-  "period": "2026-06"
- },
- {
-  "farm_id": 9,
-  "metric_id": "ordP",
   "value": 2.9,
   "period": "2026-06"
  },
  {
+  "farm_id": 6,
+  "metric_id": "fatDays",
+  "value": 603,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 6,
+  "metric_id": "ebitdaM",
+  "value": 9.9,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 6,
+  "metric_id": "invTurn",
+  "value": 0.59,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 6,
+  "metric_id": "capTurn",
+  "value": 0.53,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 6,
+  "metric_id": "equity",
+  "value": 42,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 6,
+  "metric_id": "ordP",
+  "value": 3.8,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 6,
+  "metric_id": "debtEbitda",
+  "value": 2.6,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 7,
+  "metric_id": "carcassWt",
+  "value": 436,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 7,
+  "metric_id": "price",
+  "value": 2188,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 7,
+  "metric_id": "dg",
+  "value": 859,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 7,
+  "metric_id": "mort",
+  "value": 4.5,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 7,
+  "metric_id": "fatDays",
+  "value": 632,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 7,
+  "metric_id": "ebitdaM",
+  "value": 10.7,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 7,
+  "metric_id": "invTurn",
+  "value": 0.55,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 7,
+  "metric_id": "capTurn",
+  "value": 0.43,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 7,
+  "metric_id": "equity",
+  "value": 29,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 7,
+  "metric_id": "ordP",
+  "value": 2.6,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 7,
+  "metric_id": "debtEbitda",
+  "value": 4,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 8,
+  "metric_id": "carcassWt",
+  "value": 450,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 8,
+  "metric_id": "price",
+  "value": 2124,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 8,
+  "metric_id": "dg",
+  "value": 871,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 8,
+  "metric_id": "mort",
+  "value": 4.2,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 8,
+  "metric_id": "fatDays",
+  "value": 643,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 8,
+  "metric_id": "ebitdaM",
+  "value": 18.3,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 8,
+  "metric_id": "invTurn",
+  "value": 0.54,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 8,
+  "metric_id": "capTurn",
+  "value": 0.42,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 8,
+  "metric_id": "equity",
+  "value": 31,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 8,
+  "metric_id": "ordP",
+  "value": 9.6,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 8,
+  "metric_id": "debtEbitda",
+  "value": 3.5,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 9,
+  "metric_id": "carcassWt",
+  "value": 459,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 9,
+  "metric_id": "price",
+  "value": 2203,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 9,
+  "metric_id": "dg",
+  "value": 892,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 9,
+  "metric_id": "mort",
+  "value": 4.4,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 9,
+  "metric_id": "fatDays",
+  "value": 632,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 9,
+  "metric_id": "ebitdaM",
+  "value": 3.6,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 9,
+  "metric_id": "invTurn",
+  "value": 0.55,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 9,
+  "metric_id": "capTurn",
+  "value": 0.47,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 9,
+  "metric_id": "equity",
+  "value": 35,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 9,
+  "metric_id": "ordP",
+  "value": -3,
+  "period": "2026-06"
+ },
+ {
   "farm_id": 9,
   "metric_id": "debtEbitda",
-  "value": 6.5,
+  "value": 3.5,
   "period": "2026-06"
  },
  {
   "farm_id": 10,
   "metric_id": "carcassWt",
-  "value": 422,
+  "value": 434,
   "period": "2026-06"
  },
  {
   "farm_id": 10,
   "metric_id": "price",
-  "value": 1976,
+  "value": 2099,
   "period": "2026-06"
  },
  {
   "farm_id": 10,
   "metric_id": "dg",
-  "value": 785,
+  "value": 814,
   "period": "2026-06"
  },
  {
   "farm_id": 10,
   "metric_id": "mort",
-  "value": 5.2,
+  "value": 4.5,
   "period": "2026-06"
  },
  {
   "farm_id": 10,
   "metric_id": "fatDays",
-  "value": 674,
+  "value": 657,
   "period": "2026-06"
  },
  {
   "farm_id": 10,
   "metric_id": "ebitdaM",
-  "value": 8.5,
+  "value": 0.5,
   "period": "2026-06"
  },
  {
   "farm_id": 10,
   "metric_id": "invTurn",
-  "value": 0.46,
+  "value": 0.53,
   "period": "2026-06"
  },
  {
   "farm_id": 10,
   "metric_id": "capTurn",
-  "value": 0.45,
+  "value": 0.39,
   "period": "2026-06"
  },
  {
   "farm_id": 10,
   "metric_id": "equity",
-  "value": 12,
+  "value": 24,
   "period": "2026-06"
  },
  {
   "farm_id": 10,
   "metric_id": "ordP",
-  "value": -0.7,
+  "value": -7.6,
   "period": "2026-06"
  },
  {
   "farm_id": 10,
   "metric_id": "debtEbitda",
-  "value": 16.8,
+  "value": 0,
   "period": "2026-06"
  },
  {
   "farm_id": 11,
   "metric_id": "carcassWt",
-  "value": 461,
+  "value": 442,
   "period": "2026-06"
  },
  {
   "farm_id": 11,
   "metric_id": "price",
-  "value": 2282,
+  "value": 2116,
   "period": "2026-06"
  },
  {
   "farm_id": 11,
   "metric_id": "dg",
-  "value": 874,
+  "value": 844,
   "period": "2026-06"
  },
  {
   "farm_id": 11,
   "metric_id": "mort",
-  "value": 3.7,
+  "value": 4.5,
   "period": "2026-06"
  },
  {
   "farm_id": 11,
   "metric_id": "fatDays",
-  "value": 614,
+  "value": 650,
   "period": "2026-06"
  },
  {
   "farm_id": 11,
   "metric_id": "ebitdaM",
-  "value": 14.5,
+  "value": 13.8,
   "period": "2026-06"
  },
  {
   "farm_id": 11,
   "metric_id": "invTurn",
-  "value": 0.61,
+  "value": 0.54,
   "period": "2026-06"
  },
  {
   "farm_id": 11,
   "metric_id": "capTurn",
-  "value": 0.66,
+  "value": 0.44,
   "period": "2026-06"
  },
  {
   "farm_id": 11,
   "metric_id": "equity",
-  "value": 41,
+  "value": 24,
   "period": "2026-06"
  },
  {
   "farm_id": 11,
   "metric_id": "ordP",
-  "value": 3,
+  "value": 5.8,
   "period": "2026-06"
  },
  {
   "farm_id": 11,
   "metric_id": "debtEbitda",
-  "value": 6.9,
+  "value": 4,
   "period": "2026-06"
  },
  {
   "farm_id": 12,
   "metric_id": "carcassWt",
-  "value": 475,
+  "value": 472,
   "period": "2026-06"
  },
  {
@@ -806,49 +806,49 @@
  {
   "farm_id": 12,
   "metric_id": "dg",
-  "value": 921,
+  "value": 960,
   "period": "2026-06"
  },
  {
   "farm_id": 12,
   "metric_id": "mort",
-  "value": 2.8,
+  "value": 1.2,
   "period": "2026-06"
  },
  {
   "farm_id": 12,
   "metric_id": "fatDays",
-  "value": 596,
+  "value": 566,
   "period": "2026-06"
  },
  {
   "farm_id": 12,
   "metric_id": "ebitdaM",
-  "value": 23.5,
+  "value": 20.8,
   "period": "2026-06"
  },
  {
   "farm_id": 12,
   "metric_id": "invTurn",
-  "value": 0.67,
+  "value": 0.64,
   "period": "2026-06"
  },
  {
   "farm_id": 12,
   "metric_id": "capTurn",
-  "value": 0.72,
+  "value": 0.66,
   "period": "2026-06"
  },
  {
   "farm_id": 12,
   "metric_id": "equity",
-  "value": 49,
+  "value": 38,
   "period": "2026-06"
  },
  {
   "farm_id": 12,
   "metric_id": "ordP",
-  "value": 4.6,
+  "value": 16.3,
   "period": "2026-06"
  },
  {
@@ -866,475 +866,475 @@
  {
   "farm_id": 13,
   "metric_id": "price",
-  "value": 2144,
+  "value": 2214,
   "period": "2026-06"
  },
  {
   "farm_id": 13,
   "metric_id": "dg",
-  "value": 833,
+  "value": 864,
   "period": "2026-06"
  },
  {
   "farm_id": 13,
-  "metric_id": "mort",
-  "value": 4.2,
-  "period": "2026-06"
- },
- {
-  "farm_id": 13,
-  "metric_id": "fatDays",
-  "value": 648,
-  "period": "2026-06"
- },
- {
-  "farm_id": 13,
-  "metric_id": "ebitdaM",
-  "value": 10.9,
-  "period": "2026-06"
- },
- {
-  "farm_id": 13,
-  "metric_id": "invTurn",
-  "value": 0.54,
-  "period": "2026-06"
- },
- {
-  "farm_id": 13,
-  "metric_id": "capTurn",
-  "value": 0.58,
-  "period": "2026-06"
- },
- {
-  "farm_id": 13,
-  "metric_id": "equity",
-  "value": 24,
-  "period": "2026-06"
- },
- {
-  "farm_id": 13,
-  "metric_id": "ordP",
-  "value": 0.7,
-  "period": "2026-06"
- },
- {
-  "farm_id": 13,
-  "metric_id": "debtEbitda",
-  "value": 11.3,
-  "period": "2026-06"
- },
- {
-  "farm_id": 14,
-  "metric_id": "carcassWt",
-  "value": 458,
-  "period": "2026-06"
- },
- {
-  "farm_id": 14,
-  "metric_id": "price",
-  "value": 2215,
-  "period": "2026-06"
- },
- {
-  "farm_id": 14,
-  "metric_id": "dg",
-  "value": 892,
-  "period": "2026-06"
- },
- {
-  "farm_id": 14,
-  "metric_id": "mort",
-  "value": 3.7,
-  "period": "2026-06"
- },
- {
-  "farm_id": 14,
-  "metric_id": "fatDays",
-  "value": 622,
-  "period": "2026-06"
- },
- {
-  "farm_id": 14,
-  "metric_id": "ebitdaM",
-  "value": 14.4,
-  "period": "2026-06"
- },
- {
-  "farm_id": 14,
-  "metric_id": "invTurn",
-  "value": 0.59,
-  "period": "2026-06"
- },
- {
-  "farm_id": 14,
-  "metric_id": "capTurn",
-  "value": 0.66,
-  "period": "2026-06"
- },
- {
-  "farm_id": 14,
-  "metric_id": "equity",
-  "value": 39,
-  "period": "2026-06"
- },
- {
-  "farm_id": 14,
-  "metric_id": "ordP",
-  "value": 2.9,
-  "period": "2026-06"
- },
- {
-  "farm_id": 14,
-  "metric_id": "debtEbitda",
-  "value": 7.2,
-  "period": "2026-06"
- },
- {
-  "farm_id": 15,
-  "metric_id": "carcassWt",
-  "value": 458,
-  "period": "2026-06"
- },
- {
-  "farm_id": 15,
-  "metric_id": "price",
-  "value": 2253,
-  "period": "2026-06"
- },
- {
-  "farm_id": 15,
-  "metric_id": "dg",
-  "value": 866,
-  "period": "2026-06"
- },
- {
-  "farm_id": 15,
-  "metric_id": "mort",
-  "value": 3.8,
-  "period": "2026-06"
- },
- {
-  "farm_id": 15,
-  "metric_id": "fatDays",
-  "value": 635,
-  "period": "2026-06"
- },
- {
-  "farm_id": 15,
-  "metric_id": "ebitdaM",
-  "value": 13,
-  "period": "2026-06"
- },
- {
-  "farm_id": 15,
-  "metric_id": "invTurn",
-  "value": 0.58,
-  "period": "2026-06"
- },
- {
-  "farm_id": 15,
-  "metric_id": "capTurn",
-  "value": 0.62,
-  "period": "2026-06"
- },
- {
-  "farm_id": 15,
-  "metric_id": "equity",
-  "value": 34,
-  "period": "2026-06"
- },
- {
-  "farm_id": 15,
-  "metric_id": "ordP",
-  "value": 2.3,
-  "period": "2026-06"
- },
- {
-  "farm_id": 15,
-  "metric_id": "debtEbitda",
-  "value": 8.5,
-  "period": "2026-06"
- },
- {
-  "farm_id": 16,
-  "metric_id": "carcassWt",
-  "value": 450,
-  "period": "2026-06"
- },
- {
-  "farm_id": 16,
-  "metric_id": "price",
-  "value": 2227,
-  "period": "2026-06"
- },
- {
-  "farm_id": 16,
-  "metric_id": "dg",
-  "value": 890,
-  "period": "2026-06"
- },
- {
-  "farm_id": 16,
-  "metric_id": "mort",
-  "value": 3.6,
-  "period": "2026-06"
- },
- {
-  "farm_id": 16,
-  "metric_id": "fatDays",
-  "value": 625,
-  "period": "2026-06"
- },
- {
-  "farm_id": 16,
-  "metric_id": "ebitdaM",
-  "value": 13.9,
-  "period": "2026-06"
- },
- {
-  "farm_id": 16,
-  "metric_id": "invTurn",
-  "value": 0.59,
-  "period": "2026-06"
- },
- {
-  "farm_id": 16,
-  "metric_id": "capTurn",
-  "value": 0.66,
-  "period": "2026-06"
- },
- {
-  "farm_id": 16,
-  "metric_id": "equity",
-  "value": 36,
-  "period": "2026-06"
- },
- {
-  "farm_id": 16,
-  "metric_id": "ordP",
-  "value": 2.7,
-  "period": "2026-06"
- },
- {
-  "farm_id": 16,
-  "metric_id": "debtEbitda",
-  "value": 8.1,
-  "period": "2026-06"
- },
- {
-  "farm_id": 17,
-  "metric_id": "carcassWt",
-  "value": 442,
-  "period": "2026-06"
- },
- {
-  "farm_id": 17,
-  "metric_id": "price",
-  "value": 2151,
-  "period": "2026-06"
- },
- {
-  "farm_id": 17,
-  "metric_id": "dg",
-  "value": 830,
-  "period": "2026-06"
- },
- {
-  "farm_id": 17,
   "metric_id": "mort",
   "value": 4.3,
   "period": "2026-06"
  },
  {
-  "farm_id": 17,
+  "farm_id": 13,
   "metric_id": "fatDays",
-  "value": 655,
+  "value": 636,
   "period": "2026-06"
  },
  {
-  "farm_id": 17,
+  "farm_id": 13,
   "metric_id": "ebitdaM",
-  "value": 10.5,
+  "value": 3.2,
   "period": "2026-06"
  },
  {
-  "farm_id": 17,
+  "farm_id": 13,
   "metric_id": "invTurn",
   "value": 0.55,
   "period": "2026-06"
  },
  {
-  "farm_id": 17,
+  "farm_id": 13,
   "metric_id": "capTurn",
+  "value": 0.4,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 13,
+  "metric_id": "equity",
+  "value": 33,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 13,
+  "metric_id": "ordP",
+  "value": -4.5,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 13,
+  "metric_id": "debtEbitda",
+  "value": 3.3,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 14,
+  "metric_id": "carcassWt",
+  "value": 488,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 14,
+  "metric_id": "price",
+  "value": 2314,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 14,
+  "metric_id": "dg",
+  "value": 925,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 14,
+  "metric_id": "mort",
+  "value": 3.1,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 14,
+  "metric_id": "fatDays",
+  "value": 594,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 14,
+  "metric_id": "ebitdaM",
+  "value": 13.6,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 14,
+  "metric_id": "invTurn",
+  "value": 0.6,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 14,
+  "metric_id": "capTurn",
+  "value": 0.49,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 14,
+  "metric_id": "equity",
+  "value": 45,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 14,
+  "metric_id": "ordP",
+  "value": 7.3,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 14,
+  "metric_id": "debtEbitda",
+  "value": 2.4,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 15,
+  "metric_id": "carcassWt",
+  "value": 444,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 15,
+  "metric_id": "price",
+  "value": 2162,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 15,
+  "metric_id": "dg",
+  "value": 852,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 15,
+  "metric_id": "mort",
+  "value": 4.2,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 15,
+  "metric_id": "fatDays",
+  "value": 627,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 15,
+  "metric_id": "ebitdaM",
+  "value": 15.6,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 15,
+  "metric_id": "invTurn",
+  "value": 0.56,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 15,
+  "metric_id": "capTurn",
+  "value": 0.44,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 15,
+  "metric_id": "equity",
+  "value": 30,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 15,
+  "metric_id": "ordP",
+  "value": 7.3,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 15,
+  "metric_id": "debtEbitda",
+  "value": 3.7,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 16,
+  "metric_id": "carcassWt",
+  "value": 457,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 16,
+  "metric_id": "price",
+  "value": 2145,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 16,
+  "metric_id": "dg",
+  "value": 872,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 16,
+  "metric_id": "mort",
+  "value": 4.1,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 16,
+  "metric_id": "fatDays",
+  "value": 633,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 16,
+  "metric_id": "ebitdaM",
+  "value": 14.3,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 16,
+  "metric_id": "invTurn",
+  "value": 0.55,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 16,
+  "metric_id": "capTurn",
+  "value": 0.47,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 16,
+  "metric_id": "equity",
+  "value": 30,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 16,
+  "metric_id": "ordP",
+  "value": 6.8,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 16,
+  "metric_id": "debtEbitda",
+  "value": 3.8,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 17,
+  "metric_id": "carcassWt",
+  "value": 472,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 17,
+  "metric_id": "price",
+  "value": 2309,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 17,
+  "metric_id": "dg",
+  "value": 903,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 17,
+  "metric_id": "mort",
+  "value": 3.3,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 17,
+  "metric_id": "fatDays",
+  "value": 607,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 17,
+  "metric_id": "ebitdaM",
+  "value": 22.6,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 17,
+  "metric_id": "invTurn",
   "value": 0.58,
   "period": "2026-06"
  },
  {
   "farm_id": 17,
+  "metric_id": "capTurn",
+  "value": 0.51,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 17,
   "metric_id": "equity",
-  "value": 25,
+  "value": 40,
   "period": "2026-06"
  },
  {
   "farm_id": 17,
   "metric_id": "ordP",
-  "value": 0.5,
+  "value": 15.2,
   "period": "2026-06"
  },
  {
   "farm_id": 17,
   "metric_id": "debtEbitda",
-  "value": 11.8,
+  "value": 2.8,
   "period": "2026-06"
  },
  {
   "farm_id": 18,
-  "metric_id": "carcassWt",
-  "value": 485,
-  "period": "2026-06"
- },
- {
-  "farm_id": 18,
-  "metric_id": "price",
-  "value": 2278,
-  "period": "2026-06"
- },
- {
-  "farm_id": 18,
-  "metric_id": "dg",
-  "value": 912,
-  "period": "2026-06"
- },
- {
-  "farm_id": 18,
-  "metric_id": "mort",
-  "value": 3.2,
-  "period": "2026-06"
- },
- {
-  "farm_id": 18,
-  "metric_id": "fatDays",
-  "value": 589,
-  "period": "2026-06"
- },
- {
-  "farm_id": 18,
-  "metric_id": "ebitdaM",
-  "value": 17.2,
-  "period": "2026-06"
- },
- {
-  "farm_id": 18,
-  "metric_id": "invTurn",
-  "value": 0.65,
-  "period": "2026-06"
- },
- {
-  "farm_id": 18,
-  "metric_id": "capTurn",
-  "value": 0.7,
-  "period": "2026-06"
- },
- {
-  "farm_id": 18,
-  "metric_id": "equity",
-  "value": 43,
-  "period": "2026-06"
- },
- {
-  "farm_id": 18,
-  "metric_id": "ordP",
-  "value": 4.3,
-  "period": "2026-06"
- },
- {
-  "farm_id": 18,
-  "metric_id": "debtEbitda",
-  "value": 5.4,
-  "period": "2026-06"
- },
- {
-  "farm_id": 19,
-  "metric_id": "carcassWt",
-  "value": 430,
-  "period": "2026-06"
- },
- {
-  "farm_id": 19,
-  "metric_id": "price",
-  "value": 2073,
-  "period": "2026-06"
- },
- {
-  "farm_id": 19,
-  "metric_id": "dg",
-  "value": 830,
-  "period": "2026-06"
- },
- {
-  "farm_id": 19,
-  "metric_id": "mort",
-  "value": 4.6,
-  "period": "2026-06"
- },
- {
-  "farm_id": 19,
-  "metric_id": "fatDays",
-  "value": 643,
-  "period": "2026-06"
- },
- {
-  "farm_id": 19,
-  "metric_id": "ebitdaM",
-  "value": 11.1,
-  "period": "2026-06"
- },
- {
-  "farm_id": 19,
-  "metric_id": "invTurn",
-  "value": 0.5,
-  "period": "2026-06"
- },
- {
-  "farm_id": 19,
-  "metric_id": "capTurn",
-  "value": 0.54,
-  "period": "2026-06"
- },
- {
-  "farm_id": 19,
-  "metric_id": "equity",
-  "value": 22,
-  "period": "2026-06"
- },
- {
-  "farm_id": 19,
-  "metric_id": "ordP",
-  "value": -0.6,
-  "period": "2026-06"
- },
- {
-  "farm_id": 19,
-  "metric_id": "debtEbitda",
-  "value": 12.8,
-  "period": "2026-06"
- },
- {
-  "farm_id": 20,
   "metric_id": "carcassWt",
   "value": 450,
   "period": "2026-06"
  },
  {
+  "farm_id": 18,
+  "metric_id": "price",
+  "value": 2201,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 18,
+  "metric_id": "dg",
+  "value": 848,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 18,
+  "metric_id": "mort",
+  "value": 4.2,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 18,
+  "metric_id": "fatDays",
+  "value": 640,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 18,
+  "metric_id": "ebitdaM",
+  "value": 19.2,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 18,
+  "metric_id": "invTurn",
+  "value": 0.55,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 18,
+  "metric_id": "capTurn",
+  "value": 0.5,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 18,
+  "metric_id": "equity",
+  "value": 35,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 18,
+  "metric_id": "ordP",
+  "value": 11.9,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 18,
+  "metric_id": "debtEbitda",
+  "value": 3.6,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 19,
+  "metric_id": "carcassWt",
+  "value": 459,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 19,
+  "metric_id": "price",
+  "value": 2268,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 19,
+  "metric_id": "dg",
+  "value": 902,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 19,
+  "metric_id": "mort",
+  "value": 3.4,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 19,
+  "metric_id": "fatDays",
+  "value": 623,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 19,
+  "metric_id": "ebitdaM",
+  "value": 1.1,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 19,
+  "metric_id": "invTurn",
+  "value": 0.57,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 19,
+  "metric_id": "capTurn",
+  "value": 0.51,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 19,
+  "metric_id": "equity",
+  "value": 41,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 19,
+  "metric_id": "ordP",
+  "value": -4.5,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 19,
+  "metric_id": "debtEbitda",
+  "value": 4.3,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 20,
+  "metric_id": "carcassWt",
+  "value": 442,
+  "period": "2026-06"
+ },
+ {
   "farm_id": 20,
   "metric_id": "price",
-  "value": 2215,
+  "value": 2156,
   "period": "2026-06"
  },
  {
   "farm_id": 20,
   "metric_id": "dg",
-  "value": 894,
+  "value": 863,
   "period": "2026-06"
  },
  {
@@ -1346,229 +1346,229 @@
  {
   "farm_id": 20,
   "metric_id": "fatDays",
-  "value": 622,
+  "value": 649,
   "period": "2026-06"
  },
  {
   "farm_id": 20,
   "metric_id": "ebitdaM",
-  "value": 15,
+  "value": 4.2,
   "period": "2026-06"
  },
  {
   "farm_id": 20,
   "metric_id": "invTurn",
-  "value": 0.57,
+  "value": 0.54,
   "period": "2026-06"
  },
  {
   "farm_id": 20,
   "metric_id": "capTurn",
-  "value": 0.64,
+  "value": 0.45,
   "period": "2026-06"
  },
  {
   "farm_id": 20,
   "metric_id": "equity",
-  "value": 33,
+  "value": 26,
   "period": "2026-06"
  },
  {
   "farm_id": 20,
   "metric_id": "ordP",
-  "value": 2.7,
+  "value": -2.6,
   "period": "2026-06"
  },
  {
   "farm_id": 20,
   "metric_id": "debtEbitda",
-  "value": 8.2,
+  "value": 3.4,
   "period": "2026-06"
  },
  {
   "farm_id": 21,
   "metric_id": "carcassWt",
-  "value": 445,
+  "value": 459,
   "period": "2026-06"
  },
  {
   "farm_id": 21,
   "metric_id": "price",
-  "value": 2140,
+  "value": 2229,
   "period": "2026-06"
  },
  {
   "farm_id": 21,
   "metric_id": "dg",
-  "value": 837,
+  "value": 894,
   "period": "2026-06"
  },
  {
   "farm_id": 21,
   "metric_id": "mort",
+  "value": 3.8,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 21,
+  "metric_id": "fatDays",
+  "value": 613,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 21,
+  "metric_id": "ebitdaM",
   "value": 4.3,
   "period": "2026-06"
  },
  {
   "farm_id": 21,
-  "metric_id": "fatDays",
-  "value": 639,
-  "period": "2026-06"
- },
- {
-  "farm_id": 21,
-  "metric_id": "ebitdaM",
-  "value": 11.8,
-  "period": "2026-06"
- },
- {
-  "farm_id": 21,
   "metric_id": "invTurn",
-  "value": 0.54,
-  "period": "2026-06"
- },
- {
-  "farm_id": 21,
-  "metric_id": "capTurn",
-  "value": 0.6,
-  "period": "2026-06"
- },
- {
-  "farm_id": 21,
-  "metric_id": "equity",
-  "value": 31,
-  "period": "2026-06"
- },
- {
-  "farm_id": 21,
-  "metric_id": "ordP",
-  "value": 0.9,
-  "period": "2026-06"
- },
- {
-  "farm_id": 21,
-  "metric_id": "debtEbitda",
-  "value": 9.8,
-  "period": "2026-06"
- },
- {
-  "farm_id": 22,
-  "metric_id": "carcassWt",
-  "value": 454,
-  "period": "2026-06"
- },
- {
-  "farm_id": 22,
-  "metric_id": "price",
-  "value": 2088,
-  "period": "2026-06"
- },
- {
-  "farm_id": 22,
-  "metric_id": "dg",
-  "value": 858,
-  "period": "2026-06"
- },
- {
-  "farm_id": 22,
-  "metric_id": "mort",
-  "value": 4.2,
-  "period": "2026-06"
- },
- {
-  "farm_id": 22,
-  "metric_id": "fatDays",
-  "value": 633,
-  "period": "2026-06"
- },
- {
-  "farm_id": 22,
-  "metric_id": "ebitdaM",
-  "value": 12.7,
-  "period": "2026-06"
- },
- {
-  "farm_id": 22,
-  "metric_id": "invTurn",
-  "value": 0.54,
-  "period": "2026-06"
- },
- {
-  "farm_id": 22,
-  "metric_id": "capTurn",
   "value": 0.57,
   "period": "2026-06"
  },
  {
+  "farm_id": 21,
+  "metric_id": "capTurn",
+  "value": 0.46,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 21,
+  "metric_id": "equity",
+  "value": 39,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 21,
+  "metric_id": "ordP",
+  "value": -2,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 21,
+  "metric_id": "debtEbitda",
+  "value": 2.8,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 22,
+  "metric_id": "carcassWt",
+  "value": 464,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 22,
+  "metric_id": "price",
+  "value": 2325,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 22,
+  "metric_id": "dg",
+  "value": 927,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 22,
+  "metric_id": "mort",
+  "value": 3.3,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 22,
+  "metric_id": "fatDays",
+  "value": 600,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 22,
+  "metric_id": "ebitdaM",
+  "value": 13,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 22,
+  "metric_id": "invTurn",
+  "value": 0.59,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 22,
+  "metric_id": "capTurn",
+  "value": 0.45,
+  "period": "2026-06"
+ },
+ {
   "farm_id": 22,
   "metric_id": "equity",
-  "value": 28,
+  "value": 41,
   "period": "2026-06"
  },
  {
   "farm_id": 22,
   "metric_id": "ordP",
-  "value": 1.1,
+  "value": 5.8,
   "period": "2026-06"
  },
  {
   "farm_id": 22,
   "metric_id": "debtEbitda",
-  "value": 9.3,
+  "value": 2.9,
   "period": "2026-06"
  },
  {
   "farm_id": 23,
   "metric_id": "carcassWt",
-  "value": 469,
+  "value": 467,
   "period": "2026-06"
  },
  {
   "farm_id": 23,
   "metric_id": "price",
-  "value": 2294,
+  "value": 2288,
   "period": "2026-06"
  },
  {
   "farm_id": 23,
   "metric_id": "dg",
-  "value": 915,
+  "value": 919,
   "period": "2026-06"
  },
  {
   "farm_id": 23,
   "metric_id": "mort",
-  "value": 3.7,
+  "value": 3.3,
   "period": "2026-06"
  },
  {
   "farm_id": 23,
   "metric_id": "fatDays",
-  "value": 603,
+  "value": 624,
   "period": "2026-06"
  },
  {
   "farm_id": 23,
   "metric_id": "ebitdaM",
-  "value": 15.2,
+  "value": 11,
   "period": "2026-06"
  },
  {
   "farm_id": 23,
   "metric_id": "invTurn",
-  "value": 0.63,
+  "value": 0.57,
   "period": "2026-06"
  },
  {
   "farm_id": 23,
   "metric_id": "capTurn",
-  "value": 0.68,
+  "value": 0.45,
   "period": "2026-06"
  },
  {
   "farm_id": 23,
   "metric_id": "equity",
-  "value": 40,
+  "value": 41,
   "period": "2026-06"
  },
  {
@@ -1580,319 +1580,319 @@
  {
   "farm_id": 23,
   "metric_id": "debtEbitda",
-  "value": 6.3,
+  "value": 2.9,
   "period": "2026-06"
  },
  {
   "farm_id": 24,
   "metric_id": "carcassWt",
-  "value": 442,
+  "value": 441,
   "period": "2026-06"
  },
  {
   "farm_id": 24,
   "metric_id": "price",
-  "value": 2106,
+  "value": 2204,
   "period": "2026-06"
  },
  {
   "farm_id": 24,
   "metric_id": "dg",
-  "value": 855,
+  "value": 871,
   "period": "2026-06"
  },
  {
   "farm_id": 24,
   "metric_id": "mort",
-  "value": 4.2,
+  "value": 4.4,
   "period": "2026-06"
  },
  {
   "farm_id": 24,
   "metric_id": "fatDays",
-  "value": 646,
+  "value": 637,
   "period": "2026-06"
  },
  {
   "farm_id": 24,
   "metric_id": "ebitdaM",
-  "value": 10.9,
+  "value": 8.9,
   "period": "2026-06"
  },
  {
   "farm_id": 24,
   "metric_id": "invTurn",
-  "value": 0.53,
+  "value": 0.55,
   "period": "2026-06"
  },
  {
   "farm_id": 24,
   "metric_id": "capTurn",
-  "value": 0.58,
+  "value": 0.46,
   "period": "2026-06"
  },
  {
   "farm_id": 24,
   "metric_id": "equity",
-  "value": 29,
+  "value": 30,
   "period": "2026-06"
  },
  {
   "farm_id": 24,
   "metric_id": "ordP",
-  "value": 1.7,
+  "value": 2,
   "period": "2026-06"
  },
  {
   "farm_id": 24,
   "metric_id": "debtEbitda",
-  "value": 11.7,
+  "value": 4.1,
   "period": "2026-06"
  },
  {
   "farm_id": 25,
   "metric_id": "carcassWt",
-  "value": 446,
+  "value": 465,
   "period": "2026-06"
  },
  {
   "farm_id": 25,
   "metric_id": "price",
-  "value": 2155,
+  "value": 2216,
   "period": "2026-06"
  },
  {
   "farm_id": 25,
-  "metric_id": "dg",
-  "value": 840,
-  "period": "2026-06"
- },
- {
-  "farm_id": 25,
-  "metric_id": "mort",
-  "value": 4.3,
-  "period": "2026-06"
- },
- {
-  "farm_id": 25,
-  "metric_id": "fatDays",
-  "value": 635,
-  "period": "2026-06"
- },
- {
-  "farm_id": 25,
-  "metric_id": "ebitdaM",
-  "value": 10.8,
-  "period": "2026-06"
- },
- {
-  "farm_id": 25,
-  "metric_id": "invTurn",
-  "value": 0.54,
-  "period": "2026-06"
- },
- {
-  "farm_id": 25,
-  "metric_id": "capTurn",
-  "value": 0.57,
-  "period": "2026-06"
- },
- {
-  "farm_id": 25,
-  "metric_id": "equity",
-  "value": 27,
-  "period": "2026-06"
- },
- {
-  "farm_id": 25,
-  "metric_id": "ordP",
-  "value": 1.5,
-  "period": "2026-06"
- },
- {
-  "farm_id": 25,
-  "metric_id": "debtEbitda",
-  "value": 12.7,
-  "period": "2026-06"
- },
- {
-  "farm_id": 26,
-  "metric_id": "carcassWt",
-  "value": 466,
-  "period": "2026-06"
- },
- {
-  "farm_id": 26,
-  "metric_id": "price",
-  "value": 2230,
-  "period": "2026-06"
- },
- {
-  "farm_id": 26,
-  "metric_id": "dg",
-  "value": 889,
-  "period": "2026-06"
- },
- {
-  "farm_id": 26,
-  "metric_id": "mort",
-  "value": 3.7,
-  "period": "2026-06"
- },
- {
-  "farm_id": 26,
-  "metric_id": "fatDays",
-  "value": 620,
-  "period": "2026-06"
- },
- {
-  "farm_id": 26,
-  "metric_id": "ebitdaM",
-  "value": 13.2,
-  "period": "2026-06"
- },
- {
-  "farm_id": 26,
-  "metric_id": "invTurn",
-  "value": 0.58,
-  "period": "2026-06"
- },
- {
-  "farm_id": 26,
-  "metric_id": "capTurn",
-  "value": 0.63,
-  "period": "2026-06"
- },
- {
-  "farm_id": 26,
-  "metric_id": "equity",
-  "value": 29,
-  "period": "2026-06"
- },
- {
-  "farm_id": 26,
-  "metric_id": "ordP",
-  "value": 3.2,
-  "period": "2026-06"
- },
- {
-  "farm_id": 26,
-  "metric_id": "debtEbitda",
-  "value": 9.2,
-  "period": "2026-06"
- },
- {
-  "farm_id": 27,
-  "metric_id": "carcassWt",
-  "value": 457,
-  "period": "2026-06"
- },
- {
-  "farm_id": 27,
-  "metric_id": "price",
-  "value": 2196,
-  "period": "2026-06"
- },
- {
-  "farm_id": 27,
   "metric_id": "dg",
   "value": 895,
   "period": "2026-06"
  },
  {
-  "farm_id": 27,
+  "farm_id": 25,
   "metric_id": "mort",
-  "value": 3.7,
+  "value": 3.8,
   "period": "2026-06"
  },
  {
-  "farm_id": 27,
+  "farm_id": 25,
   "metric_id": "fatDays",
-  "value": 617,
+  "value": 604,
   "period": "2026-06"
  },
  {
-  "farm_id": 27,
+  "farm_id": 25,
   "metric_id": "ebitdaM",
-  "value": 13.5,
+  "value": 16.4,
   "period": "2026-06"
  },
  {
-  "farm_id": 27,
+  "farm_id": 25,
   "metric_id": "invTurn",
   "value": 0.58,
   "period": "2026-06"
  },
  {
+  "farm_id": 25,
+  "metric_id": "capTurn",
+  "value": 0.5,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 25,
+  "metric_id": "equity",
+  "value": 35,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 25,
+  "metric_id": "ordP",
+  "value": 9.3,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 25,
+  "metric_id": "debtEbitda",
+  "value": 3.4,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 26,
+  "metric_id": "carcassWt",
+  "value": 460,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 26,
+  "metric_id": "price",
+  "value": 2223,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 26,
+  "metric_id": "dg",
+  "value": 892,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 26,
+  "metric_id": "mort",
+  "value": 3.4,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 26,
+  "metric_id": "fatDays",
+  "value": 595,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 26,
+  "metric_id": "ebitdaM",
+  "value": 16.9,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 26,
+  "metric_id": "invTurn",
+  "value": 0.59,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 26,
+  "metric_id": "capTurn",
+  "value": 0.54,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 26,
+  "metric_id": "equity",
+  "value": 40,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 26,
+  "metric_id": "ordP",
+  "value": 10.7,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 26,
+  "metric_id": "debtEbitda",
+  "value": 3.1,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 27,
+  "metric_id": "carcassWt",
+  "value": 451,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 27,
+  "metric_id": "price",
+  "value": 2089,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 27,
+  "metric_id": "dg",
+  "value": 842,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 27,
+  "metric_id": "mort",
+  "value": 4.6,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 27,
+  "metric_id": "fatDays",
+  "value": 644,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 27,
+  "metric_id": "ebitdaM",
+  "value": 16.6,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 27,
+  "metric_id": "invTurn",
+  "value": 0.54,
+  "period": "2026-06"
+ },
+ {
   "farm_id": 27,
   "metric_id": "capTurn",
-  "value": 0.65,
+  "value": 0.43,
   "period": "2026-06"
  },
  {
   "farm_id": 27,
   "metric_id": "equity",
-  "value": 38,
+  "value": 25,
   "period": "2026-06"
  },
  {
   "farm_id": 27,
   "metric_id": "ordP",
-  "value": 2.5,
+  "value": 7.5,
   "period": "2026-06"
  },
  {
   "farm_id": 27,
   "metric_id": "debtEbitda",
-  "value": 8.2,
+  "value": 4.1,
   "period": "2026-06"
  },
  {
   "farm_id": 28,
   "metric_id": "carcassWt",
-  "value": 488,
+  "value": 477,
   "period": "2026-06"
  },
  {
   "farm_id": 28,
   "metric_id": "price",
-  "value": 2324,
+  "value": 2294,
   "period": "2026-06"
  },
  {
   "farm_id": 28,
   "metric_id": "dg",
-  "value": 935,
+  "value": 912,
   "period": "2026-06"
  },
  {
   "farm_id": 28,
   "metric_id": "mort",
-  "value": 3,
+  "value": 3.2,
   "period": "2026-06"
  },
  {
   "farm_id": 28,
   "metric_id": "fatDays",
-  "value": 592,
+  "value": 595,
   "period": "2026-06"
  },
  {
   "farm_id": 28,
   "metric_id": "ebitdaM",
-  "value": 17.9,
+  "value": 17.6,
   "period": "2026-06"
  },
  {
   "farm_id": 28,
   "metric_id": "invTurn",
-  "value": 0.66,
+  "value": 0.59,
   "period": "2026-06"
  },
  {
   "farm_id": 28,
   "metric_id": "capTurn",
-  "value": 0.74,
+  "value": 0.56,
   "period": "2026-06"
  },
  {
@@ -1904,61 +1904,61 @@
  {
   "farm_id": 28,
   "metric_id": "ordP",
-  "value": 4.7,
+  "value": 11.8,
   "period": "2026-06"
  },
  {
   "farm_id": 28,
   "metric_id": "debtEbitda",
-  "value": 5,
+  "value": 2.7,
   "period": "2026-06"
  },
  {
   "farm_id": 29,
   "metric_id": "carcassWt",
-  "value": 453,
+  "value": 446,
   "period": "2026-06"
  },
  {
   "farm_id": 29,
   "metric_id": "price",
-  "value": 2180,
+  "value": 2187,
   "period": "2026-06"
  },
  {
   "farm_id": 29,
   "metric_id": "dg",
-  "value": 833,
+  "value": 867,
   "period": "2026-06"
  },
  {
   "farm_id": 29,
   "metric_id": "mort",
-  "value": 4.1,
+  "value": 3.9,
   "period": "2026-06"
  },
  {
   "farm_id": 29,
   "metric_id": "fatDays",
-  "value": 638,
+  "value": 628,
   "period": "2026-06"
  },
  {
   "farm_id": 29,
   "metric_id": "ebitdaM",
-  "value": 11.2,
+  "value": 16.6,
   "period": "2026-06"
  },
  {
   "farm_id": 29,
   "metric_id": "invTurn",
-  "value": 0.53,
+  "value": 0.56,
   "period": "2026-06"
  },
  {
   "farm_id": 29,
   "metric_id": "capTurn",
-  "value": 0.59,
+  "value": 0.46,
   "period": "2026-06"
  },
  {
@@ -1970,37 +1970,37 @@
  {
   "farm_id": 29,
   "metric_id": "ordP",
-  "value": 1.4,
+  "value": 8.8,
   "period": "2026-06"
  },
  {
   "farm_id": 29,
   "metric_id": "debtEbitda",
-  "value": 11.5,
+  "value": 3.5,
   "period": "2026-06"
  },
  {
   "farm_id": 30,
   "metric_id": "carcassWt",
-  "value": 441,
+  "value": 451,
   "period": "2026-06"
  },
  {
   "farm_id": 30,
   "metric_id": "price",
-  "value": 2153,
+  "value": 2155,
   "period": "2026-06"
  },
  {
   "farm_id": 30,
   "metric_id": "dg",
-  "value": 862,
+  "value": 842,
   "period": "2026-06"
  },
  {
   "farm_id": 30,
   "metric_id": "mort",
-  "value": 4.2,
+  "value": 4,
   "period": "2026-06"
  },
  {
@@ -2012,679 +2012,679 @@
  {
   "farm_id": 30,
   "metric_id": "ebitdaM",
-  "value": 12.1,
+  "value": 14.6,
   "period": "2026-06"
  },
  {
   "farm_id": 30,
   "metric_id": "invTurn",
-  "value": 0.54,
+  "value": 0.56,
   "period": "2026-06"
  },
  {
   "farm_id": 30,
   "metric_id": "capTurn",
-  "value": 0.6,
+  "value": 0.46,
   "period": "2026-06"
  },
  {
   "farm_id": 30,
-  "metric_id": "equity",
-  "value": 33,
-  "period": "2026-06"
- },
- {
-  "farm_id": 30,
-  "metric_id": "ordP",
-  "value": 2.5,
-  "period": "2026-06"
- },
- {
-  "farm_id": 30,
-  "metric_id": "debtEbitda",
-  "value": 10.6,
-  "period": "2026-06"
- },
- {
-  "farm_id": 31,
-  "metric_id": "carcassWt",
-  "value": 475,
-  "period": "2026-06"
- },
- {
-  "farm_id": 31,
-  "metric_id": "price",
-  "value": 2272,
-  "period": "2026-06"
- },
- {
-  "farm_id": 31,
-  "metric_id": "dg",
-  "value": 860,
-  "period": "2026-06"
- },
- {
-  "farm_id": 31,
-  "metric_id": "mort",
-  "value": 3.8,
-  "period": "2026-06"
- },
- {
-  "farm_id": 31,
-  "metric_id": "fatDays",
-  "value": 622,
-  "period": "2026-06"
- },
- {
-  "farm_id": 31,
-  "metric_id": "ebitdaM",
-  "value": 15.1,
-  "period": "2026-06"
- },
- {
-  "farm_id": 31,
-  "metric_id": "invTurn",
-  "value": 0.6,
-  "period": "2026-06"
- },
- {
-  "farm_id": 31,
-  "metric_id": "capTurn",
-  "value": 0.64,
-  "period": "2026-06"
- },
- {
-  "farm_id": 31,
-  "metric_id": "equity",
-  "value": 37,
-  "period": "2026-06"
- },
- {
-  "farm_id": 31,
-  "metric_id": "ordP",
-  "value": 3.4,
-  "period": "2026-06"
- },
- {
-  "farm_id": 31,
-  "metric_id": "debtEbitda",
-  "value": 7.6,
-  "period": "2026-06"
- },
- {
-  "farm_id": 32,
-  "metric_id": "carcassWt",
-  "value": 450,
-  "period": "2026-06"
- },
- {
-  "farm_id": 32,
-  "metric_id": "price",
-  "value": 2214,
-  "period": "2026-06"
- },
- {
-  "farm_id": 32,
-  "metric_id": "dg",
-  "value": 873,
-  "period": "2026-06"
- },
- {
-  "farm_id": 32,
-  "metric_id": "mort",
-  "value": 3.8,
-  "period": "2026-06"
- },
- {
-  "farm_id": 32,
-  "metric_id": "fatDays",
-  "value": 610,
-  "period": "2026-06"
- },
- {
-  "farm_id": 32,
-  "metric_id": "ebitdaM",
-  "value": 12.3,
-  "period": "2026-06"
- },
- {
-  "farm_id": 32,
-  "metric_id": "invTurn",
-  "value": 0.58,
-  "period": "2026-06"
- },
- {
-  "farm_id": 32,
-  "metric_id": "capTurn",
-  "value": 0.64,
-  "period": "2026-06"
- },
- {
-  "farm_id": 32,
-  "metric_id": "equity",
-  "value": 38,
-  "period": "2026-06"
- },
- {
-  "farm_id": 32,
-  "metric_id": "ordP",
-  "value": 2.9,
-  "period": "2026-06"
- },
- {
-  "farm_id": 32,
-  "metric_id": "debtEbitda",
-  "value": 8.6,
-  "period": "2026-06"
- },
- {
-  "farm_id": 33,
-  "metric_id": "carcassWt",
-  "value": 449,
-  "period": "2026-06"
- },
- {
-  "farm_id": 33,
-  "metric_id": "price",
-  "value": 2193,
-  "period": "2026-06"
- },
- {
-  "farm_id": 33,
-  "metric_id": "dg",
-  "value": 851,
-  "period": "2026-06"
- },
- {
-  "farm_id": 33,
-  "metric_id": "mort",
-  "value": 4.1,
-  "period": "2026-06"
- },
- {
-  "farm_id": 33,
-  "metric_id": "fatDays",
-  "value": 639,
-  "period": "2026-06"
- },
- {
-  "farm_id": 33,
-  "metric_id": "ebitdaM",
-  "value": 14.2,
-  "period": "2026-06"
- },
- {
-  "farm_id": 33,
-  "metric_id": "invTurn",
-  "value": 0.57,
-  "period": "2026-06"
- },
- {
-  "farm_id": 33,
-  "metric_id": "capTurn",
-  "value": 0.64,
-  "period": "2026-06"
- },
- {
-  "farm_id": 33,
-  "metric_id": "equity",
-  "value": 34,
-  "period": "2026-06"
- },
- {
-  "farm_id": 33,
-  "metric_id": "ordP",
-  "value": 2.5,
-  "period": "2026-06"
- },
- {
-  "farm_id": 33,
-  "metric_id": "debtEbitda",
-  "value": 8.1,
-  "period": "2026-06"
- },
- {
-  "farm_id": 34,
-  "metric_id": "carcassWt",
-  "value": 458,
-  "period": "2026-06"
- },
- {
-  "farm_id": 34,
-  "metric_id": "price",
-  "value": 2277,
-  "period": "2026-06"
- },
- {
-  "farm_id": 34,
-  "metric_id": "dg",
-  "value": 918,
-  "period": "2026-06"
- },
- {
-  "farm_id": 34,
-  "metric_id": "mort",
-  "value": 3.7,
-  "period": "2026-06"
- },
- {
-  "farm_id": 34,
-  "metric_id": "fatDays",
-  "value": 606,
-  "period": "2026-06"
- },
- {
-  "farm_id": 34,
-  "metric_id": "ebitdaM",
-  "value": 15.1,
-  "period": "2026-06"
- },
- {
-  "farm_id": 34,
-  "metric_id": "invTurn",
-  "value": 0.61,
-  "period": "2026-06"
- },
- {
-  "farm_id": 34,
-  "metric_id": "capTurn",
-  "value": 0.66,
-  "period": "2026-06"
- },
- {
-  "farm_id": 34,
-  "metric_id": "equity",
-  "value": 34,
-  "period": "2026-06"
- },
- {
-  "farm_id": 34,
-  "metric_id": "ordP",
-  "value": 3.5,
-  "period": "2026-06"
- },
- {
-  "farm_id": 34,
-  "metric_id": "debtEbitda",
-  "value": 7.1,
-  "period": "2026-06"
- },
- {
-  "farm_id": 35,
-  "metric_id": "carcassWt",
-  "value": 453,
-  "period": "2026-06"
- },
- {
-  "farm_id": 35,
-  "metric_id": "price",
-  "value": 2235,
-  "period": "2026-06"
- },
- {
-  "farm_id": 35,
-  "metric_id": "dg",
-  "value": 870,
-  "period": "2026-06"
- },
- {
-  "farm_id": 35,
-  "metric_id": "mort",
-  "value": 3.7,
-  "period": "2026-06"
- },
- {
-  "farm_id": 35,
-  "metric_id": "fatDays",
-  "value": 636,
-  "period": "2026-06"
- },
- {
-  "farm_id": 35,
-  "metric_id": "ebitdaM",
-  "value": 13.9,
-  "period": "2026-06"
- },
- {
-  "farm_id": 35,
-  "metric_id": "invTurn",
-  "value": 0.57,
-  "period": "2026-06"
- },
- {
-  "farm_id": 35,
-  "metric_id": "capTurn",
-  "value": 0.62,
-  "period": "2026-06"
- },
- {
-  "farm_id": 35,
   "metric_id": "equity",
   "value": 29,
   "period": "2026-06"
  },
  {
-  "farm_id": 35,
+  "farm_id": 30,
   "metric_id": "ordP",
-  "value": 1.6,
+  "value": 7,
   "period": "2026-06"
  },
  {
-  "farm_id": 35,
+  "farm_id": 30,
   "metric_id": "debtEbitda",
-  "value": 8.2,
+  "value": 4.2,
   "period": "2026-06"
  },
  {
-  "farm_id": 36,
+  "farm_id": 31,
   "metric_id": "carcassWt",
-  "value": 466,
+  "value": 473,
   "period": "2026-06"
  },
  {
-  "farm_id": 36,
+  "farm_id": 31,
   "metric_id": "price",
-  "value": 2232,
+  "value": 2323,
   "period": "2026-06"
  },
  {
-  "farm_id": 36,
+  "farm_id": 31,
   "metric_id": "dg",
-  "value": 883,
+  "value": 920,
   "period": "2026-06"
  },
  {
-  "farm_id": 36,
+  "farm_id": 31,
   "metric_id": "mort",
-  "value": 3.4,
+  "value": 3.2,
   "period": "2026-06"
  },
  {
-  "farm_id": 36,
+  "farm_id": 31,
   "metric_id": "fatDays",
-  "value": 608,
+  "value": 605,
   "period": "2026-06"
  },
  {
-  "farm_id": 36,
+  "farm_id": 31,
   "metric_id": "ebitdaM",
-  "value": 15.2,
+  "value": 9.7,
   "period": "2026-06"
  },
  {
-  "farm_id": 36,
+  "farm_id": 31,
   "metric_id": "invTurn",
-  "value": 0.6,
+  "value": 0.58,
   "period": "2026-06"
  },
  {
-  "farm_id": 36,
+  "farm_id": 31,
   "metric_id": "capTurn",
-  "value": 0.67,
+  "value": 0.5,
   "period": "2026-06"
  },
  {
-  "farm_id": 36,
-  "metric_id": "equity",
-  "value": 38,
-  "period": "2026-06"
- },
- {
-  "farm_id": 36,
-  "metric_id": "ordP",
-  "value": 2.6,
-  "period": "2026-06"
- },
- {
-  "farm_id": 36,
-  "metric_id": "debtEbitda",
-  "value": 7.4,
-  "period": "2026-06"
- },
- {
-  "farm_id": 37,
-  "metric_id": "carcassWt",
-  "value": 448,
-  "period": "2026-06"
- },
- {
-  "farm_id": 37,
-  "metric_id": "price",
-  "value": 2127,
-  "period": "2026-06"
- },
- {
-  "farm_id": 37,
-  "metric_id": "dg",
-  "value": 859,
-  "period": "2026-06"
- },
- {
-  "farm_id": 37,
-  "metric_id": "mort",
-  "value": 3.9,
-  "period": "2026-06"
- },
- {
-  "farm_id": 37,
-  "metric_id": "fatDays",
-  "value": 628,
-  "period": "2026-06"
- },
- {
-  "farm_id": 37,
-  "metric_id": "ebitdaM",
-  "value": 12.8,
-  "period": "2026-06"
- },
- {
-  "farm_id": 37,
-  "metric_id": "invTurn",
-  "value": 0.56,
-  "period": "2026-06"
- },
- {
-  "farm_id": 37,
-  "metric_id": "capTurn",
-  "value": 0.61,
-  "period": "2026-06"
- },
- {
-  "farm_id": 37,
-  "metric_id": "equity",
-  "value": 28,
-  "period": "2026-06"
- },
- {
-  "farm_id": 37,
-  "metric_id": "ordP",
-  "value": 2.5,
-  "period": "2026-06"
- },
- {
-  "farm_id": 37,
-  "metric_id": "debtEbitda",
-  "value": 9.3,
-  "period": "2026-06"
- },
- {
-  "farm_id": 38,
-  "metric_id": "carcassWt",
-  "value": 470,
-  "period": "2026-06"
- },
- {
-  "farm_id": 38,
-  "metric_id": "price",
-  "value": 2280,
-  "period": "2026-06"
- },
- {
-  "farm_id": 38,
-  "metric_id": "dg",
-  "value": 916,
-  "period": "2026-06"
- },
- {
-  "farm_id": 38,
-  "metric_id": "mort",
-  "value": 3.3,
-  "period": "2026-06"
- },
- {
-  "farm_id": 38,
-  "metric_id": "fatDays",
-  "value": 606,
-  "period": "2026-06"
- },
- {
-  "farm_id": 38,
-  "metric_id": "ebitdaM",
-  "value": 15.1,
-  "period": "2026-06"
- },
- {
-  "farm_id": 38,
-  "metric_id": "invTurn",
-  "value": 0.6,
-  "period": "2026-06"
- },
- {
-  "farm_id": 38,
-  "metric_id": "capTurn",
-  "value": 0.67,
-  "period": "2026-06"
- },
- {
-  "farm_id": 38,
-  "metric_id": "equity",
-  "value": 37,
-  "period": "2026-06"
- },
- {
-  "farm_id": 38,
-  "metric_id": "ordP",
-  "value": 2.9,
-  "period": "2026-06"
- },
- {
-  "farm_id": 38,
-  "metric_id": "debtEbitda",
-  "value": 7.9,
-  "period": "2026-06"
- },
- {
-  "farm_id": 39,
-  "metric_id": "carcassWt",
-  "value": 468,
-  "period": "2026-06"
- },
- {
-  "farm_id": 39,
-  "metric_id": "price",
-  "value": 2253,
-  "period": "2026-06"
- },
- {
-  "farm_id": 39,
-  "metric_id": "dg",
-  "value": 906,
-  "period": "2026-06"
- },
- {
-  "farm_id": 39,
-  "metric_id": "mort",
-  "value": 3.7,
-  "period": "2026-06"
- },
- {
-  "farm_id": 39,
-  "metric_id": "fatDays",
-  "value": 602,
-  "period": "2026-06"
- },
- {
-  "farm_id": 39,
-  "metric_id": "ebitdaM",
-  "value": 16.3,
-  "period": "2026-06"
- },
- {
-  "farm_id": 39,
-  "metric_id": "invTurn",
-  "value": 0.63,
-  "period": "2026-06"
- },
- {
-  "farm_id": 39,
-  "metric_id": "capTurn",
-  "value": 0.69,
-  "period": "2026-06"
- },
- {
-  "farm_id": 39,
+  "farm_id": 31,
   "metric_id": "equity",
   "value": 41,
   "period": "2026-06"
  },
  {
-  "farm_id": 39,
+  "farm_id": 31,
   "metric_id": "ordP",
-  "value": 3.8,
+  "value": 4.3,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 31,
+  "metric_id": "debtEbitda",
+  "value": 2.6,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 32,
+  "metric_id": "carcassWt",
+  "value": 447,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 32,
+  "metric_id": "price",
+  "value": 2189,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 32,
+  "metric_id": "dg",
+  "value": 876,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 32,
+  "metric_id": "mort",
+  "value": 4.1,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 32,
+  "metric_id": "fatDays",
+  "value": 631,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 32,
+  "metric_id": "ebitdaM",
+  "value": 2.1,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 32,
+  "metric_id": "invTurn",
+  "value": 0.55,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 32,
+  "metric_id": "capTurn",
+  "value": 0.45,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 32,
+  "metric_id": "equity",
+  "value": 34,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 32,
+  "metric_id": "ordP",
+  "value": -4.2,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 32,
+  "metric_id": "debtEbitda",
+  "value": 2.8,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 33,
+  "metric_id": "carcassWt",
+  "value": 458,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 33,
+  "metric_id": "price",
+  "value": 2191,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 33,
+  "metric_id": "dg",
+  "value": 858,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 33,
+  "metric_id": "mort",
+  "value": 3.9,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 33,
+  "metric_id": "fatDays",
+  "value": 627,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 33,
+  "metric_id": "ebitdaM",
+  "value": 18.9,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 33,
+  "metric_id": "invTurn",
+  "value": 0.56,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 33,
+  "metric_id": "capTurn",
+  "value": 0.5,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 33,
+  "metric_id": "equity",
+  "value": 35,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 33,
+  "metric_id": "ordP",
+  "value": 11.8,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 33,
+  "metric_id": "debtEbitda",
+  "value": 3.5,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 34,
+  "metric_id": "carcassWt",
+  "value": 443,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 34,
+  "metric_id": "price",
+  "value": 2137,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 34,
+  "metric_id": "dg",
+  "value": 865,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 34,
+  "metric_id": "mort",
+  "value": 4.1,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 34,
+  "metric_id": "fatDays",
+  "value": 631,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 34,
+  "metric_id": "ebitdaM",
+  "value": 13.9,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 34,
+  "metric_id": "invTurn",
+  "value": 0.55,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 34,
+  "metric_id": "capTurn",
+  "value": 0.42,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 34,
+  "metric_id": "equity",
+  "value": 32,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 34,
+  "metric_id": "ordP",
+  "value": 5.4,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 34,
+  "metric_id": "debtEbitda",
+  "value": 3.5,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 35,
+  "metric_id": "carcassWt",
+  "value": 486,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 35,
+  "metric_id": "price",
+  "value": 2354,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 35,
+  "metric_id": "dg",
+  "value": 942,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 35,
+  "metric_id": "mort",
+  "value": 2.9,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 35,
+  "metric_id": "fatDays",
+  "value": 585,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 35,
+  "metric_id": "ebitdaM",
+  "value": 25.9,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 35,
+  "metric_id": "invTurn",
+  "value": 0.61,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 35,
+  "metric_id": "capTurn",
+  "value": 0.58,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 35,
+  "metric_id": "equity",
+  "value": 44,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 35,
+  "metric_id": "ordP",
+  "value": 20,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 35,
+  "metric_id": "debtEbitda",
+  "value": 2.2,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 36,
+  "metric_id": "carcassWt",
+  "value": 424,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 36,
+  "metric_id": "price",
+  "value": 2088,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 36,
+  "metric_id": "dg",
+  "value": 828,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 36,
+  "metric_id": "mort",
+  "value": 5,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 36,
+  "metric_id": "fatDays",
+  "value": 661,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 36,
+  "metric_id": "ebitdaM",
+  "value": 4.4,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 36,
+  "metric_id": "invTurn",
+  "value": 0.52,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 36,
+  "metric_id": "capTurn",
+  "value": 0.39,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 36,
+  "metric_id": "equity",
+  "value": 21,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 36,
+  "metric_id": "ordP",
+  "value": -4.4,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 36,
+  "metric_id": "debtEbitda",
+  "value": 4,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 37,
+  "metric_id": "carcassWt",
+  "value": 472,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 37,
+  "metric_id": "price",
+  "value": 2245,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 37,
+  "metric_id": "dg",
+  "value": 889,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 37,
+  "metric_id": "mort",
+  "value": 3.5,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 37,
+  "metric_id": "fatDays",
+  "value": 620,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 37,
+  "metric_id": "ebitdaM",
+  "value": 19.8,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 37,
+  "metric_id": "invTurn",
+  "value": 0.57,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 37,
+  "metric_id": "capTurn",
+  "value": 0.48,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 37,
+  "metric_id": "equity",
+  "value": 39,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 37,
+  "metric_id": "ordP",
+  "value": 12.3,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 37,
+  "metric_id": "debtEbitda",
+  "value": 3.2,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 38,
+  "metric_id": "carcassWt",
+  "value": 445,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 38,
+  "metric_id": "price",
+  "value": 2111,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 38,
+  "metric_id": "dg",
+  "value": 839,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 38,
+  "metric_id": "mort",
+  "value": 4.6,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 38,
+  "metric_id": "fatDays",
+  "value": 633,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 38,
+  "metric_id": "ebitdaM",
+  "value": 18.4,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 38,
+  "metric_id": "invTurn",
+  "value": 0.55,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 38,
+  "metric_id": "capTurn",
+  "value": 0.46,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 38,
+  "metric_id": "equity",
+  "value": 30,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 38,
+  "metric_id": "ordP",
+  "value": 10.2,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 38,
+  "metric_id": "debtEbitda",
+  "value": 3.9,
   "period": "2026-06"
  },
  {
   "farm_id": 39,
-  "metric_id": "debtEbitda",
-  "value": 5.9,
-  "period": "2026-06"
- },
- {
-  "farm_id": 40,
   "metric_id": "carcassWt",
-  "value": 454,
+  "value": 482,
   "period": "2026-06"
  },
  {
-  "farm_id": 40,
+  "farm_id": 39,
   "metric_id": "price",
-  "value": 2200,
+  "value": 2273,
   "period": "2026-06"
  },
  {
-  "farm_id": 40,
+  "farm_id": 39,
   "metric_id": "dg",
-  "value": 883,
+  "value": 928,
   "period": "2026-06"
  },
  {
-  "farm_id": 40,
+  "farm_id": 39,
   "metric_id": "mort",
-  "value": 3.7,
+  "value": 2.9,
   "period": "2026-06"
  },
  {
-  "farm_id": 40,
+  "farm_id": 39,
   "metric_id": "fatDays",
-  "value": 621,
+  "value": 587,
   "period": "2026-06"
  },
  {
-  "farm_id": 40,
+  "farm_id": 39,
   "metric_id": "ebitdaM",
-  "value": 15,
+  "value": 17.4,
   "period": "2026-06"
  },
  {
-  "farm_id": 40,
+  "farm_id": 39,
   "metric_id": "invTurn",
   "value": 0.6,
   "period": "2026-06"
  },
  {
+  "farm_id": 39,
+  "metric_id": "capTurn",
+  "value": 0.52,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 39,
+  "metric_id": "equity",
+  "value": 44,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 39,
+  "metric_id": "ordP",
+  "value": 11.5,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 39,
+  "metric_id": "debtEbitda",
+  "value": 2.4,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 40,
+  "metric_id": "carcassWt",
+  "value": 449,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 40,
+  "metric_id": "price",
+  "value": 2186,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 40,
+  "metric_id": "dg",
+  "value": 849,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 40,
+  "metric_id": "mort",
+  "value": 4.2,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 40,
+  "metric_id": "fatDays",
+  "value": 632,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 40,
+  "metric_id": "ebitdaM",
+  "value": 3.9,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 40,
+  "metric_id": "invTurn",
+  "value": 0.55,
+  "period": "2026-06"
+ },
+ {
   "farm_id": 40,
   "metric_id": "capTurn",
-  "value": 0.63,
+  "value": 0.41,
   "period": "2026-06"
  },
  {
@@ -2696,49 +2696,49 @@
  {
   "farm_id": 40,
   "metric_id": "ordP",
-  "value": 2.9,
+  "value": -3.4,
   "period": "2026-06"
  },
  {
   "farm_id": 40,
   "metric_id": "debtEbitda",
-  "value": 7.1,
+  "value": 3.5,
   "period": "2026-06"
  },
  {
   "farm_id": 41,
   "metric_id": "carcassWt",
-  "value": 455,
+  "value": 450,
   "period": "2026-06"
  },
  {
   "farm_id": 41,
   "metric_id": "price",
-  "value": 2178,
+  "value": 2245,
   "period": "2026-06"
  },
  {
   "farm_id": 41,
   "metric_id": "dg",
-  "value": 873,
+  "value": 865,
   "period": "2026-06"
  },
  {
   "farm_id": 41,
   "metric_id": "mort",
-  "value": 3.9,
+  "value": 3.7,
   "period": "2026-06"
  },
  {
   "farm_id": 41,
   "metric_id": "fatDays",
-  "value": 619,
+  "value": 626,
   "period": "2026-06"
  },
  {
   "farm_id": 41,
   "metric_id": "ebitdaM",
-  "value": 12.3,
+  "value": 0.5,
   "period": "2026-06"
  },
  {
@@ -2750,223 +2750,223 @@
  {
   "farm_id": 41,
   "metric_id": "capTurn",
-  "value": 0.58,
+  "value": 0.44,
   "period": "2026-06"
  },
  {
   "farm_id": 41,
   "metric_id": "equity",
-  "value": 27,
+  "value": 35,
   "period": "2026-06"
  },
  {
   "farm_id": 41,
   "metric_id": "ordP",
-  "value": 1.6,
+  "value": -6.2,
   "period": "2026-06"
  },
  {
   "farm_id": 41,
   "metric_id": "debtEbitda",
-  "value": 10.7,
+  "value": 0,
   "period": "2026-06"
  },
  {
   "farm_id": 42,
   "metric_id": "carcassWt",
-  "value": 452,
+  "value": 455,
   "period": "2026-06"
  },
  {
   "farm_id": 42,
   "metric_id": "price",
-  "value": 2239,
+  "value": 2212,
   "period": "2026-06"
  },
  {
   "farm_id": 42,
   "metric_id": "dg",
-  "value": 896,
+  "value": 862,
   "period": "2026-06"
  },
  {
   "farm_id": 42,
-  "metric_id": "mort",
-  "value": 4.1,
-  "period": "2026-06"
- },
- {
-  "farm_id": 42,
-  "metric_id": "fatDays",
-  "value": 631,
-  "period": "2026-06"
- },
- {
-  "farm_id": 42,
-  "metric_id": "ebitdaM",
-  "value": 12.9,
-  "period": "2026-06"
- },
- {
-  "farm_id": 42,
-  "metric_id": "invTurn",
-  "value": 0.59,
-  "period": "2026-06"
- },
- {
-  "farm_id": 42,
-  "metric_id": "capTurn",
-  "value": 0.63,
-  "period": "2026-06"
- },
- {
-  "farm_id": 42,
-  "metric_id": "equity",
-  "value": 34,
-  "period": "2026-06"
- },
- {
-  "farm_id": 42,
-  "metric_id": "ordP",
-  "value": 3,
-  "period": "2026-06"
- },
- {
-  "farm_id": 42,
-  "metric_id": "debtEbitda",
-  "value": 9.4,
-  "period": "2026-06"
- },
- {
-  "farm_id": 43,
-  "metric_id": "carcassWt",
-  "value": 453,
-  "period": "2026-06"
- },
- {
-  "farm_id": 43,
-  "metric_id": "price",
-  "value": 2221,
-  "period": "2026-06"
- },
- {
-  "farm_id": 43,
-  "metric_id": "dg",
-  "value": 869,
-  "period": "2026-06"
- },
- {
-  "farm_id": 43,
   "metric_id": "mort",
   "value": 3.9,
   "period": "2026-06"
  },
  {
+  "farm_id": 42,
+  "metric_id": "fatDays",
+  "value": 628,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 42,
+  "metric_id": "ebitdaM",
+  "value": 0.5,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 42,
+  "metric_id": "invTurn",
+  "value": 0.56,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 42,
+  "metric_id": "capTurn",
+  "value": 0.44,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 42,
+  "metric_id": "equity",
+  "value": 36,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 42,
+  "metric_id": "ordP",
+  "value": -6.6,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 42,
+  "metric_id": "debtEbitda",
+  "value": 7.4,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 43,
+  "metric_id": "carcassWt",
+  "value": 430,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 43,
+  "metric_id": "price",
+  "value": 2065,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 43,
+  "metric_id": "dg",
+  "value": 837,
+  "period": "2026-06"
+ },
+ {
+  "farm_id": 43,
+  "metric_id": "mort",
+  "value": 4.4,
+  "period": "2026-06"
+ },
+ {
   "farm_id": 43,
   "metric_id": "fatDays",
-  "value": 619,
+  "value": 628,
   "period": "2026-06"
  },
  {
   "farm_id": 43,
   "metric_id": "ebitdaM",
-  "value": 11.5,
+  "value": 10,
   "period": "2026-06"
  },
  {
   "farm_id": 43,
   "metric_id": "invTurn",
-  "value": 0.55,
+  "value": 0.56,
   "period": "2026-06"
  },
  {
   "farm_id": 43,
   "metric_id": "capTurn",
-  "value": 0.6,
+  "value": 0.44,
   "period": "2026-06"
  },
  {
   "farm_id": 43,
   "metric_id": "equity",
-  "value": 32,
+  "value": 22,
   "period": "2026-06"
  },
  {
   "farm_id": 43,
   "metric_id": "ordP",
-  "value": 1.4,
+  "value": 2.2,
   "period": "2026-06"
  },
  {
   "farm_id": 43,
   "metric_id": "debtEbitda",
-  "value": 11,
+  "value": 4.2,
   "period": "2026-06"
  },
  {
   "farm_id": 44,
   "metric_id": "carcassWt",
-  "value": 474,
+  "value": 463,
   "period": "2026-06"
  },
  {
   "farm_id": 44,
   "metric_id": "price",
-  "value": 2308,
+  "value": 2237,
   "period": "2026-06"
  },
  {
   "farm_id": 44,
   "metric_id": "dg",
-  "value": 912,
+  "value": 876,
   "period": "2026-06"
  },
  {
   "farm_id": 44,
   "metric_id": "mort",
-  "value": 3.4,
+  "value": 3.7,
   "period": "2026-06"
  },
  {
   "farm_id": 44,
   "metric_id": "fatDays",
-  "value": 617,
+  "value": 615,
   "period": "2026-06"
  },
  {
   "farm_id": 44,
   "metric_id": "ebitdaM",
-  "value": 15.9,
+  "value": 16.2,
   "period": "2026-06"
  },
  {
   "farm_id": 44,
   "metric_id": "invTurn",
-  "value": 0.64,
+  "value": 0.57,
   "period": "2026-06"
  },
  {
   "farm_id": 44,
   "metric_id": "capTurn",
-  "value": 0.67,
+  "value": 0.49,
   "period": "2026-06"
  },
  {
   "farm_id": 44,
   "metric_id": "equity",
-  "value": 43,
+  "value": 38,
   "period": "2026-06"
  },
  {
   "farm_id": 44,
   "metric_id": "ordP",
-  "value": 4.3,
+  "value": 9.3,
   "period": "2026-06"
  },
  {
   "farm_id": 44,
   "metric_id": "debtEbitda",
-  "value": 6,
+  "value": 3.6,
   "period": "2026-06"
  }
 ]

@@ -231,6 +231,20 @@
   var PenLLM = { enhance: null };
   window.BeefBenchmark = { PenLLM: PenLLM, verifyNumbers: verifyNumbers, extractNumbers: extractNumbers };
 
+  // コンテキスト値も母集団の中で順位づけして根拠に添える（指標名・自農場値・順位・母集団数の同居を全指摘で保証）
+  var CTX_GETTERS = {
+    occ: function (g) { return Math.round(g.head / g.barnCap * 100); },
+    spare: function (g) { return g.barnCap - g.head; },
+    perW: function (g) { return Math.round(g.head / g.workers); },
+    workers: function (g) { return g.workers; }, head: function (g) { return g.head; },
+    barnCap: function (g) { return g.barnCap; }, debt: function (g) { return g.debt; },
+    feedSelf: function (g) { return g.feedSelf; }, age: function (g) { return g.age; }
+  };
+  function ctxRank(key, f) {
+    var get = CTX_GETTERS[key], v = get(f), c = 1;
+    farms.forEach(function (g) { if (get(g) > v) c++; });
+    return c;
+  }
   function evidenceLine(f, ctx, keys) {
     return keys.map(function (ek) {
       if (ek.kind === 'metric') {
@@ -238,13 +252,22 @@
         return METRICS[m].lb + ' ' + f[m] + METRICS[m].u + '（' + rk(f, m) + '位/' + farms.length + '農場・判定' + gr(bf(f, m)) + '）';
       }
       var cl = CTX_LABELS[ek.key] || [ek.key, ''];
-      return cl[0] + ' ' + ctx[ek.key] + cl[1];
+      if (ek.key === 'succ') {
+        var und = farms.filter(function (g) { return g.succ === '未定'; }).length;
+        return cl[0] + ' ' + ctx.succ + '（後継者未定は' + farms.length + '農場中' + und + '農場）';
+      }
+      var rank = CTX_GETTERS[ek.key] ? '（高い順' + ctxRank(ek.key, f) + '位/' + farms.length + '農場）' : '';
+      return cl[0] + ' ' + ctx[ek.key] + cl[1] + rank;
     }).join('　／　');
   }
 
   function penFeedback(fid) { try { return JSON.parse(localStorage.getItem('penFeedback') || '[]').filter(function (r) { return r.farm_id === fid; }); } catch (e) { return []; } }
 
-  function renderPen(f) {
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+  var penSeq = 0; // 農場を素早く切り替えたとき、古い非同期描画が新しい画面を上書きしないように
+  async function renderPen(f) {
+    var seq = ++penSeq;
     var ctx = buildPenContext(f);
     var items = [];
     RULES.forEach(function (r) {
@@ -252,26 +275,32 @@
       var title = fillTemplate(r.template.title, ctx), body = fillTemplate(r.template.body, ctx);
       if (title === null || body === null) return; // ガードレール：根拠（確定値）が揃わない指摘は出さない
       var evidence = evidenceLine(f, ctx, r.evidence_keys || []);
-      var item = { rule_id: r.rule_id, p: r.priority, title: title, body: body, evidence: evidence };
-      // LLM肉付け口（未接続時はルール文のまま）。接続時も数値照合ゲート不通過なら item のまま
-      if (typeof PenLLM.enhance === 'function') {
+      items.push({ rule_id: r.rule_id, p: r.priority, title: title, body: body, evidence: evidence });
+    });
+    // LLM肉付け口（未接続時はルール文のまま）。非同期関数にも対応し、
+    // タイムアウト・例外・数値照合ゲート不通過はすべてルールベース文へフォールバックする。
+    if (typeof PenLLM.enhance === 'function') {
+      await Promise.all(items.map(async function (item) {
         try {
-          var out = PenLLM.enhance(item);
-          if (out && verifyNumbers(out.title + ' ' + out.body, extractNumbers(item.title + ' ' + item.body + ' ' + item.evidence)).ok) {
-            item.title = out.title; item.body = out.body;
+          var out = await Promise.race([
+            Promise.resolve(PenLLM.enhance(item)),
+            new Promise(function (_, rej) { setTimeout(function () { rej(new Error('timeout')); }, 4000); })
+          ]);
+          if (out && verifyNumbers(String(out.title) + ' ' + String(out.body), extractNumbers(item.title + ' ' + item.body + ' ' + item.evidence)).ok) {
+            item.title = String(out.title); item.body = String(out.body); // プレーンテキストとして描画（下で全エスケープ）
           }
         } catch (e) { /* フォールバック＝ルールベース文 */ }
-      }
-      items.push(item);
-    });
+      }));
+      if (seq !== penSeq) return; // 画面が別農場に切り替わっていたら破棄
+    }
     items.sort(function (a, b) { return a.p - b.p; });
     var LV = { 1: { t: '最優先', c: '#c0392b' }, 2: { t: '次に効く', c: '#e08a3c' }, 3: { t: '維持・強み', c: '#1e8f5b' } };
     var votes = {}; penFeedback(f.id).forEach(function (r) { votes[r.rule_id] = r.vote; });
     var h = '';
     items.slice(0, 5).forEach(function (it) {
       h += '<div class="item" data-rule="' + it.rule_id + '"><span class="lv" style="background:' + LV[it.p].c + '">' + LV[it.p].t + '</span>' +
-        '<div class="tx"><b>' + it.title + '</b><span>' + it.body + '</span>' +
-        '<span class="ev">根拠：' + it.evidence + '</span>' +
+        '<div class="tx"><b>' + esc(it.title) + '</b><span>' + esc(it.body) + '</span>' +
+        '<span class="ev">根拠：' + esc(it.evidence) + '</span>' +
         '<span class="fb"><button data-vote="useful"' + (votes[it.rule_id] === 'useful' ? ' class="on"' : '') + '>役に立った</button><button data-vote="off"' + (votes[it.rule_id] === 'off' ? ' class="on"' : '') + '>外れ</button></span>' +
         '</div></div>';
     });
@@ -352,7 +381,8 @@
       document.getElementById('lbFat').textContent = dF; document.getElementById('lbMort').textContent = dM.toFixed(1);
       var nf = f.fatDays - dF, nm = Math.max(.3, f.mort - dM);
       var bs = f.head * 365 / f.fatDays * (1 - f.mort / 100), ns = f.head * 365 / nf * (1 - nm / 100), add = ns - bs;
-      var yen = (add * (f.carcassWt * f.price) + bs * dF * 900) / 10000;
+      // 増益額 ＝ 追加出荷の売上増 ＋ 肥育日数短縮による飼料費削減（550円/日・頭、データ生成モデルと同水準のサンプル係数）
+      var yen = (add * (f.carcassWt * f.price) + bs * dF * 550) / 10000;
       var ne = Math.min(30, f.ebitdaM + (yen * 10000) / (f.sales * 1e6) * 100);
       var nd = +(f.debt / Math.max(1, f.sales * ne / 100)).toFixed(1);
       document.getElementById('oHead').textContent = '+' + Math.round(add) + ' 頭/年';
