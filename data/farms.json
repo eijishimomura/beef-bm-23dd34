@@ -1,0 +1,362 @@
+[
+ {
+  "farm_id": 0,
+  "name": "ひなた牧場",
+  "ku": "繁殖",
+  "region": "北海道",
+  "band": "大",
+  "head": 661
+ },
+ {
+  "farm_id": 1,
+  "name": "あおぞら牧場",
+  "ku": "繁殖",
+  "region": "北海道",
+  "band": "大",
+  "head": 860
+ },
+ {
+  "farm_id": 2,
+  "name": "みどり牧場",
+  "ku": "繁殖",
+  "region": "北海道",
+  "band": "大",
+  "head": 641
+ },
+ {
+  "farm_id": 3,
+  "name": "大地牧場",
+  "ku": "肥育",
+  "region": "北海道",
+  "band": "小",
+  "head": 37
+ },
+ {
+  "farm_id": 4,
+  "name": "清流牧場",
+  "ku": "肥育",
+  "region": "北海道",
+  "band": "大",
+  "head": 412
+ },
+ {
+  "farm_id": 5,
+  "name": "巨牛ファーム",
+  "ku": "肥育",
+  "region": "北海道",
+  "band": "小",
+  "head": 880
+ },
+ {
+  "farm_id": 6,
+  "name": "いなほ牧場",
+  "ku": "一貫",
+  "region": "北海道",
+  "band": "小",
+  "head": 45
+ },
+ {
+  "farm_id": 7,
+  "name": "はるかぜ牧場",
+  "ku": "一貫",
+  "region": "北海道",
+  "band": "大",
+  "head": 702
+ },
+ {
+  "farm_id": 8,
+  "name": "ゆたか牧場",
+  "ku": "一貫",
+  "region": "北海道",
+  "band": "大",
+  "head": 422
+ },
+ {
+  "farm_id": 9,
+  "name": "あかつき牧場",
+  "ku": "繁殖",
+  "region": "東北",
+  "band": "小",
+  "head": 89
+ },
+ {
+  "farm_id": 10,
+  "name": "しらかば牧場",
+  "ku": "繁殖",
+  "region": "東北",
+  "band": "中",
+  "head": 248
+ },
+ {
+  "farm_id": 11,
+  "name": "つばさ牧場",
+  "ku": "繁殖",
+  "region": "東北",
+  "band": "小",
+  "head": 34
+ },
+ {
+  "farm_id": 12,
+  "name": "匠牧場",
+  "ku": "肥育",
+  "region": "東北",
+  "band": "小",
+  "head": 55
+ },
+ {
+  "farm_id": 13,
+  "name": "まきば牧場",
+  "ku": "肥育",
+  "region": "東北",
+  "band": "小",
+  "head": 81
+ },
+ {
+  "farm_id": 14,
+  "name": "あさひ牧場",
+  "ku": "肥育",
+  "region": "東北",
+  "band": "大",
+  "head": 889
+ },
+ {
+  "farm_id": 15,
+  "name": "こまち牧場",
+  "ku": "一貫",
+  "region": "東北",
+  "band": "中",
+  "head": 219
+ },
+ {
+  "farm_id": 16,
+  "name": "ふじ牧場",
+  "ku": "一貫",
+  "region": "東北",
+  "band": "小",
+  "head": 89
+ },
+ {
+  "farm_id": 17,
+  "name": "なでしこ牧場",
+  "ku": "一貫",
+  "region": "東北",
+  "band": "中",
+  "head": 145
+ },
+ {
+  "farm_id": 18,
+  "name": "たいよう牧場",
+  "ku": "繁殖",
+  "region": "関東",
+  "band": "小",
+  "head": 45
+ },
+ {
+  "farm_id": 19,
+  "name": "わかば牧場",
+  "ku": "繁殖",
+  "region": "関東",
+  "band": "中",
+  "head": 108
+ },
+ {
+  "farm_id": 20,
+  "name": "みのり牧場",
+  "ku": "繁殖",
+  "region": "関東",
+  "band": "大",
+  "head": 784
+ },
+ {
+  "farm_id": 21,
+  "name": "かがやき牧場",
+  "ku": "肥育",
+  "region": "関東",
+  "band": "中",
+  "head": 179
+ },
+ {
+  "farm_id": 22,
+  "name": "ほくと牧場",
+  "ku": "肥育",
+  "region": "関東",
+  "band": "大",
+  "head": 809
+ },
+ {
+  "farm_id": 23,
+  "name": "こうよう牧場",
+  "ku": "肥育",
+  "region": "関東",
+  "band": "大",
+  "head": 841
+ },
+ {
+  "farm_id": 24,
+  "name": "せせらぎ牧場",
+  "ku": "一貫",
+  "region": "関東",
+  "band": "大",
+  "head": 323
+ },
+ {
+  "farm_id": 25,
+  "name": "くろべ牧場",
+  "ku": "一貫",
+  "region": "関東",
+  "band": "小",
+  "head": 75
+ },
+ {
+  "farm_id": 26,
+  "name": "はやて牧場",
+  "ku": "一貫",
+  "region": "関東",
+  "band": "大",
+  "head": 466
+ },
+ {
+  "farm_id": 27,
+  "name": "ときわ牧場",
+  "ku": "繁殖",
+  "region": "中国",
+  "band": "小",
+  "head": 45
+ },
+ {
+  "farm_id": 28,
+  "name": "あゆみ牧場",
+  "ku": "繁殖",
+  "region": "中国",
+  "band": "中",
+  "head": 164
+ },
+ {
+  "farm_id": 29,
+  "name": "しおん牧場",
+  "ku": "繁殖",
+  "region": "中国",
+  "band": "中",
+  "head": 245
+ },
+ {
+  "farm_id": 30,
+  "name": "なぎさ牧場",
+  "ku": "肥育",
+  "region": "中国",
+  "band": "小",
+  "head": 78
+ },
+ {
+  "farm_id": 31,
+  "name": "こはる牧場",
+  "ku": "肥育",
+  "region": "中国",
+  "band": "大",
+  "head": 421
+ },
+ {
+  "farm_id": 32,
+  "name": "あおば牧場",
+  "ku": "肥育",
+  "region": "中国",
+  "band": "小",
+  "head": 56
+ },
+ {
+  "farm_id": 33,
+  "name": "ゆうひ牧場",
+  "ku": "一貫",
+  "region": "中国",
+  "band": "大",
+  "head": 827
+ },
+ {
+  "farm_id": 34,
+  "name": "みなみ牧場",
+  "ku": "一貫",
+  "region": "中国",
+  "band": "大",
+  "head": 880
+ },
+ {
+  "farm_id": 35,
+  "name": "きたかぜ牧場",
+  "ku": "一貫",
+  "region": "中国",
+  "band": "小",
+  "head": 81
+ },
+ {
+  "farm_id": 36,
+  "name": "すずらん牧場",
+  "ku": "繁殖",
+  "region": "九州",
+  "band": "大",
+  "head": 753
+ },
+ {
+  "farm_id": 37,
+  "name": "やまびこ牧場",
+  "ku": "繁殖",
+  "region": "九州",
+  "band": "中",
+  "head": 208
+ },
+ {
+  "farm_id": 38,
+  "name": "あかね牧場",
+  "ku": "繁殖",
+  "region": "九州",
+  "band": "小",
+  "head": 67
+ },
+ {
+  "farm_id": 39,
+  "name": "ひかり牧場",
+  "ku": "肥育",
+  "region": "九州",
+  "band": "小",
+  "head": 57
+ },
+ {
+  "farm_id": 40,
+  "name": "つむぎ牧場",
+  "ku": "肥育",
+  "region": "九州",
+  "band": "中",
+  "head": 113
+ },
+ {
+  "farm_id": 41,
+  "name": "こだま牧場",
+  "ku": "肥育",
+  "region": "九州",
+  "band": "中",
+  "head": 111
+ },
+ {
+  "farm_id": 42,
+  "name": "さくら牧場",
+  "ku": "一貫",
+  "region": "九州",
+  "band": "大",
+  "head": 886
+ },
+ {
+  "farm_id": 43,
+  "name": "わたぼうし牧場",
+  "ku": "一貫",
+  "region": "九州",
+  "band": "大",
+  "head": 895
+ },
+ {
+  "farm_id": 44,
+  "name": "ほしぞら牧場",
+  "ku": "一貫",
+  "region": "九州",
+  "band": "小",
+  "head": 47
+ }
+]

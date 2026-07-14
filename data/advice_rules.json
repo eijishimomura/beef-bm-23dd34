@@ -1,0 +1,115 @@
+{
+  "_readme": "赤ペン先生のルール定義（外部化）。コード変更なしに改訂できる。condition の var / template の {token} は assets/app.js の buildPenContext() が用意する値（一覧は README を参照）。priority: 1=最優先(赤) / 2=次に効く(橙) / 3=維持・強み(緑)。テンプレート中の数値はすべてルール側で確定した値のみを埋め込む（LLMに計算させない）。トーンは伴走（指導・叱責の語調を禁止）。",
+  "rules": [
+    {
+      "rule_id": "barn_full",
+      "priority": 1,
+      "condition": { "all": [ { "var": "occ", "op": ">=", "value": 92 } ] },
+      "template": {
+        "title": "牛舎はほぼ満床（稼働率{occ}%）。増頭では稼げない。",
+        "body": "空きは{spare}頭のみ。利益を伸ばす道は「回転」しかない。肥育日数の短縮と事故率の低減を最優先に。増頭投資を検討するなら牛舎増設とセットでないと成立しない。"
+      },
+      "evidence_keys": [ { "kind": "ctx", "key": "occ" }, { "kind": "ctx", "key": "spare" }, { "kind": "metric", "id": "fatDays" }, { "kind": "metric", "id": "mort" } ]
+    },
+    {
+      "rule_id": "barn_slack",
+      "priority": 2,
+      "condition": { "all": [ { "var": "occ", "op": "<=", "value": 78 } ] },
+      "template": {
+        "title": "牛舎に余力あり（稼働率{occ}%・空き{spare}頭）。",
+        "body": "固定費が遊んでいる。増頭は限界利益がそのまま乗るため、財務に余力があるなら最も効率の良い一手。"
+      },
+      "evidence_keys": [ { "kind": "ctx", "key": "occ" }, { "kind": "ctx", "key": "spare" } ]
+    },
+    {
+      "rule_id": "debt_high",
+      "priority": 1,
+      "condition": { "all": [ { "var": "debtEbitda", "op": ">=", "value": 5 } ] },
+      "template": {
+        "title": "有利子負債はEBITDAの{debtEbitda}年分。借入余力が乏しい。",
+        "body": "新規投資（増頭・設備）は当面難しい。まずは回転改善と単価改善でEBITDAを厚くし、負債倍率を下げる。金融機関には本レポートの順位・改善計画を添えて説明するのが有効。"
+      },
+      "evidence_keys": [ { "kind": "metric", "id": "debtEbitda" }, { "kind": "ctx", "key": "debt" } ]
+    },
+    {
+      "rule_id": "debt_low",
+      "priority": 3,
+      "condition": { "all": [ { "var": "debtEbitda", "op": "<=", "value": 2.5 } ] },
+      "template": {
+        "title": "負債はEBITDAの{debtEbitda}年分。財務は健全。",
+        "body": "借入余力がある。規模拡大・省力化投資の判断が可能な体質。攻めの選択肢を持てる数少ない農場。"
+      },
+      "evidence_keys": [ { "kind": "metric", "id": "debtEbitda" }, { "kind": "ctx", "key": "debt" } ]
+    },
+    {
+      "rule_id": "price_low",
+      "priority": 1,
+      "condition": { "all": [ { "var": "priceGrade", "op": "in", "value": [ "D", "E", "F" ] } ] },
+      "template": {
+        "title": "枝肉単価が下位圏（{price}円/kg・{priceRank}位・判定{priceGrade}）。",
+        "body": "量は出ていても単価で取り負けている。出荷月齢・仕上げ・格付・出荷先の見直しを。単価を+100円/kg動かせば、枝肉{carcassWt}kgで1頭あたり約+{priceUp100}千円。"
+      },
+      "evidence_keys": [ { "kind": "metric", "id": "price" }, { "kind": "metric", "id": "carcassWt" } ]
+    },
+    {
+      "rule_id": "mort_high",
+      "priority": 2,
+      "condition": { "all": [ { "var": "mortGrade", "op": "in", "value": [ "D", "E", "F" ] } ] },
+      "template": {
+        "title": "事故率が下位圏（{mort}%・判定{mortGrade}）。",
+        "body": "1pt改善で年間 約+{mortAddHead}頭の出荷増。導入時の馴致・衛生管理・観察頻度の見直しが最短の増益策。"
+      },
+      "evidence_keys": [ { "kind": "metric", "id": "mort" } ]
+    },
+    {
+      "rule_id": "turn_strength",
+      "priority": 3,
+      "condition": { "all": [ { "var": "fatGrade", "op": "not_in", "value": [ "D", "E", "F" ] }, { "var": "turnGrade", "op": "not_in", "value": [ "D", "E", "F" ] } ] },
+      "template": {
+        "title": "回転は強み（肥育日数{fatDays}日・在庫回転{invTurn}回／判定{fatGrade}・{turnGrade}）。",
+        "body": "ここは維持でよい。資源は単価・品質の改善に寄せた方がリターンが大きい。"
+      },
+      "evidence_keys": [ { "kind": "metric", "id": "fatDays" }, { "kind": "metric", "id": "invTurn" } ]
+    },
+    {
+      "rule_id": "fat_long",
+      "priority": 1,
+      "condition": { "all": [ { "var": "fatGrade", "op": "in", "value": [ "D", "E", "F" ] } ] },
+      "template": {
+        "title": "肥育日数が長い（{fatDays}日・判定{fatGrade}）＝資金が牛に寝ている。",
+        "body": "30日短縮すれば在庫回転は{invTurn}→{turnAfter30}回。飼料費と金利の両方が減り、EBITDAに直接効く。"
+      },
+      "evidence_keys": [ { "kind": "metric", "id": "fatDays" }, { "kind": "metric", "id": "invTurn" } ]
+    },
+    {
+      "rule_id": "labor_productivity",
+      "priority": 3,
+      "condition": { "all": [ { "var": "perW", "op": "<", "value": 45 } ] },
+      "template": {
+        "title": "1人あたり飼養頭数が{perW}頭と少ない。",
+        "body": "省力化（給餌・観察の自動化）で労働生産性を上げる余地。規模拡大より先に、今の頭数を少ない人手で回せる体制へ。"
+      },
+      "evidence_keys": [ { "kind": "ctx", "key": "perW" }, { "kind": "ctx", "key": "workers" }, { "kind": "ctx", "key": "head" } ]
+    },
+    {
+      "rule_id": "feed_dependency",
+      "priority": 2,
+      "condition": { "all": [ { "var": "feedSelf", "op": "<", "value": 15 } ] },
+      "template": {
+        "title": "飼料自給率{feedSelf}%＝飼料相場に業績が丸乗り。",
+        "body": "粗飼料の自給拡大は、単年の利益より「相場変動への耐性」を買う投資（仮説）。EBITDAの振れ幅を抑える。"
+      },
+      "evidence_keys": [ { "kind": "ctx", "key": "feedSelf" } ]
+    },
+    {
+      "rule_id": "successor_risk",
+      "priority": 2,
+      "condition": { "all": [ { "var": "succ", "op": "==", "value": "未定" }, { "var": "age", "op": ">=", "value": 60 } ] },
+      "template": {
+        "title": "経営者{age}歳・後継者未定。",
+        "body": "設備投資は回収期間を短く設計すべき。長期の大型投資より、回転改善など単年で効く施策を優先。"
+      },
+      "evidence_keys": [ { "kind": "ctx", "key": "age" }, { "kind": "ctx", "key": "succ" } ]
+    }
+  ]
+}

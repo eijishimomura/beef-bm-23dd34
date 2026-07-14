@@ -1,0 +1,102 @@
+[
+ {
+  "metric_id": "carcassWt",
+  "label": "枝肉重量",
+  "unit": "kg",
+  "group": "prod",
+  "dir": 1,
+  "formula": "出荷牛の平均枝肉重量",
+  "source": "と畜成績（枝肉証明書）"
+ },
+ {
+  "metric_id": "price",
+  "label": "枝肉単価",
+  "unit": "円/kg",
+  "group": "prod",
+  "dir": 1,
+  "formula": "枝肉売上 ÷ 枝肉重量",
+  "source": "市場データ"
+ },
+ {
+  "metric_id": "dg",
+  "label": "増体 DG",
+  "unit": "g/日",
+  "group": "prod",
+  "dir": 1,
+  "formula": "(出荷体重 − 導入体重) ÷ 飼養日数",
+  "source": "飼養記録"
+ },
+ {
+  "metric_id": "mort",
+  "label": "事故率",
+  "unit": "%",
+  "group": "prod",
+  "dir": -1,
+  "formula": "事故頭数 ÷ 飼養頭数 × 100",
+  "source": "飼養記録"
+ },
+ {
+  "metric_id": "fatDays",
+  "label": "肥育日数",
+  "unit": "日",
+  "group": "prod",
+  "dir": -1,
+  "formula": "導入から出荷までの平均日数",
+  "source": "飼養記録"
+ },
+ {
+  "metric_id": "ebitdaM",
+  "label": "EBITDAマージン",
+  "unit": "%",
+  "group": "econ",
+  "dir": 1,
+  "formula": "EBITDA ÷ 売上高 × 100",
+  "source": "決算書（損益計算書）"
+ },
+ {
+  "metric_id": "invTurn",
+  "label": "在庫回転(牛群)",
+  "unit": "回",
+  "group": "econ",
+  "dir": 1,
+  "formula": "年間出荷頭数 ÷ 平均飼養頭数",
+  "source": "飼養記録・出荷実績"
+ },
+ {
+  "metric_id": "capTurn",
+  "label": "総資本回転",
+  "unit": "回",
+  "group": "econ",
+  "dir": 1,
+  "formula": "売上高 ÷ 総資本",
+  "source": "決算書（貸借対照表）"
+ },
+ {
+  "metric_id": "equity",
+  "label": "自己資本比率",
+  "unit": "%",
+  "group": "econ",
+  "dir": 1,
+  "formula": "自己資本 ÷ 総資本 × 100",
+  "source": "決算書（貸借対照表）"
+ },
+ {
+  "metric_id": "ordP",
+  "label": "経常利益率",
+  "unit": "%",
+  "group": "econ",
+  "dir": 1,
+  "add": 1,
+  "formula": "経常利益 ÷ 売上高 × 100",
+  "source": "決算書（損益計算書）"
+ },
+ {
+  "metric_id": "debtEbitda",
+  "label": "有利子負債/EBITDA",
+  "unit": "年",
+  "group": "econ",
+  "dir": -1,
+  "formula": "有利子負債残高 ÷ EBITDA",
+  "source": "決算書"
+ }
+]

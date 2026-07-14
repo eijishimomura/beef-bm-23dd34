@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>肉牛ベンチマーク（デモ）</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div id="app">
+
+  <div class="head">
+    <div class="title">肉牛ベンチマーク<small>DEMO ／ 組合版ベンチマーク（サンプル）</small></div>
+    <div class="flag">サンプルデータ（実農場ではありません）</div>
+  </div>
+
+  <div class="intro" id="intro">
+    <button class="close" id="introClose">閉じる</button>
+    <h2>このページは何か（30秒）</h2>
+    <p>全国の肉牛経営を、生産成績だけでなく<b>経営（EBITDA・在庫回転・有利子負債）まで</b>一枚で比べるベンチマークの<b>動くデモ</b>です。数値はすべてサンプル（架空の45農場）で、実在の農場ではありません。</p>
+    <ol>
+      <li><b>① 全体ダッシュボード</b>：組合全体の改善余地・格差・分布を俯瞰。散布図のバブルを<b>タップ／クリック</b>すると…</li>
+      <li><b>② 農場個票</b>：その農場の成績表・「赤ペン先生」の指摘・改善シミュレーションが開きます。</li>
+      <li>個票の<b>スライダー（改善シミュレーション）</b>を動かすと、増収額や負債倍率がその場で変わります。</li>
+    </ol>
+  </div>
+
+  <div class="tabs">
+    <div class="tab on" data-v="ov">① 全体ダッシュボード</div>
+    <div class="tab" data-v="fm">② 農場個票</div>
+  </div>
+
+  <div id="loading" class="panel"><p class="psub" style="margin:0">データを読み込んでいます…</p></div>
+
+  <div id="viewOv" style="display:none">
+    <div class="panel">
+      <p class="ph">組合として、まず見るべき3つ</p>
+      <p class="psub">平均・中央値を1本で見ても意味は薄い。効くのは「改善余地の金額」「格差」「対象農場」。</p>
+      <div class="kpis" id="kpis"></div>
+    </div>
+    <div class="panel">
+      <p class="ph">格差の推移（12ヶ月ローリング）</p>
+      <p class="psub">上位10%・中央値・下位10%の3本。開いているか、縮んでいるかが組合の打ち手を決める。</p>
+      <div class="grp" style="margin-bottom:8px"><span>指標</span><select id="selGap"></select></div>
+      <div id="gapPlot"></div>
+      <div class="legend"><b><span class="dot" style="background:#1e8f5b"></span>上位10%</b><b><span class="dot" style="background:#5f7085"></span>中央値</b><b><span class="dot" style="background:#c0392b"></span>下位10%</b></div>
+      <div class="cmt" id="gapCmt"></div>
+    </div>
+    <div class="panel">
+      <p class="ph">ポジショニング散布図</p>
+      <p class="psub">バブル＝規模（頭数）。破線＝中央値。輪取り＋名称＝異常値。クリックで個票へ。</p>
+      <div class="ctrls">
+        <div class="grp"><span>区分</span><div class="seg" id="segKu"><button data-k="all" class="on">全</button><button data-k="繁殖">繁殖</button><button data-k="肥育">肥育</button><button data-k="一貫">一貫</button></div></div>
+        <div class="grp"><span>規模</span><div class="seg" id="segSc"><button data-s="all" class="on">全</button><button data-s="小">小</button><button data-s="中">中</button><button data-s="大">大</button></div></div>
+        <div class="grp"><span>X</span><select id="selX"></select></div>
+        <div class="grp"><span>Y</span><select id="selY"></select></div>
+        <div class="grp"><span>色</span><div class="seg" id="segCol"><button data-c="ku" class="on">区分</button><button data-c="gr">判定</button></div></div>
+      </div>
+      <div class="plotwrap"><div id="plot"></div><div class="tip" id="tip"></div></div>
+      <div class="legend" id="legend"></div>
+      <div class="cmt" id="cmt"></div>
+    </div>
+    <div class="panel">
+      <p class="ph">層別の中央値（規模帯 × 経営区分）</p>
+      <p class="psub">中央値が意味を持つのは層別したときだけ。全体1本の中位は「誰のものでもない数字」になる。</p>
+      <div class="grp" style="margin-bottom:8px"><span>指標</span><select id="selStrat"></select></div>
+      <div class="scroll"><table id="stratTbl"></table></div>
+      <div class="note">セル＝該当層の中央値（括弧内は農場数）。層内のばらつきは散布図で確認。</div>
+    </div>
+  </div>
+
+  <div id="viewFm" style="display:none">
+    <div class="panel">
+      <div class="ctrls"><div class="grp"><span>農場</span><select id="selFarm"></select></div></div>
+      <div class="fhead">
+        <div><div class="fname" id="fName"></div><div class="fmeta" id="fMeta"></div></div>
+        <div class="big" style="display:flex;align-items:center;gap:9px"><div style="font-size:10.5px;color:var(--muted)">総合判定</div><div class="gchip" id="fGrade"></div></div>
+      </div>
+      <div class="subttl" style="margin-top:6px">前提条件（コンテキスト）</div>
+      <div class="ctx" id="ctxBox"></div>
+      <div class="note">※初回ヒアリング（アンケートフォーム）で取得。年1回、または前提が変わったときに更新。</div>
+    </div>
+    <div class="panel">
+      <p class="ph">赤ペン先生 — コンテキストを踏まえた評価と示唆</p>
+      <p class="psub">同じ成績でも、牛舎キャパ・借入・労働力が違えば打ち手は変わる。前提条件と突き合わせて採点する。</p>
+      <div class="pen" id="penBox"></div>
+      <div class="note">※生成方式＝ハイブリッド（ルールで骨・LLMで肉付け）。本デモはルールベースで完結（ルール定義は data/advice_rules.json に外部化）。数値と根拠はルール側で確定し、必ず指摘に同居させる。獣医学的診断・投資/財務の断定的助言はしない。</div>
+    </div>
+    <div class="panel">
+      <p class="ph">成績表（数値＋位置）</p>
+      <p class="psub">PigINFO型の数値表に、位置バーを1列として内包。数字の厳密さと一目の分かりやすさを両立。</p>
+      <div class="scroll"><table id="scoreTbl"></table></div>
+      <div class="note">位置バー：左＝下位10% / 右＝上位10% / 細線＝中央値。↓良＝低いほど良い指標。</div>
+    </div>
+    <div class="panel">
+      <p class="ph">推移（12ヶ月ローリング平均・指数＝24ヶ月前を100）</p>
+      <p class="psub">単位の違う指標を同一マトリクスで重ねて見る。伸びているのか、落ちているのかが本質。</p>
+      <div class="chk" id="tsChk" style="margin-bottom:10px"></div>
+      <div class="plotwrap"><div id="tsPlot"></div><div class="tip" id="tip2"></div></div>
+      <div class="legend" id="tsLeg"></div>
+      <div class="cmt" id="tsCmt"></div>
+      <div class="note">※初期値は過去データの遡及で埋める。生産KPIは月次（と畜成績・市場データ）、経営指標は年次（決算3期分）の二層。</div>
+    </div>
+    <div class="panel">
+      <p class="ph">経営指標</p>
+      <p class="psub">先行事例（豚のPigINFO）が踏み込んでいないBS・資本効率まで。ここが差別化の核。</p>
+      <div id="mgmtBox"></div>
+      <div class="subttl">年次（決算3期分）</div>
+      <div class="scroll"><table id="fiscalTbl"></table></div>
+      <div class="note">財務は月次で遡及できないため、経営指標は年次（決算3期分）で持つ（生産KPIの月次と二層）。</div>
+    </div>
+    <div class="panel">
+      <div class="grid2">
+        <div><div class="subttl" style="margin-top:0">改善シミュレーション</div>
+          <div class="sim">
+            <label>肥育日数の短縮：<span id="lbFat">0</span> 日</label><input type="range" id="sFat" min="0" max="90" value="0" step="5">
+            <label>事故率の低減：<span id="lbMort">0.0</span> pt</label><input type="range" id="sMort" min="0" max="30" value="0" step="1">
+            <div class="simout">
+              <div class="c"><div class="t">追加出荷</div><div class="v" id="oHead"></div></div>
+              <div class="c"><div class="t">増収額</div><div class="v" id="oYen"></div></div>
+              <div class="c"><div class="t">EBITDAマージン</div><div class="v" id="oEbit"></div></div>
+              <div class="c"><div class="t">有利子負債/EBITDA</div><div class="v" id="oDebt"></div></div>
+            </div>
+            <div class="capwarn" id="capWarn"></div>
+            <div class="note">※サンプル係数。牛舎キャパを超える増頭は警告。</div>
+          </div>
+        </div>
+        <div><div class="subttl" style="margin-top:0">生産ツリー（弱点の自動ハイライト）</div>
+          <div id="treeBox" style="background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:12px 14px;font-size:12px;line-height:2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<footer>本サイトの数値はすべてサンプルデータです（実在の農場・団体の実績ではありません）。限定共有用デモにつきURLの転載はご遠慮ください。</footer>
+<script src="assets/charts.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
