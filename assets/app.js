@@ -386,7 +386,7 @@
   function initSim(f, occ) {
     var sF = document.getElementById('sFat'), sM = document.getElementById('sMort'); sF.value = 0; sM.value = 0;
     var ovVal = ov(f);
-    function man(yen) { var v = yen / 1e4; return (v < 0 ? '−' : '+') + '¥' + Math.round(Math.abs(v)).toLocaleString() + '万'; }
+    function disp(v) { return (v < 0 ? '−' : '+') + '¥' + Math.abs(v).toLocaleString() + '万'; }
     function run() {
       var dF = +sF.value, dM = +sM.value / 10;
       document.getElementById('lbFat').textContent = dF; document.getElementById('lbMort').textContent = dM.toFixed(1);
@@ -396,18 +396,22 @@
       var newE = baseE + r.netGain, newSales = f.sales * 1e6 + r.salesInc;
       var ne = newE / newSales * 100;
       var nd = newE > 0 ? (f.debt * 1e6 / newE) : Infinity;
+      // 表示は万円に丸めた各行の加減算が厳密に一致するよう、丸め後の値から純増益を組み立てる
+      var rSales = Math.round(r.salesInc / 1e4), rCalf = Math.round(r.calfInc / 1e4),
+        rFeed = Math.round(r.feedIncNet / 1e4), rOther = Math.round(r.otherInc / 1e4);
+      var rNet = rSales - rCalf - rFeed - rOther;
       document.getElementById('oHead').textContent = '+' + Math.round(addTotal) + ' 頭/年';
-      document.getElementById('oYen').innerHTML = man(r.netGain) + '<span style="font-size:11px">/年</span>';
+      document.getElementById('oYen').innerHTML = disp(rNet) + '<span style="font-size:11px">/年</span>';
       document.getElementById('oEbit').innerHTML = f.ebitdaM + '% <span class="up">→ ' + ne.toFixed(1) + '%</span>';
       document.getElementById('oDebt').innerHTML = f.debtEbitda + '年 <span class="up">→ ' + (isFinite(nd) ? nd.toFixed(1) : '—') + '年</span>';
       // 内訳表：売上増 − 素牛費増 − 飼料費増減 − その他変動費増 = 純増益（画面上で検算できる）
       document.getElementById('simBreak').innerHTML =
         '<thead><tr><th style="text-align:left">項目</th><th>金額/年</th><th style="text-align:left">内容</th></tr></thead><tbody>' +
-        '<tr><td class="k">売上増</td><td>' + man(r.salesInc) + '</td><td style="text-align:left">追加出荷 ' + Math.round(addTotal) + '頭（回転' + Math.round(r.addTurn) + '＋救命' + Math.round(r.saved) + '）× 1頭売上 ' + Math.round(r.eco.s / 1e4) + '万円</td></tr>' +
-        '<tr><td class="k">素牛費 増</td><td>' + man(-r.calfInc) + '</td><td style="text-align:left">回転増 ' + Math.round(r.addTurn) + '頭 × ' + Math.round(r.eco.calf / 1e4) + '万円/頭（救命牛は投下済みのため除く）</td></tr>' +
-        '<tr><td class="k">飼料費 増減</td><td>' + man(-r.feedIncNet) + '</td><td style="text-align:left">既存出荷の短縮削減 − 追加飼養分</td></tr>' +
-        '<tr><td class="k">その他変動費 増</td><td>' + man(-r.otherInc) + '</td><td style="text-align:left">' + Math.round(PARAMS.other_var_cost_yen_per_head / 1e4) + '万円/頭（敷料・診療 等）</td></tr>' +
-        '<tr style="font-weight:800;background:#eef3fb"><td class="k">純増益（EBITDA増）</td><td>' + man(r.netGain) + '</td><td style="text-align:left">1頭限界利益率 ' + (r.marginRatio * 100).toFixed(1) + '%（薄利構造）</td></tr></tbody>';
+        '<tr><td class="k">売上増</td><td>' + disp(rSales) + '</td><td style="text-align:left">追加出荷 ' + Math.round(addTotal) + '頭（回転' + Math.round(r.addTurn) + '＋救命' + Math.round(r.saved) + '）× 1頭売上 ' + Math.round(r.eco.s / 1e4) + '万円</td></tr>' +
+        '<tr><td class="k">素牛費 増</td><td>' + disp(-rCalf) + '</td><td style="text-align:left">回転増 ' + Math.round(r.addTurn) + '頭 × ' + Math.round(r.eco.calf / 1e4) + '万円/頭（救命牛は投下済みのため除く）</td></tr>' +
+        '<tr><td class="k">飼料費 増減</td><td>' + disp(-rFeed) + '</td><td style="text-align:left">既存出荷の短縮削減 − 追加飼養分</td></tr>' +
+        '<tr><td class="k">その他変動費 増</td><td>' + disp(-rOther) + '</td><td style="text-align:left">' + Math.round(PARAMS.other_var_cost_yen_per_head / 1e4) + '万円/頭（敷料・診療 等）</td></tr>' +
+        '<tr style="font-weight:800;background:#eef3fb"><td class="k">純増益（EBITDA増）</td><td>' + disp(rNet) + '</td><td style="text-align:left">1頭限界利益率 ' + (r.marginRatio * 100).toFixed(1) + '%（薄利構造）</td></tr></tbody>';
       document.getElementById('simNote').innerHTML =
         '※係数は data/params.json のサンプル値（飼料費' + PARAMS.feed_yen_per_day_head + '円/日・頭）。素牛費は、1頭限界利益率が肉牛肥育の薄利レンジ' +
         '（売上比5〜18%）に収まるよう農場の枝肉売上から逆算した実効値（区分基準値は params.json の目安）。' +
