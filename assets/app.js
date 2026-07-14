@@ -409,7 +409,8 @@
         '<tr><td class="k">その他変動費 増</td><td>' + man(-r.otherInc) + '</td><td style="text-align:left">' + Math.round(PARAMS.other_var_cost_yen_per_head / 1e4) + '万円/頭（敷料・診療 等）</td></tr>' +
         '<tr style="font-weight:800;background:#eef3fb"><td class="k">純増益（EBITDA増）</td><td>' + man(r.netGain) + '</td><td style="text-align:left">1頭限界利益率 ' + (r.marginRatio * 100).toFixed(1) + '%（薄利構造）</td></tr></tbody>';
       document.getElementById('simNote').innerHTML =
-        '※係数は data/params.json のサンプル値（飼料費' + PARAMS.feed_yen_per_day_head + '円/日・頭、素牛費は区分基準値を農場成績で補正）。' +
+        '※係数は data/params.json のサンプル値（飼料費' + PARAMS.feed_yen_per_day_head + '円/日・頭）。素牛費は、1頭限界利益率が肉牛肥育の薄利レンジ' +
+        '（売上比5〜18%）に収まるよう農場の枝肉売上から逆算した実効値（区分基準値は params.json の目安）。' +
         '救命牛の素牛費は死亡時点で投下済み（サンクコスト）のため、事故率低減の増益は「売上−飼料費」で近似。';
       var cw = document.getElementById('capWarn');
       if (r.blocked && dF > 0) { cw.style.display = 'block'; cw.textContent = '⚠ 稼働率' + occ + '%で満床のため増頭できません。肥育日数短縮の効果は飼料費削減のみ反映（追加出荷0頭）。'; }
@@ -472,25 +473,44 @@
   }
 
   // ================= 受け入れチェック（コンソールで BeefBenchmark.runChecks()） =================
-  // A-1: 全農場×全スライダー位置で 1頭限界利益率が5〜18%／内訳の加減算一致／満床農場の増頭0
-  // A-2: 格差（p90−p10相当）が24ヶ月で拡大（EBITDAマージン+10%以上）
-  // A-3: デフォルト農場に判定AとD〜Fが混在し、最優先の赤ペン指摘が出る
+  // A-1: 全農場×全スライダー位置で 1頭限界利益率が5〜18%／内訳の加減算一致／満床農場の増頭0／
+  //      レバー別の仕様式（①(a)+①(b)+②）による独立再計算と純増益が一致
+  // A-2: 格差（p90−p10相当）が24ヶ月で拡大（EBITDAマージン+10%以上）＋順位の安定（不自然な逆転がない）
+  // A-3: デフォルト農場（選定ロジックを独立に再実行）に判定AとD〜Fが混在し、最優先の赤ペン指摘が出る
   function runChecks() {
     var fails = [];
     farms.forEach(function (f) {
-      var o = ov(f), occ = Math.round(f.head / f.barnCap * 100);
+      var o = ov(f), occRaw = f.head / f.barnCap * 100;
       for (var dd = 0; dd <= 90; dd += 5) for (var dm = 0; dm <= 3; dm += 0.5) {
         var r = window.SimModel.simulate(f, PARAMS, o, dd, dm);
         if (r.marginRatio < 0.05 - 1e-9 || r.marginRatio > 0.18 + 1e-9) fails.push('A-1 限界利益率範囲外 ' + f.name + ' dd=' + dd + ' → ' + (r.marginRatio * 100).toFixed(1) + '%');
         if (Math.abs(r.salesInc - r.calfInc - r.feedIncNet - r.otherInc - r.netGain) > 1) fails.push('A-1 内訳不一致 ' + f.name);
-        if (occ >= PARAMS.capacity_block_occupancy_pct && dd > 0 && r.addTurn !== 0) fails.push('A-1 満床でも増頭 ' + f.name);
+        if (occRaw >= PARAMS.capacity_block_occupancy_pct && dd > 0 && r.addTurn !== 0) fails.push('A-1 満床でも増頭 ' + f.name);
+        // 独立再計算：修正仕様の3式（①(a)飼料費削減＋①(b)追加出荷×1頭限界利益＋②救命×(売上−飼料費)）を
+        // simulate() の内部変数を使わずに組み直し、純増益と突合する
+        var E = window.SimModel.farmEconomy(f, PARAMS, o);
+        var bs = f.head * 365 / f.fatDays * (1 - f.mort / 100);
+        var effDm = Math.min(dm, Math.max(0, f.mort - 0.3));
+        var addT = (occRaw >= PARAMS.capacity_block_occupancy_pct || dd === 0) ? 0 : f.head * 365 / (f.fatDays - dd) * (1 - f.mort / 100) - bs;
+        var expected = bs * dd * E.feed
+          + addT * (E.s - E.calf - (f.fatDays - dd) * E.feed - E.other)
+          + f.head * 365 / f.fatDays * (effDm / 100) * (E.s - (f.fatDays - dd) * E.feed);
+        if (Math.abs(expected - r.netGain) > 1) fails.push('A-1 独立再計算と不一致 ' + f.name + ' dd=' + dd + ' dm=' + dm);
       }
     });
     function gapGrowth(m) { var g0 = gapAt(0, m), g1 = gapAt(NP - 1, m); var d0 = Math.abs(g0.hi - g0.lo), d1 = Math.abs(g1.hi - g1.lo); return d1 / d0 - 1; }
     if (gapGrowth('ebitdaM') < 0.10) fails.push('A-2 EBITDAマージン格差拡大 ' + (gapGrowth('ebitdaM') * 100).toFixed(1) + '% (<10%)');
     if (gapGrowth('price') <= 0) fails.push('A-2 枝肉単価の格差が拡大していない');
     if (gapGrowth('invTurn') <= 0) fails.push('A-2 在庫回転の格差が拡大していない');
-    var f0 = farms[curFarm], grades = SCORE.map(function (m) { return gr(bf(f0, m)); });
+    // 順位の安定性：24ヶ月前と直近のローリング値の順位相関が高い（トレンドが不自然な逆転を生んでいない）
+    ['ebitdaM', 'price', 'invTurn'].forEach(function (m) {
+      function ranksAt(i) { var v = farms.map(function (f) { return f.rl[m][i]; }); var idx = v.map(function (x, k) { return [x, k]; }).sort(function (a, b) { return a[0] - b[0]; }); var rr = []; idx.forEach(function (pair, pos) { rr[pair[1]] = pos; }); return rr; }
+      var r0 = ranksAt(0), r1 = ranksAt(NP - 1), n = r0.length, num = 0;
+      for (var k = 0; k < n; k++) { var d = r0[k] - r1[k]; num += d * d; }
+      var rho = 1 - 6 * num / (n * (n * n - 1)); // スピアマン順位相関
+      if (rho < 0.7) fails.push('A-2 順位が不自然に入れ替わっている ' + m + ' (ρ=' + rho.toFixed(2) + ')');
+    });
+    var f0 = pickDefaultFarm(), grades = SCORE.map(function (m) { return gr(bf(f0, m)); });
     if (grades.indexOf('A') < 0 && grades.indexOf('B') < 0) fails.push('A-3 デフォルト農場に上位判定がない');
     if (!grades.some(function (g) { return 'DEF'.indexOf(g) >= 0; })) fails.push('A-3 デフォルト農場に下位判定がない');
     var pctx = buildPenContext(f0);
@@ -499,6 +519,23 @@
       pass: fails.length === 0, failures: fails, defaultFarm: f0.name, defaultGrades: grades.join(''),
       gapGrowthPct: { ebitdaM: +(gapGrowth('ebitdaM') * 100).toFixed(1), price: +(gapGrowth('price') * 100).toFixed(1), invTurn: +(gapGrowth('invTurn') * 100).toFixed(1) }
     };
+  }
+
+  // 個票のデフォルト農場＝上位判定（A/B）と下位判定（D〜F）の混在度が最大の農場。
+  // 「全部A」の優等生でも「全部F」の脱落農場でもなく、強みと弱みが混在するギザギザな
+  // プロファイル（PigINFO 日高牧場型：量は出るが単価で負ける、等）を最初に見せる。
+  function pickDefaultFarm() {
+    var bestMix = -1, best = farms[0];
+    farms.forEach(function (f) {
+      var good = 0, bad = 0, ranks = [];
+      SCORE.forEach(function (m) {
+        var g = gr(bf(f, m)); ranks.push(rk(f, m));
+        if (g === 'A' || g === 'B') good++; else if (g !== 'C') bad++;
+      });
+      var mix = good * bad * 1000 + (Math.max.apply(0, ranks) - Math.min.apply(0, ranks));
+      if (mix > bestMix) { bestMix = mix; best = f; }
+    });
+    return best;
   }
 
   // ================= ルーティング・初期化 =================
@@ -516,19 +553,7 @@
   function init() {
     document.getElementById('loading').style.display = 'none';
 
-    // 個票のデフォルト農場＝上位判定（A/B）と下位判定（D〜F）の混在度が最大の農場。
-    // 「全部A」の優等生でも「全部F」の脱落農場でもなく、強みと弱みが混在するギザギザな
-    // プロファイル（PigINFO 日高牧場型：量は出るが単価で負ける、等）を最初に見せる。
-    var bestMix = -1;
-    farms.forEach(function (f) {
-      var good = 0, bad = 0, ranks = [];
-      SCORE.forEach(function (m) {
-        var g = gr(bf(f, m)); ranks.push(rk(f, m));
-        if (g === 'A' || g === 'B') good++; else if (g !== 'C') bad++;
-      });
-      var mix = good * bad * 1000 + (Math.max.apply(0, ranks) - Math.min.apply(0, ranks));
-      if (mix > bestMix) { bestMix = mix; curFarm = f.id; }
-    });
+    curFarm = pickDefaultFarm().id;
     window.BeefBenchmark.runChecks = runChecks;
 
     var selGap = document.getElementById('selGap'), selStrat = document.getElementById('selStrat');

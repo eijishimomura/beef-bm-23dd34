@@ -23,7 +23,7 @@
   // dd=肥育日数短縮(日), dm=事故率低減(pt)。返り値の金額は円/年。
   function simulate(f, P, ov, dd, dm) {
     var E = farmEconomy(f, P, ov);
-    var occ = Math.round(f.head / f.barnCap * 100);
+    var occRaw = f.head / f.barnCap * 100, occ = Math.round(occRaw);
     var newFat = f.fatDays - dd, newMort = Math.max(0.3, f.mort - dm);
     var bs = f.head * 365 / f.fatDays * (1 - f.mort / 100);       // 現状の年間出荷頭数
     var feedNew = newFat * E.feed;                                 // 1頭飼料費（短縮後）
@@ -31,8 +31,8 @@
 
     // ①(a) 既存出荷頭数の飼料費削減
     var feedSave = bs * dd * E.feed;
-    // ①(b) 回転向上による追加出荷（満床＝稼働率95%以上では増頭できないため0）
-    var blocked = occ >= P.capacity_block_occupancy_pct;
+    // ①(b) 回転向上による追加出荷（満床＝稼働率95%以上では増頭できないため0）。判定は丸め前の実率
+    var blocked = occRaw >= P.capacity_block_occupancy_pct;
     var addTurn = 0;
     if (!blocked && dd > 0) addTurn = f.head * 365 / newFat * (1 - f.mort / 100) - bs;
     // ② 事故率低減：救命頭数 ×（1頭売上 − 1頭飼料費）。下げ幅は実際の事故率（下限0.3%）までに制限

@@ -61,11 +61,13 @@
       .sort(function (a, b) { return Y(a.y) - Y(b.y); })
       .forEach(function (pt) {
         var cx = X(pt.x), cy = Y(pt.y), w = pt.label.length * 11 + 6, cand = [cy - pt.r - 5, cy + pt.r + 14];
+        // 左右のプロット境界内に収める（端の農場名がはみ出さないように）
+        var lx = Math.max(p.l + w / 2, Math.min(W - p.r - w / 2, cx));
         for (var i = 0; i < cand.length; i++) {
-          var box = { x1: cx - w / 2, x2: cx + w / 2, y1: cand[i] - 11, y2: cand[i] + 2 };
+          var box = { x1: lx - w / 2, x2: lx + w / 2, y1: cand[i] - 11, y2: cand[i] + 2 };
           if (box.y1 < p.t || box.y2 > H - p.b || overlaps(box)) continue;
           placed.push(box);
-          s += '<text x="' + cx.toFixed(1) + '" y="' + cand[i].toFixed(1) + '" text-anchor="middle" font-size="10.5" font-weight="700" fill="#0f1e33" stroke="#fff" stroke-width="3" paint-order="stroke">' + pt.label + '</text>';
+          s += '<text x="' + lx.toFixed(1) + '" y="' + cand[i].toFixed(1) + '" text-anchor="middle" font-size="10.5" font-weight="700" fill="#0f1e33" stroke="#fff" stroke-width="3" paint-order="stroke">' + pt.label + '</text>';
           break;
         }
       });
