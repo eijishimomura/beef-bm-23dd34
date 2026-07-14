@@ -119,12 +119,14 @@
             <label>事故率の低減：<span id="lbMort">0.0</span> pt</label><input type="range" id="sMort" min="0" max="30" value="0" step="1">
             <div class="simout">
               <div class="c"><div class="t">追加出荷</div><div class="v" id="oHead"></div></div>
-              <div class="c"><div class="t">増益額（売上増＋飼料費減）</div><div class="v" id="oYen"></div></div>
+              <div class="c"><div class="t">純増益（EBITDA増・年間）</div><div class="v" id="oYen"></div></div>
               <div class="c"><div class="t">EBITDAマージン</div><div class="v" id="oEbit"></div></div>
               <div class="c"><div class="t">有利子負債/EBITDA</div><div class="v" id="oDebt"></div></div>
             </div>
             <div class="capwarn" id="capWarn"></div>
-            <div class="note">※サンプル係数（飼料費削減 550円/日・頭で試算）。回転上昇時は牛舎キャパの再確認を促す簡易警告。</div>
+            <div class="subttl" style="margin:12px 0 5px">増益の内訳（年間・限界利益ベース）</div>
+            <div class="scroll"><table id="simBreak"></table></div>
+            <div class="note" id="simNote"></div>
           </div>
         </div>
         <div><div class="subttl" style="margin-top:0">生産ツリー（弱点の自動ハイライト）</div>
@@ -137,6 +139,7 @@
 </div>
 <footer>本サイトの数値はすべてサンプルデータです（実在の農場・団体の実績ではありません）。限定共有用デモにつきURLの転載はご遠慮ください。</footer>
 <script src="assets/charts.js"></script>
+<script src="assets/sim_model.js"></script>
 <script src="assets/app.js"></script>
 </body>
 </html>

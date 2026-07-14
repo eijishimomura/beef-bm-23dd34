@@ -13,13 +13,13 @@
   var METRICS = {}, PROD = [], ECON = [], SCORE = [];
   var AXES = ['carcassWt', 'price', 'dg', 'ebitdaM', 'invTurn', 'capTurn', 'equity', 'ordP'];
   var KUS = ['繁殖', '肥育', '一貫'];
-  var farms = [], STATS = {}, BENCH = {}, RULES = [], NP = 0;
+  var farms = [], STATS = {}, BENCH = {}, RULES = [], NP = 0, PARAMS = null;
   var kuC = { '繁殖': '#0e7c86', '肥育': '#3b5bdb', '一貫': '#7048e8' };
 
   // ---- データ読み込み（正規化JSON＝簡易DB） ----
   function load(name) { return fetch('data/' + name + '.json').then(function (r) { if (!r.ok) throw new Error(name + ': ' + r.status); return r.json(); }); }
-  Promise.all(['farms', 'context', 'metrics', 'farm_metrics', 'timeseries', 'fiscal', 'benchmarks', 'advice_rules'].map(load))
-    .then(function (t) { build(t[0], t[1], t[2], t[3], t[4], t[5], t[6], t[7]); init(); })
+  Promise.all(['farms', 'context', 'metrics', 'farm_metrics', 'timeseries', 'fiscal', 'benchmarks', 'advice_rules', 'params'].map(load))
+    .then(function (t) { PARAMS = t[8]; build(t[0], t[1], t[2], t[3], t[4], t[5], t[6], t[7]); init(); })
     .catch(function (e) {
       document.getElementById('loading').innerHTML = '<p class="psub" style="margin:0;color:var(--gF)">データの読み込みに失敗しました（' + e.message + '）。ローカルで開く場合は python3 scripts/dev_server.py を起動し http://localhost:8642 を開いてください。</p>';
     });
@@ -140,13 +140,21 @@
     var xn = Math.min.apply(0, xs), xx = Math.max.apply(0, xs), yn = Math.min.apply(0, ys), yx = Math.max.apply(0, ys);
     var dx = (xx - xn) * .07, dy = (yx - yn) * .07; xn -= dx; xx += dx; yn -= dy; yx += dy;
     function R(h) { return 6 + (Math.sqrt(h) - Math.sqrt(30)) / (Math.sqrt(950) - Math.sqrt(30)) * 18; }
-    function out(f) { return bf(f, xm) >= .92 || bf(f, xm) <= .08 || bf(f, ym) >= .92 || bf(f, ym) <= .08; }
+    // 異常値＝稀だから意味を持つ。各軸の最上位・最下位（計最大4）＋「規模突出だが収益中位以下」1件に限定（ラベル最大5件）
+    var outIds = {};
+    if (fs.length) {
+      var byX = fs.slice().sort(function (a, b) { return a[xm] - b[xm]; });
+      var byY = fs.slice().sort(function (a, b) { return a[ym] - b[ym]; });
+      [byX[0], byX[byX.length - 1], byY[0], byY[byY.length - 1]].forEach(function (f) { outIds[f.id] = 1; });
+      var bigF = fs.slice().sort(function (a, b) { return b.head - a.head; })[0];
+      if (bigF && bigF.head >= 500 && bf(bigF, ym) < .5) outIds[bigF.id] = 1;
+    }
     scatterChart(document.getElementById('plot'), {
       xMin: xn, xMax: xx, yMin: yn, yMax: yx, xMed: STATS[xm].med, yMed: STATS[ym].med,
       xLabel: METRICS[xm].lb + ' (' + METRICS[xm].u + ')', yLabel: METRICS[ym].lb + ' (' + METRICS[ym].u + ')',
       quad: { tr: '両立ゾーン（トップ層）', tl: '少数精鋭・高収益', br: '量はあるが薄利', bl: '要改善ゾーン' },
       points: fs.map(function (f) {
-        return { id: f.id, x: f[xm], y: f[ym], r: R(f.head), color: st.col === 'ku' ? kuC[f.ku] : gc(gr(ov(f))), outline: out(f), label: f.name };
+        return { id: f.id, x: f[xm], y: f[ym], r: R(f.head), color: st.col === 'ku' ? kuC[f.ku] : gc(gr(ov(f))), outline: !!outIds[f.id], label: f.name };
       })
     });
     var tip = document.getElementById('tip'), wr = document.getElementById('plot');
@@ -374,23 +382,37 @@
       '<br><span style="font-size:11px;color:var(--muted)">※最も順位の低い要因を弱点として自動抽出。赤ペン先生の指摘と連動。</span>';
   }
 
+  // 改善シミュレーション：1頭限界利益ベース（モデルは assets/sim_model.js、係数は data/params.json）
   function initSim(f, occ) {
     var sF = document.getElementById('sFat'), sM = document.getElementById('sMort'); sF.value = 0; sM.value = 0;
+    var ovVal = ov(f);
+    function man(yen) { var v = yen / 1e4; return (v < 0 ? '−' : '+') + '¥' + Math.round(Math.abs(v)).toLocaleString() + '万'; }
     function run() {
       var dF = +sF.value, dM = +sM.value / 10;
       document.getElementById('lbFat').textContent = dF; document.getElementById('lbMort').textContent = dM.toFixed(1);
-      var nf = f.fatDays - dF, nm = Math.max(.3, f.mort - dM);
-      var bs = f.head * 365 / f.fatDays * (1 - f.mort / 100), ns = f.head * 365 / nf * (1 - nm / 100), add = ns - bs;
-      // 増益額 ＝ 追加出荷の売上増 ＋ 肥育日数短縮による飼料費削減（550円/日・頭、データ生成モデルと同水準のサンプル係数）
-      var yen = (add * (f.carcassWt * f.price) + bs * dF * 550) / 10000;
-      var ne = Math.min(30, f.ebitdaM + (yen * 10000) / (f.sales * 1e6) * 100);
-      var nd = +(f.debt / Math.max(1, f.sales * ne / 100)).toFixed(1);
-      document.getElementById('oHead').textContent = '+' + Math.round(add) + ' 頭/年';
-      document.getElementById('oYen').innerHTML = '+¥' + Math.round(yen).toLocaleString() + ' 万/年';
+      var r = window.SimModel.simulate(f, PARAMS, ovVal, dF, dM);
+      var addTotal = r.addTurn + r.saved;
+      var baseE = f.sales * 1e6 * f.ebitdaM / 100;                 // 現状EBITDA（円）
+      var newE = baseE + r.netGain, newSales = f.sales * 1e6 + r.salesInc;
+      var ne = newE / newSales * 100;
+      var nd = newE > 0 ? (f.debt * 1e6 / newE) : Infinity;
+      document.getElementById('oHead').textContent = '+' + Math.round(addTotal) + ' 頭/年';
+      document.getElementById('oYen').innerHTML = man(r.netGain) + '<span style="font-size:11px">/年</span>';
       document.getElementById('oEbit').innerHTML = f.ebitdaM + '% <span class="up">→ ' + ne.toFixed(1) + '%</span>';
-      document.getElementById('oDebt').innerHTML = f.debtEbitda + '年 <span class="up">→ ' + nd + '年</span>';
+      document.getElementById('oDebt').innerHTML = f.debtEbitda + '年 <span class="up">→ ' + (isFinite(nd) ? nd.toFixed(1) : '—') + '年</span>';
+      // 内訳表：売上増 − 素牛費増 − 飼料費増減 − その他変動費増 = 純増益（画面上で検算できる）
+      document.getElementById('simBreak').innerHTML =
+        '<thead><tr><th style="text-align:left">項目</th><th>金額/年</th><th style="text-align:left">内容</th></tr></thead><tbody>' +
+        '<tr><td class="k">売上増</td><td>' + man(r.salesInc) + '</td><td style="text-align:left">追加出荷 ' + Math.round(addTotal) + '頭（回転' + Math.round(r.addTurn) + '＋救命' + Math.round(r.saved) + '）× 1頭売上 ' + Math.round(r.eco.s / 1e4) + '万円</td></tr>' +
+        '<tr><td class="k">素牛費 増</td><td>' + man(-r.calfInc) + '</td><td style="text-align:left">回転増 ' + Math.round(r.addTurn) + '頭 × ' + Math.round(r.eco.calf / 1e4) + '万円/頭（救命牛は投下済みのため除く）</td></tr>' +
+        '<tr><td class="k">飼料費 増減</td><td>' + man(-r.feedIncNet) + '</td><td style="text-align:left">既存出荷の短縮削減 − 追加飼養分</td></tr>' +
+        '<tr><td class="k">その他変動費 増</td><td>' + man(-r.otherInc) + '</td><td style="text-align:left">' + Math.round(PARAMS.other_var_cost_yen_per_head / 1e4) + '万円/頭（敷料・診療 等）</td></tr>' +
+        '<tr style="font-weight:800;background:#eef3fb"><td class="k">純増益（EBITDA増）</td><td>' + man(r.netGain) + '</td><td style="text-align:left">1頭限界利益率 ' + (r.marginRatio * 100).toFixed(1) + '%（薄利構造）</td></tr></tbody>';
+      document.getElementById('simNote').innerHTML =
+        '※係数は data/params.json のサンプル値（飼料費' + PARAMS.feed_yen_per_day_head + '円/日・頭、素牛費は区分基準値を農場成績で補正）。' +
+        '救命牛の素牛費は死亡時点で投下済み（サンクコスト）のため、事故率低減の増益は「売上−飼料費」で近似。';
       var cw = document.getElementById('capWarn');
-      if (occ >= 92 && dF > 0) { cw.style.display = 'block'; cw.textContent = '⚠ 稼働率' + occ + '%。回転が上がる＝同時飼養頭数の山が立つ。牛舎キャパ内で回せるか要確認。'; }
+      if (r.blocked && dF > 0) { cw.style.display = 'block'; cw.textContent = '⚠ 稼働率' + occ + '%で満床のため増頭できません。肥育日数短縮の効果は飼料費削減のみ反映（追加出荷0頭）。'; }
       else cw.style.display = 'none';
     }
     sF.oninput = run; sM.oninput = run; run();
@@ -449,6 +471,36 @@
     renderPen(f); renderScore(f); renderMgmt(f); renderFiscal(f); renderTree(f); initSim(f, occ); drawTS(fid);
   }
 
+  // ================= 受け入れチェック（コンソールで BeefBenchmark.runChecks()） =================
+  // A-1: 全農場×全スライダー位置で 1頭限界利益率が5〜18%／内訳の加減算一致／満床農場の増頭0
+  // A-2: 格差（p90−p10相当）が24ヶ月で拡大（EBITDAマージン+10%以上）
+  // A-3: デフォルト農場に判定AとD〜Fが混在し、最優先の赤ペン指摘が出る
+  function runChecks() {
+    var fails = [];
+    farms.forEach(function (f) {
+      var o = ov(f), occ = Math.round(f.head / f.barnCap * 100);
+      for (var dd = 0; dd <= 90; dd += 5) for (var dm = 0; dm <= 3; dm += 0.5) {
+        var r = window.SimModel.simulate(f, PARAMS, o, dd, dm);
+        if (r.marginRatio < 0.05 - 1e-9 || r.marginRatio > 0.18 + 1e-9) fails.push('A-1 限界利益率範囲外 ' + f.name + ' dd=' + dd + ' → ' + (r.marginRatio * 100).toFixed(1) + '%');
+        if (Math.abs(r.salesInc - r.calfInc - r.feedIncNet - r.otherInc - r.netGain) > 1) fails.push('A-1 内訳不一致 ' + f.name);
+        if (occ >= PARAMS.capacity_block_occupancy_pct && dd > 0 && r.addTurn !== 0) fails.push('A-1 満床でも増頭 ' + f.name);
+      }
+    });
+    function gapGrowth(m) { var g0 = gapAt(0, m), g1 = gapAt(NP - 1, m); var d0 = Math.abs(g0.hi - g0.lo), d1 = Math.abs(g1.hi - g1.lo); return d1 / d0 - 1; }
+    if (gapGrowth('ebitdaM') < 0.10) fails.push('A-2 EBITDAマージン格差拡大 ' + (gapGrowth('ebitdaM') * 100).toFixed(1) + '% (<10%)');
+    if (gapGrowth('price') <= 0) fails.push('A-2 枝肉単価の格差が拡大していない');
+    if (gapGrowth('invTurn') <= 0) fails.push('A-2 在庫回転の格差が拡大していない');
+    var f0 = farms[curFarm], grades = SCORE.map(function (m) { return gr(bf(f0, m)); });
+    if (grades.indexOf('A') < 0 && grades.indexOf('B') < 0) fails.push('A-3 デフォルト農場に上位判定がない');
+    if (!grades.some(function (g) { return 'DEF'.indexOf(g) >= 0; })) fails.push('A-3 デフォルト農場に下位判定がない');
+    var pctx = buildPenContext(f0);
+    if (!RULES.some(function (r) { return r.priority === 1 && evalCond(r.condition, pctx); })) fails.push('A-3 デフォルト農場に最優先指摘が出ない');
+    return {
+      pass: fails.length === 0, failures: fails, defaultFarm: f0.name, defaultGrades: grades.join(''),
+      gapGrowthPct: { ebitdaM: +(gapGrowth('ebitdaM') * 100).toFixed(1), price: +(gapGrowth('price') * 100).toFixed(1), invTurn: +(gapGrowth('invTurn') * 100).toFixed(1) }
+    };
+  }
+
   // ================= ルーティング・初期化 =================
   function setTab(v) {
     A.querySelectorAll('.tab').forEach(function (x) { x.classList.toggle('on', x.getAttribute('data-v') === v); });
@@ -463,6 +515,21 @@
 
   function init() {
     document.getElementById('loading').style.display = 'none';
+
+    // 個票のデフォルト農場＝上位判定（A/B）と下位判定（D〜F）の混在度が最大の農場。
+    // 「全部A」の優等生でも「全部F」の脱落農場でもなく、強みと弱みが混在するギザギザな
+    // プロファイル（PigINFO 日高牧場型：量は出るが単価で負ける、等）を最初に見せる。
+    var bestMix = -1;
+    farms.forEach(function (f) {
+      var good = 0, bad = 0, ranks = [];
+      SCORE.forEach(function (m) {
+        var g = gr(bf(f, m)); ranks.push(rk(f, m));
+        if (g === 'A' || g === 'B') good++; else if (g !== 'C') bad++;
+      });
+      var mix = good * bad * 1000 + (Math.max.apply(0, ranks) - Math.min.apply(0, ranks));
+      if (mix > bestMix) { bestMix = mix; curFarm = f.id; }
+    });
+    window.BeefBenchmark.runChecks = runChecks;
 
     var selGap = document.getElementById('selGap'), selStrat = document.getElementById('selStrat');
     SCORE.forEach(function (m) { [selGap, selStrat].forEach(function (sel) { var o = document.createElement('option'); o.value = m; o.textContent = METRICS[m].lb; sel.appendChild(o); }); });

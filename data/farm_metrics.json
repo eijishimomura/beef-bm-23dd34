@@ -1322,49 +1322,49 @@
  {
   "farm_id": 20,
   "metric_id": "carcassWt",
-  "value": 442,
+  "value": 506,
   "period": "2026-06"
  },
  {
   "farm_id": 20,
   "metric_id": "price",
-  "value": 2156,
+  "value": 2020,
   "period": "2026-06"
  },
  {
   "farm_id": 20,
   "metric_id": "dg",
-  "value": 863,
+  "value": 965,
   "period": "2026-06"
  },
  {
   "farm_id": 20,
   "metric_id": "mort",
-  "value": 4.1,
+  "value": 2.4,
   "period": "2026-06"
  },
  {
   "farm_id": 20,
   "metric_id": "fatDays",
-  "value": 649,
+  "value": 600,
   "period": "2026-06"
  },
  {
   "farm_id": 20,
   "metric_id": "ebitdaM",
-  "value": 4.2,
+  "value": 10.3,
   "period": "2026-06"
  },
  {
   "farm_id": 20,
   "metric_id": "invTurn",
-  "value": 0.54,
+  "value": 0.59,
   "period": "2026-06"
  },
  {
   "farm_id": 20,
   "metric_id": "capTurn",
-  "value": 0.45,
+  "value": 0.52,
   "period": "2026-06"
  },
  {
@@ -1376,13 +1376,13 @@
  {
   "farm_id": 20,
   "metric_id": "ordP",
-  "value": -2.6,
+  "value": 4,
   "period": "2026-06"
  },
  {
   "farm_id": 20,
   "metric_id": "debtEbitda",
-  "value": 3.4,
+  "value": 3.8,
   "period": "2026-06"
  },
  {

@@ -78,6 +78,9 @@ export function generate(){
   Object.assign(farms[12],{name:'匠牧場',head:55,barnCap:58,workers:2,
     carcassWt:472,price:2680,fatDays:566,mort:1.2,dg:960,feedSelf:35,calfSrc:'自家産',calfNoise:-0.02,feedNoise:-0.03,
     skill:0.95,debtTarget:1.4});   // 小規模だが高収益・低負債
+  // 「量はあるが単価が弱い」典型（PigINFO 日高牧場型）を母集団に必ず1件保証する。
+  // 枝肉重量・増体は上位、枝肉単価は下位圏 → 個票のギザギザなプロファイルのデフォルト表示に使う。
+  Object.assign(farms[20],{carcassWt:506,price:2020,dg:965,mort:2.4,fatDays:600,skill:0.55});
 
   // ---- 1頭経済モデル：生産KPI → 売上・原価 → EBITDA → 資本効率（生産と経営が矛盾しない導出） ----
   // 係数はサンプル（実勢の桁感に合わせたスタイライズ値）。単位：百万円。
@@ -109,9 +112,20 @@ export function generate(){
   });
 
   // ---- 時系列（36ヶ月・月次） ----
-  function mkTS(base,add){const drift=(rnd()-0.45)*0.24,a=[];for(let t=0;t<36;t++){const p=(35-t)/35;
-    a.push(add? base+drift*3*p+(rnd()-0.5)*0.8 : base*(1+drift*p)*(1+(rnd()-0.5)*0.08));}return a;}
-  farms.forEach(f=>{f.ts={};SCORE.forEach(m=>{f.ts[m]=mkTS(f[m],MMAP[m].add);});});
+  // 格差の構造トレンド：過去（24〜36ヶ月前）の値を「中央値へ CONV の割合だけ寄せた水準」に置き、
+  // 現在値へ発散していく系列を作る。上位は改善し続け、下位は置いていかれ、中位は横ばい。
+  // → どの指標でも p90−p10 が経年で拡大し（PigINFOの実証と同じ構造）、順序の不自然な逆転も起きない。
+  // CONV=過去に閉じていた格差の割合（財務指標は大きく、生産指標は小さく）
+  const CONV={ebitdaM:0.3,ordP:0.3,debtEbitda:0.25,mort:0.25,price:0.28,invTurn:0.2,capTurn:0.12,equity:0.12,carcassWt:0.1,dg:0.1,fatDays:0.1};
+  const MED={};
+  SCORE.forEach(m=>{const v=farms.map(f=>f[m]).sort((a,b)=>a-b);MED[m]=quantile(v,.5);});
+  function mkTS(base,add,med,conv){
+    const wob=(rnd()-0.5)*0.03; // 農場固有の揺らぎ（トレンドを機械的に見せない）
+    const a=[];for(let t=0;t<36;t++){const p=(35-t)/35;
+      const core=base+(med-base)*conv*p;
+      a.push(add? core+wob*3*p+(rnd()-0.5)*0.8 : core*(1+wob*p)*(1+(rnd()-0.5)*0.08));}
+    return a;}
+  farms.forEach(f=>{f.ts={};SCORE.forEach(m=>{f.ts[m]=mkTS(f[m],MMAP[m].add,MED[m],CONV[m]||0.12);});});
 
   // ---- 年次（決算3期分）— 財務は月次で遡及できないため年次の二層で持つ ----
   // 直近期=現在値。過去2期は EBITDAマージンの時系列ドリフトと整合させて導出する。

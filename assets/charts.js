@@ -48,17 +48,35 @@
     s += '<rect x="' + p.l + '" y="' + p.t + '" width="' + (W - p.l - p.r) + '" height="' + (H - p.t - p.b) + '" fill="#fbfcfe" stroke="#eef2f7"/>';
     s += '<line x1="' + xp + '" y1="' + p.t + '" x2="' + xp + '" y2="' + (H - p.b) + '" stroke="#c7d2e0" stroke-dasharray="5 4"/>';
     s += '<line x1="' + p.l + '" y1="' + yp + '" x2="' + (W - p.r) + '" y2="' + yp + '" stroke="#c7d2e0" stroke-dasharray="5 4"/>';
-    s += '<text x="' + (W - p.r - 6) + '" y="' + (p.t + 16) + '" text-anchor="end" font-size="11" fill="' + q + '">' + cfg.quad.tr + '</text>';
-    s += '<text x="' + (p.l + 6) + '" y="' + (p.t + 16) + '" font-size="11" fill="' + q + '">' + cfg.quad.tl + '</text>';
-    s += '<text x="' + (W - p.r - 6) + '" y="' + (H - p.b - 8) + '" text-anchor="end" font-size="11" fill="' + q + '">' + cfg.quad.br + '</text>';
-    s += '<text x="' + (p.l + 6) + '" y="' + (H - p.b - 8) + '" font-size="11" fill="' + q + '">' + cfg.quad.bl + '</text>';
     s += '<text x="' + ((p.l + W - p.r) / 2) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="12" font-weight="700" fill="#5f7085">' + cfg.xLabel + ' →</text>';
     s += '<text transform="translate(15,' + ((p.t + H - p.b) / 2) + ') rotate(-90)" text-anchor="middle" font-size="12" font-weight="700" fill="#5f7085">' + cfg.yLabel + ' →</text>';
     cfg.points.forEach(function (pt) {
       var cx = X(pt.x), cy = Y(pt.y);
       s += '<circle class="bub" data-id="' + pt.id + '" cx="' + cx.toFixed(1) + '" cy="' + cy.toFixed(1) + '" r="' + pt.r.toFixed(1) + '" fill="' + pt.color + '" fill-opacity=".62" stroke="' + (pt.outline ? '#0f1e33' : pt.color) + '" stroke-width="' + (pt.outline ? 2 : 1) + '" style="cursor:pointer"/>';
-      if (pt.outline) s += '<text x="' + cx.toFixed(1) + '" y="' + (cy - pt.r - 4).toFixed(1) + '" text-anchor="middle" font-size="10.5" font-weight="700" fill="#0f1e33">' + pt.label + '</text>';
     });
+    // 異常値ラベル：バウンディングボックスの衝突を検出し、上→下の順に退避。それでも重なる場合は非表示（ホバーで名称表示）
+    var placed = [];
+    function overlaps(b) { return placed.some(function (o) { return !(b.x2 < o.x1 || b.x1 > o.x2 || b.y2 < o.y1 || b.y1 > o.y2); }); }
+    cfg.points.filter(function (pt) { return pt.outline; })
+      .sort(function (a, b) { return Y(a.y) - Y(b.y); })
+      .forEach(function (pt) {
+        var cx = X(pt.x), cy = Y(pt.y), w = pt.label.length * 11 + 6, cand = [cy - pt.r - 5, cy + pt.r + 14];
+        for (var i = 0; i < cand.length; i++) {
+          var box = { x1: cx - w / 2, x2: cx + w / 2, y1: cand[i] - 11, y2: cand[i] + 2 };
+          if (box.y1 < p.t || box.y2 > H - p.b || overlaps(box)) continue;
+          placed.push(box);
+          s += '<text x="' + cx.toFixed(1) + '" y="' + cand[i].toFixed(1) + '" text-anchor="middle" font-size="10.5" font-weight="700" fill="#0f1e33" stroke="#fff" stroke-width="3" paint-order="stroke">' + pt.label + '</text>';
+          break;
+        }
+      });
+    // 象限ラベルはバブルの上に白ハロー付きで重ね、常に読めるようにする
+    function quadText(x, y, anchor, txt) {
+      return '<text x="' + x + '" y="' + y + '" text-anchor="' + anchor + '" font-size="11" fill="' + q + '" stroke="#fbfcfe" stroke-width="3.5" paint-order="stroke">' + txt + '</text>';
+    }
+    s += quadText(W - p.r - 6, p.t + 16, 'end', cfg.quad.tr);
+    s += quadText(p.l + 6, p.t + 16, 'start', cfg.quad.tl);
+    s += quadText(W - p.r - 6, H - p.b - 8, 'end', cfg.quad.br);
+    s += quadText(p.l + 6, H - p.b - 8, 'start', cfg.quad.bl);
     s += '</svg>';
     el.innerHTML = s;
   }
