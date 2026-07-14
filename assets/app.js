@@ -410,7 +410,7 @@
         '<tr><td class="k">売上増</td><td>' + disp(rSales) + '</td><td style="text-align:left">追加出荷 ' + Math.round(addTotal) + '頭（回転' + Math.round(r.addTurn) + '＋救命' + Math.round(r.saved) + '）× 1頭売上 ' + Math.round(r.eco.s / 1e4) + '万円</td></tr>' +
         '<tr><td class="k">素牛費 増</td><td>' + disp(-rCalf) + '</td><td style="text-align:left">回転増 ' + Math.round(r.addTurn) + '頭 × ' + Math.round(r.eco.calf / 1e4) + '万円/頭（救命牛は投下済みのため除く）</td></tr>' +
         '<tr><td class="k">飼料費 増減</td><td>' + disp(-rFeed) + '</td><td style="text-align:left">既存出荷の短縮削減 − 追加飼養分</td></tr>' +
-        '<tr><td class="k">その他変動費 増</td><td>' + disp(-rOther) + '</td><td style="text-align:left">' + Math.round(PARAMS.other_var_cost_yen_per_head / 1e4) + '万円/頭（敷料・診療 等）</td></tr>' +
+        '<tr><td class="k">その他変動費 増</td><td>' + disp(-rOther) + '</td><td style="text-align:left">追加出荷 ' + Math.round(addTotal) + '頭（回転＋救命）× ' + Math.round(PARAMS.other_var_cost_yen_per_head / 1e4) + '万円/頭（敷料・診療 等）</td></tr>' +
         '<tr style="font-weight:800;background:#eef3fb"><td class="k">純増益（EBITDA増）</td><td>' + disp(rNet) + '</td><td style="text-align:left">1頭限界利益率 ' + (r.marginRatio * 100).toFixed(1) + '%（薄利構造）</td></tr></tbody>';
       document.getElementById('simNote').innerHTML =
         '※係数は data/params.json のサンプル値（飼料費' + PARAMS.feed_yen_per_day_head + '円/日・頭）。素牛費は、1頭限界利益率が肉牛肥育の薄利レンジ' +
@@ -498,7 +498,7 @@
         var addT = (occRaw >= PARAMS.capacity_block_occupancy_pct || dd === 0) ? 0 : f.head * 365 / (f.fatDays - dd) * (1 - f.mort / 100) - bs;
         var expected = bs * dd * E.feed
           + addT * (E.s - E.calf - (f.fatDays - dd) * E.feed - E.other)
-          + f.head * 365 / f.fatDays * (effDm / 100) * (E.s - (f.fatDays - dd) * E.feed);
+          + f.head * 365 / f.fatDays * (effDm / 100) * (E.s - (f.fatDays - dd) * E.feed - E.other);
         if (Math.abs(expected - r.netGain) > 1) fails.push('A-1 独立再計算と不一致 ' + f.name + ' dd=' + dd + ' dm=' + dm);
       }
     });
@@ -513,6 +513,11 @@
       for (var k = 0; k < n; k++) { var d = r0[k] - r1[k]; num += d * d; }
       var rho = 1 - 6 * num / (n * (n * n - 1)); // スピアマン順位相関
       if (rho < 0.7) fails.push('A-2 順位が不自然に入れ替わっている ' + m + ' (ρ=' + rho.toFixed(2) + ')');
+    });
+    // B-1: 属性の整合 — 規模帯（band）が頭数（head）の閾値と一致し、層が層として機能していること
+    farms.forEach(function (f) {
+      var expect = f.head < 100 ? '小' : f.head < 300 ? '中' : '大';
+      if (f.band !== expect) fails.push('B-1 規模帯と頭数の不整合 ' + f.name + ' head=' + f.head + ' band=' + f.band + '（正: ' + expect + '）');
     });
     var f0 = pickDefaultFarm(), grades = SCORE.map(function (m) { return gr(bf(f0, m)); });
     if (grades.indexOf('A') < 0 && grades.indexOf('B') < 0) fails.push('A-3 デフォルト農場に上位判定がない');

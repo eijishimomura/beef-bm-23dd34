@@ -1,7 +1,7 @@
 /* 改善シミュレーションの経済モデル（1頭限界利益ベース）。
  * レバーごとに限界利益の構造が違う：
  *   ① 肥育日数短縮 = (a)既存出荷頭数の飼料費削減 + (b)回転向上による追加出荷の限界利益（満床なら0）
- *   ② 事故率低減   = 救命頭数 ×（1頭売上 − 1頭飼料費）。素牛費は死亡時点で投下済み（サンクコスト）のため引かない
+ *   ② 事故率低減   = 救命頭数 ×（1頭売上 − 1頭飼料費 − その他変動費）。素牛費は死亡時点で投下済み（サンクコスト）のため引かない
  * パラメータは data/params.json に外部化。app.js とチェックスクリプト（scripts/checks.html）の両方から使う。
  */
 (function (global) {
@@ -42,7 +42,7 @@
     var salesInc = (addTurn + saved) * E.s;                        // 売上増
     var calfInc = addTurn * E.calf;                                // 素牛費 増（救命牛の素牛費はサンクコスト）
     var feedIncNet = (addTurn + saved) * feedNew - feedSave;       // 飼料費 増減（正＝増）
-    var otherInc = addTurn * E.other;                              // その他変動費 増
+    var otherInc = (addTurn + saved) * E.other;                    // その他変動費 増（救命牛にも敷料・診療費はかかる）
     var netGain = salesInc - calfInc - feedIncNet - otherInc;      // 純増益 = EBITDA増
 
     return {
