@@ -1,5 +1,59 @@
 [
  {
+  "metric_id": "calvingInterval",
+  "label": "分娩間隔",
+  "unit": "ヶ月",
+  "group": "repro",
+  "dir": -1,
+  "formula": "分娩から次の分娩までの平均月数",
+  "source": "繁殖台帳"
+ },
+ {
+  "metric_id": "firstCalvingAge",
+  "label": "初産月齢",
+  "unit": "ヶ月",
+  "group": "repro",
+  "dir": -1,
+  "formula": "初回分娩時の月齢",
+  "source": "繁殖台帳"
+ },
+ {
+  "metric_id": "conceptionRate",
+  "label": "受胎率",
+  "unit": "%",
+  "group": "repro",
+  "dir": 1,
+  "formula": "受胎数 ÷ 人工授精回数 × 100",
+  "source": "授精記録"
+ },
+ {
+  "metric_id": "servicesPerConception",
+  "label": "授精回数",
+  "unit": "回",
+  "group": "repro",
+  "dir": -1,
+  "formula": "妊娠成立までの平均授精回数",
+  "source": "授精記録"
+ },
+ {
+  "metric_id": "calvingRate",
+  "label": "分娩率",
+  "unit": "%",
+  "group": "repro",
+  "dir": 1,
+  "formula": "年間分娩頭数 ÷ 母牛頭数 × 100",
+  "source": "繁殖台帳"
+ },
+ {
+  "metric_id": "calfSurvival",
+  "label": "子牛生存率",
+  "unit": "%",
+  "group": "repro",
+  "dir": 1,
+  "formula": "100 − 哺乳期間の死亡率",
+  "source": "飼養記録"
+ },
+ {
   "metric_id": "carcassWt",
   "label": "枝肉重量",
   "unit": "kg",

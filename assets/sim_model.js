@@ -2,6 +2,7 @@
  * レバーごとに限界利益の構造が違う：
  *   ① 肥育日数短縮 = (a)既存出荷頭数の飼料費削減 + (b)回転向上による追加出荷の限界利益（満床なら0）
  *   ② 事故率低減   = 救命頭数 ×（1頭売上 − 1頭飼料費 − その他変動費）。素牛費は死亡時点で投下済み（サンクコスト）のため引かない
+ *   ③ 分娩間隔短縮（繁殖・一貫のみ）= 追加子牛数 × 子牛換算値（繁殖=販売額／一貫=素牛費相当の内製化価値）
  * パラメータは data/params.json に外部化。app.js とチェックスクリプト（scripts/checks.html）の両方から使う。
  */
 (function (global) {
@@ -20,8 +21,9 @@
     return { s: s, feed: feed, other: other, r0: r0, calf: calf };
   }
 
-  // dd=肥育日数短縮(日), dm=事故率低減(pt)。返り値の金額は円/年。
-  function simulate(f, P, ov, dd, dm) {
+  // dd=肥育日数短縮(日), dm=事故率低減(pt), dc=分娩間隔短縮(ヶ月・繁殖/一貫のみ)。返り値の金額は円/年。
+  function simulate(f, P, ov, dd, dm, dc) {
+    dc = dc || 0;
     var E = farmEconomy(f, P, ov);
     var occRaw = f.head / f.barnCap * 100, occ = Math.round(occRaw);
     var newFat = f.fatDays - dd, newMort = Math.max(0.3, f.mort - dm);
@@ -39,15 +41,27 @@
     var effDm = Math.min(dm, Math.max(0, f.mort - 0.3));
     var saved = f.head * 365 / f.fatDays * (effDm / 100);
 
+    // ③ 分娩間隔短縮：追加子牛数 = 母牛数 ×（12/(分娩間隔−Δc) − 12/分娩間隔）× 子牛生存率
+    // 短縮後の分娩間隔は12.0ヶ月を下限とする（妊娠期間≈9.5ヶ月の生物学的限界の目安）
+    var calfAdd = 0, calfGain = 0, effDc = 0;
+    if (dc > 0 && f.calvingInterval && P.calf_sale_yen && P.calf_sale_yen[f.ku]) {
+      effDc = Math.min(dc, Math.max(0, f.calvingInterval - 12));
+      if (effDc > 0) {
+        calfAdd = f.head * (12 / (f.calvingInterval - effDc) - 12 / f.calvingInterval) * (f.calfSurvival || 90) / 100;
+        calfGain = calfAdd * P.calf_sale_yen[f.ku];
+      }
+    }
+
     var salesInc = (addTurn + saved) * E.s;                        // 売上増
     var calfInc = addTurn * E.calf;                                // 素牛費 増（救命牛の素牛費はサンクコスト）
     var feedIncNet = (addTurn + saved) * feedNew - feedSave;       // 飼料費 増減（正＝増）
     var otherInc = (addTurn + saved) * E.other;                    // その他変動費 増（救命牛にも敷料・診療費はかかる）
-    var netGain = salesInc - calfInc - feedIncNet - otherInc;      // 純増益 = EBITDA増
+    var netGain = salesInc - calfInc - feedIncNet - otherInc + calfGain; // 純増益 = EBITDA増
 
     return {
       eco: E, occ: occ, blocked: blocked,
       addTurn: addTurn, saved: saved, margin: margin, marginRatio: margin / E.s,
+      calfAdd: calfAdd, calfGain: calfGain, effDc: effDc,
       salesInc: salesInc, calfInc: calfInc, feedIncNet: feedIncNet, otherInc: otherInc, netGain: netGain
     };
   }

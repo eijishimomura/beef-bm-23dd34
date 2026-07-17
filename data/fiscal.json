@@ -2,155 +2,155 @@
  {
   "farm_id": 0,
   "fy": 2023,
-  "sales": 371,
-  "ebitda": 63.8,
-  "ebitda_margin": 17.2,
-  "debt": 231,
-  "equity_ratio": 38
+  "sales": 372,
+  "ebitda": 62.5,
+  "ebitda_margin": 16.8,
+  "debt": 226,
+  "equity_ratio": 42
  },
  {
   "farm_id": 0,
   "fy": 2024,
-  "sales": 376,
-  "ebitda": 66.2,
-  "ebitda_margin": 17.6,
-  "debt": 220,
-  "equity_ratio": 39
+  "sales": 380,
+  "ebitda": 65,
+  "ebitda_margin": 17.1,
+  "debt": 221,
+  "equity_ratio": 44
  },
  {
   "farm_id": 0,
   "fy": 2025,
   "sales": 395,
-  "ebitda": 73.1,
-  "ebitda_margin": 18.5,
-  "debt": 218,
-  "equity_ratio": 40
+  "ebitda": 69.9,
+  "ebitda_margin": 17.7,
+  "debt": 217,
+  "equity_ratio": 45
  },
  {
   "farm_id": 1,
   "fy": 2023,
-  "sales": 115,
-  "ebitda": 10.9,
-  "ebitda_margin": 9.5,
-  "debt": 36,
-  "equity_ratio": 32
+  "sales": 237,
+  "ebitda": 40.3,
+  "ebitda_margin": 17,
+  "debt": 193,
+  "equity_ratio": 22
  },
  {
   "farm_id": 1,
   "fy": 2024,
-  "sales": 122,
-  "ebitda": 10.7,
-  "ebitda_margin": 8.8,
-  "debt": 35,
-  "equity_ratio": 33
+  "sales": 246,
+  "ebitda": 43.3,
+  "ebitda_margin": 17.6,
+  "debt": 189,
+  "equity_ratio": 22
  },
  {
   "farm_id": 1,
   "fy": 2025,
-  "sales": 124,
-  "ebitda": 10,
-  "ebitda_margin": 8.1,
-  "debt": 34,
-  "equity_ratio": 34
+  "sales": 253,
+  "ebitda": 45,
+  "ebitda_margin": 17.8,
+  "debt": 181,
+  "equity_ratio": 23
  },
  {
   "farm_id": 2,
   "fy": 2023,
-  "sales": 340,
-  "ebitda": 68.7,
-  "ebitda_margin": 20.2,
-  "debt": 247,
-  "equity_ratio": 37
+  "sales": 32,
+  "ebitda": 6,
+  "ebitda_margin": 18.8,
+  "debt": 23,
+  "equity_ratio": 40
  },
  {
   "farm_id": 2,
   "fy": 2024,
-  "sales": 348,
-  "ebitda": 72.7,
-  "ebitda_margin": 20.9,
-  "debt": 242,
+  "sales": 34,
+  "ebitda": 6.5,
+  "ebitda_margin": 19.1,
+  "debt": 23,
+  "equity_ratio": 42
+ },
+ {
+  "farm_id": 2,
+  "fy": 2025,
+  "sales": 35,
+  "ebitda": 7,
+  "ebitda_margin": 20,
+  "debt": 22,
+  "equity_ratio": 43
+ },
+ {
+  "farm_id": 3,
+  "fy": 2023,
+  "sales": 66,
+  "ebitda": 9.6,
+  "ebitda_margin": 14.6,
+  "debt": 34,
   "equity_ratio": 38
  },
  {
-  "farm_id": 2,
-  "fy": 2025,
-  "sales": 365,
-  "ebitda": 80.3,
-  "ebitda_margin": 22,
-  "debt": 232,
-  "equity_ratio": 39
- },
- {
-  "farm_id": 3,
-  "fy": 2023,
-  "sales": 421,
-  "ebitda": 58.9,
-  "ebitda_margin": 14,
-  "debt": 208,
-  "equity_ratio": 39
- },
- {
   "farm_id": 3,
   "fy": 2024,
-  "sales": 440,
-  "ebitda": 60.3,
-  "ebitda_margin": 13.7,
-  "debt": 199,
+  "sales": 67,
+  "ebitda": 9.9,
+  "ebitda_margin": 14.8,
+  "debt": 34,
+  "equity_ratio": 39
+ },
+ {
+  "farm_id": 3,
+  "fy": 2025,
+  "sales": 69,
+  "ebitda": 10.2,
+  "ebitda_margin": 14.8,
+  "debt": 32,
   "equity_ratio": 40
  },
  {
-  "farm_id": 3,
-  "fy": 2025,
-  "sales": 453,
-  "ebitda": 62.5,
-  "ebitda_margin": 13.8,
-  "debt": 196,
-  "equity_ratio": 41
- },
- {
   "farm_id": 4,
   "fy": 2023,
-  "sales": 18,
-  "ebitda": 0.9,
-  "ebitda_margin": 4.9,
-  "debt": 1,
-  "equity_ratio": 34
+  "sales": 36,
+  "ebitda": 1.8,
+  "ebitda_margin": 5.1,
+  "debt": 2,
+  "equity_ratio": 37
  },
  {
   "farm_id": 4,
   "fy": 2024,
-  "sales": 19,
+  "sales": 38,
+  "ebitda": 1.4,
+  "ebitda_margin": 3.8,
+  "debt": 2,
+  "equity_ratio": 38
+ },
+ {
+  "farm_id": 4,
+  "fy": 2025,
+  "sales": 39,
   "ebitda": 0.7,
-  "ebitda_margin": 3.7,
-  "debt": 1,
-  "equity_ratio": 35
- },
- {
-  "farm_id": 4,
-  "fy": 2025,
-  "sales": 19,
-  "ebitda": 0.4,
-  "ebitda_margin": 2,
-  "debt": 1,
-  "equity_ratio": 36
+  "ebitda_margin": 1.8,
+  "debt": 2,
+  "equity_ratio": 39
  },
  {
   "farm_id": 5,
   "fy": 2023,
-  "sales": 407,
-  "ebitda": 30.5,
-  "ebitda_margin": 7.5,
+  "sales": 400,
+  "ebitda": 31.2,
+  "ebitda_margin": 7.8,
   "debt": 191,
-  "equity_ratio": 23
+  "equity_ratio": 31
  },
  {
   "farm_id": 5,
   "fy": 2024,
-  "sales": 428,
-  "ebitda": 28.7,
-  "ebitda_margin": 6.7,
-  "debt": 182,
-  "equity_ratio": 23
+  "sales": 417,
+  "ebitda": 28.8,
+  "ebitda_margin": 6.9,
+  "debt": 184,
+  "equity_ratio": 32
  },
  {
   "farm_id": 5,
@@ -159,187 +159,187 @@
   "ebitda": 23.9,
   "ebitda_margin": 5.5,
   "debt": 177,
-  "equity_ratio": 24
+  "equity_ratio": 33
  },
  {
   "farm_id": 6,
   "fy": 2023,
-  "sales": 47,
-  "ebitda": 5.2,
-  "ebitda_margin": 11,
-  "debt": 14,
+  "sales": 60,
+  "ebitda": 12.4,
+  "ebitda_margin": 20.7,
+  "debt": 42,
   "equity_ratio": 39
  },
  {
   "farm_id": 6,
   "fy": 2024,
-  "sales": 48,
-  "ebitda": 5.1,
-  "ebitda_margin": 10.6,
-  "debt": 13,
+  "sales": 61,
+  "ebitda": 13.2,
+  "ebitda_margin": 21.6,
+  "debt": 40,
   "equity_ratio": 41
  },
  {
   "farm_id": 6,
   "fy": 2025,
-  "sales": 50,
-  "ebitda": 5,
-  "ebitda_margin": 9.9,
-  "debt": 13,
+  "sales": 64,
+  "ebitda": 14.5,
+  "ebitda_margin": 22.7,
+  "debt": 40,
   "equity_ratio": 42
  },
  {
   "farm_id": 7,
   "fy": 2023,
-  "sales": 97,
-  "ebitda": 11.2,
-  "ebitda_margin": 11.5,
-  "debt": 46,
-  "equity_ratio": 27
+  "sales": 402,
+  "ebitda": 85.2,
+  "ebitda_margin": 21.2,
+  "debt": 273,
+  "equity_ratio": 43
  },
  {
   "farm_id": 7,
   "fy": 2024,
-  "sales": 99,
-  "ebitda": 11,
-  "ebitda_margin": 11.1,
-  "debt": 45,
-  "equity_ratio": 28
+  "sales": 409,
+  "ebitda": 90.4,
+  "ebitda_margin": 22.1,
+  "debt": 265,
+  "equity_ratio": 45
  },
  {
   "farm_id": 7,
   "fy": 2025,
-  "sales": 102,
-  "ebitda": 10.9,
-  "ebitda_margin": 10.7,
-  "debt": 44,
-  "equity_ratio": 29
+  "sales": 430,
+  "ebitda": 100.6,
+  "ebitda_margin": 23.4,
+  "debt": 256,
+  "equity_ratio": 46
  },
  {
   "farm_id": 8,
   "fy": 2023,
-  "sales": 106,
-  "ebitda": 18.2,
-  "ebitda_margin": 17.2,
-  "debt": 77,
-  "equity_ratio": 29
- },
- {
-  "farm_id": 8,
-  "fy": 2024,
-  "sales": 111,
-  "ebitda": 19.5,
-  "ebitda_margin": 17.6,
-  "debt": 75,
-  "equity_ratio": 30
- },
- {
-  "farm_id": 8,
-  "fy": 2025,
-  "sales": 113,
-  "ebitda": 20.7,
-  "ebitda_margin": 18.3,
-  "debt": 72,
-  "equity_ratio": 31
- },
- {
-  "farm_id": 9,
-  "fy": 2023,
-  "sales": 45,
-  "ebitda": 2.8,
-  "ebitda_margin": 6.2,
-  "debt": 6,
-  "equity_ratio": 33
- },
- {
-  "farm_id": 9,
-  "fy": 2024,
-  "sales": 47,
-  "ebitda": 2.4,
-  "ebitda_margin": 5.2,
-  "debt": 6,
-  "equity_ratio": 34
- },
- {
-  "farm_id": 9,
-  "fy": 2025,
-  "sales": 48,
-  "ebitda": 1.7,
-  "ebitda_margin": 3.6,
-  "debt": 6,
+  "sales": 43,
+  "ebitda": 5.1,
+  "ebitda_margin": 11.8,
+  "debt": 17,
   "equity_ratio": 35
  },
  {
+  "farm_id": 8,
+  "fy": 2024,
+  "sales": 46,
+  "ebitda": 5.2,
+  "ebitda_margin": 11.3,
+  "debt": 17,
+  "equity_ratio": 36
+ },
+ {
+  "farm_id": 8,
+  "fy": 2025,
+  "sales": 46,
+  "ebitda": 5,
+  "ebitda_margin": 10.8,
+  "debt": 16,
+  "equity_ratio": 37
+ },
+ {
+  "farm_id": 9,
+  "fy": 2023,
+  "sales": 219,
+  "ebitda": 36.8,
+  "ebitda_margin": 16.8,
+  "debt": 160,
+  "equity_ratio": 26
+ },
+ {
+  "farm_id": 9,
+  "fy": 2024,
+  "sales": 226,
+  "ebitda": 38,
+  "ebitda_margin": 16.8,
+  "debt": 153,
+  "equity_ratio": 27
+ },
+ {
+  "farm_id": 9,
+  "fy": 2025,
+  "sales": 234,
+  "ebitda": 39.8,
+  "ebitda_margin": 17,
+  "debt": 150,
+  "equity_ratio": 28
+ },
+ {
   "farm_id": 10,
   "fy": 2023,
-  "sales": 17,
-  "ebitda": 0.6,
-  "ebitda_margin": 3.8,
-  "debt": 0,
-  "equity_ratio": 23
+  "sales": 123,
+  "ebitda": 19.1,
+  "ebitda_margin": 15.5,
+  "debt": 62,
+  "equity_ratio": 39
  },
  {
   "farm_id": 10,
   "fy": 2024,
-  "sales": 18,
-  "ebitda": 0.5,
-  "ebitda_margin": 2.5,
-  "debt": 0,
-  "equity_ratio": 23
+  "sales": 126,
+  "ebitda": 19.3,
+  "ebitda_margin": 15.3,
+  "debt": 59,
+  "equity_ratio": 41
  },
  {
   "farm_id": 10,
   "fy": 2025,
-  "sales": 18,
-  "ebitda": 0.1,
-  "ebitda_margin": 0.5,
-  "debt": 0,
-  "equity_ratio": 24
+  "sales": 132,
+  "ebitda": 20.5,
+  "ebitda_margin": 15.5,
+  "debt": 58,
+  "equity_ratio": 42
  },
  {
   "farm_id": 11,
   "fy": 2023,
-  "sales": 114,
-  "ebitda": 15.5,
-  "ebitda_margin": 13.6,
-  "debt": 71,
-  "equity_ratio": 23
+  "sales": 50,
+  "ebitda": 6.9,
+  "ebitda_margin": 13.7,
+  "debt": 20,
+  "equity_ratio": 40
  },
  {
   "farm_id": 11,
   "fy": 2024,
-  "sales": 118,
-  "ebitda": 16.3,
-  "ebitda_margin": 13.8,
-  "debt": 70,
-  "equity_ratio": 23
+  "sales": 53,
+  "ebitda": 7.3,
+  "ebitda_margin": 13.7,
+  "debt": 20,
+  "equity_ratio": 42
  },
  {
   "farm_id": 11,
   "fy": 2025,
-  "sales": 122,
-  "ebitda": 16.8,
-  "ebitda_margin": 13.8,
-  "debt": 67,
-  "equity_ratio": 24
+  "sales": 54,
+  "ebitda": 7.3,
+  "ebitda_margin": 13.5,
+  "debt": 19,
+  "equity_ratio": 43
  },
  {
   "farm_id": 12,
   "fy": 2023,
-  "sales": 41,
-  "ebitda": 7.9,
-  "ebitda_margin": 19.3,
+  "sales": 42,
+  "ebitda": 8.1,
+  "ebitda_margin": 19.4,
   "debt": 14,
-  "equity_ratio": 36
+  "equity_ratio": 38
  },
  {
   "farm_id": 12,
   "fy": 2024,
   "sales": 43,
   "ebitda": 8.5,
-  "ebitda_margin": 19.7,
+  "ebitda_margin": 19.8,
   "debt": 13,
-  "equity_ratio": 37
+  "equity_ratio": 39
  },
  {
   "farm_id": 12,
@@ -348,870 +348,870 @@
   "ebitda": 9.2,
   "ebitda_margin": 20.8,
   "debt": 13,
-  "equity_ratio": 38
+  "equity_ratio": 40
  },
  {
   "farm_id": 13,
   "fy": 2023,
-  "sales": 88,
-  "ebitda": 5.2,
-  "ebitda_margin": 5.9,
-  "debt": 11,
-  "equity_ratio": 31
- },
- {
-  "farm_id": 13,
-  "fy": 2024,
-  "sales": 93,
-  "ebitda": 4.5,
-  "ebitda_margin": 4.8,
-  "debt": 10,
-  "equity_ratio": 32
- },
- {
-  "farm_id": 13,
-  "fy": 2025,
-  "sales": 94,
-  "ebitda": 3,
-  "ebitda_margin": 3.2,
-  "debt": 10,
-  "equity_ratio": 33
- },
- {
-  "farm_id": 14,
-  "fy": 2023,
-  "sales": 118,
-  "ebitda": 16.2,
-  "ebitda_margin": 13.7,
-  "debt": 43,
-  "equity_ratio": 42
- },
- {
-  "farm_id": 14,
-  "fy": 2024,
-  "sales": 124,
-  "ebitda": 17.1,
-  "ebitda_margin": 13.8,
-  "debt": 43,
-  "equity_ratio": 44
- },
- {
-  "farm_id": 14,
-  "fy": 2025,
-  "sales": 128,
-  "ebitda": 17.4,
-  "ebitda_margin": 13.6,
-  "debt": 41,
-  "equity_ratio": 45
- },
- {
-  "farm_id": 15,
-  "fy": 2023,
-  "sales": 290,
-  "ebitda": 44.4,
-  "ebitda_margin": 15.3,
-  "debt": 188,
-  "equity_ratio": 28
- },
- {
-  "farm_id": 15,
-  "fy": 2024,
-  "sales": 299,
-  "ebitda": 46,
-  "ebitda_margin": 15.4,
-  "debt": 187,
-  "equity_ratio": 29
- },
- {
-  "farm_id": 15,
-  "fy": 2025,
-  "sales": 312,
-  "ebitda": 48.7,
-  "ebitda_margin": 15.6,
-  "debt": 180,
-  "equity_ratio": 30
- },
- {
-  "farm_id": 16,
-  "fy": 2023,
-  "sales": 126,
-  "ebitda": 18.1,
-  "ebitda_margin": 14.4,
-  "debt": 77,
-  "equity_ratio": 28
- },
- {
-  "farm_id": 16,
-  "fy": 2024,
-  "sales": 130,
-  "ebitda": 18.7,
-  "ebitda_margin": 14.4,
-  "debt": 76,
-  "equity_ratio": 29
- },
- {
-  "farm_id": 16,
-  "fy": 2025,
-  "sales": 136,
-  "ebitda": 19.4,
-  "ebitda_margin": 14.3,
-  "debt": 73,
-  "equity_ratio": 30
- },
- {
-  "farm_id": 17,
-  "fy": 2023,
-  "sales": 91,
-  "ebitda": 18.6,
-  "ebitda_margin": 20.4,
-  "debt": 65,
-  "equity_ratio": 38
- },
- {
-  "farm_id": 17,
-  "fy": 2024,
-  "sales": 95,
-  "ebitda": 20.2,
-  "ebitda_margin": 21.3,
-  "debt": 64,
-  "equity_ratio": 39
- },
- {
-  "farm_id": 17,
-  "fy": 2025,
-  "sales": 98,
-  "ebitda": 22.1,
-  "ebitda_margin": 22.6,
-  "debt": 62,
-  "equity_ratio": 40
- },
- {
-  "farm_id": 18,
-  "fy": 2023,
-  "sales": 343,
-  "ebitda": 61.7,
-  "ebitda_margin": 18,
-  "debt": 265,
-  "equity_ratio": 33
- },
- {
-  "farm_id": 18,
-  "fy": 2024,
-  "sales": 351,
-  "ebitda": 64.2,
-  "ebitda_margin": 18.3,
-  "debt": 255,
-  "equity_ratio": 34
- },
- {
-  "farm_id": 18,
-  "fy": 2025,
-  "sales": 363,
-  "ebitda": 69.7,
-  "ebitda_margin": 19.2,
-  "debt": 248,
-  "equity_ratio": 35
- },
- {
-  "farm_id": 19,
-  "fy": 2023,
-  "sales": 20,
-  "ebitda": 0.8,
-  "ebitda_margin": 4.2,
-  "debt": 1,
-  "equity_ratio": 39
- },
- {
-  "farm_id": 19,
-  "fy": 2024,
-  "sales": 20,
-  "ebitda": 0.6,
-  "ebitda_margin": 3,
-  "debt": 1,
-  "equity_ratio": 40
- },
- {
-  "farm_id": 19,
-  "fy": 2025,
-  "sales": 21,
-  "ebitda": 0.2,
-  "ebitda_margin": 1.1,
-  "debt": 1,
-  "equity_ratio": 41
- },
- {
-  "farm_id": 20,
-  "fy": 2023,
-  "sales": 38,
-  "ebitda": 4.3,
-  "ebitda_margin": 11.3,
-  "debt": 17,
-  "equity_ratio": 24
- },
- {
-  "farm_id": 20,
-  "fy": 2024,
-  "sales": 40,
-  "ebitda": 4.3,
-  "ebitda_margin": 10.8,
-  "debt": 17,
-  "equity_ratio": 25
- },
- {
-  "farm_id": 20,
-  "fy": 2025,
-  "sales": 41,
-  "ebitda": 4.2,
-  "ebitda_margin": 10.3,
-  "debt": 16,
-  "equity_ratio": 26
- },
- {
-  "farm_id": 21,
-  "fy": 2023,
-  "sales": 23,
-  "ebitda": 1.5,
-  "ebitda_margin": 6.7,
-  "debt": 3,
-  "equity_ratio": 37
- },
- {
-  "farm_id": 21,
-  "fy": 2024,
-  "sales": 25,
-  "ebitda": 1.5,
-  "ebitda_margin": 5.8,
-  "debt": 3,
-  "equity_ratio": 38
- },
- {
-  "farm_id": 21,
-  "fy": 2025,
-  "sales": 25,
-  "ebitda": 1.1,
-  "ebitda_margin": 4.3,
-  "debt": 3,
-  "equity_ratio": 39
- },
- {
-  "farm_id": 22,
-  "fy": 2023,
-  "sales": 368,
-  "ebitda": 47.5,
-  "ebitda_margin": 12.9,
-  "debt": 150,
-  "equity_ratio": 39
- },
- {
-  "farm_id": 22,
-  "fy": 2024,
-  "sales": 380,
-  "ebitda": 49.4,
-  "ebitda_margin": 13,
-  "debt": 148,
-  "equity_ratio": 40
- },
- {
-  "farm_id": 22,
-  "fy": 2025,
-  "sales": 388,
-  "ebitda": 50.4,
-  "ebitda_margin": 13,
-  "debt": 144,
-  "equity_ratio": 41
- },
- {
-  "farm_id": 23,
-  "fy": 2023,
-  "sales": 139,
-  "ebitda": 16.1,
-  "ebitda_margin": 11.6,
-  "debt": 50,
-  "equity_ratio": 39
- },
- {
-  "farm_id": 23,
-  "fy": 2024,
-  "sales": 145,
-  "ebitda": 16.1,
-  "ebitda_margin": 11.1,
-  "debt": 48,
-  "equity_ratio": 40
- },
- {
-  "farm_id": 23,
-  "fy": 2025,
-  "sales": 150,
-  "ebitda": 16.5,
-  "ebitda_margin": 11,
-  "debt": 47,
-  "equity_ratio": 41
- },
- {
-  "farm_id": 24,
-  "fy": 2023,
-  "sales": 104,
-  "ebitda": 10.6,
-  "ebitda_margin": 10.2,
-  "debt": 43,
-  "equity_ratio": 28
- },
- {
-  "farm_id": 24,
-  "fy": 2024,
-  "sales": 106,
-  "ebitda": 10.3,
-  "ebitda_margin": 9.7,
-  "debt": 42,
-  "equity_ratio": 29
- },
- {
-  "farm_id": 24,
-  "fy": 2025,
-  "sales": 110,
-  "ebitda": 9.8,
-  "ebitda_margin": 8.9,
-  "debt": 40,
-  "equity_ratio": 30
- },
- {
-  "farm_id": 25,
-  "fy": 2023,
-  "sales": 75,
-  "ebitda": 11.6,
-  "ebitda_margin": 15.5,
-  "debt": 49,
-  "equity_ratio": 33
- },
- {
-  "farm_id": 25,
-  "fy": 2024,
-  "sales": 80,
-  "ebitda": 12.6,
-  "ebitda_margin": 15.7,
-  "debt": 47,
-  "equity_ratio": 34
- },
- {
-  "farm_id": 25,
-  "fy": 2025,
-  "sales": 81,
-  "ebitda": 13.3,
-  "ebitda_margin": 16.4,
-  "debt": 46,
-  "equity_ratio": 35
- },
- {
-  "farm_id": 26,
-  "fy": 2023,
-  "sales": 58,
-  "ebitda": 9.4,
-  "ebitda_margin": 16.2,
-  "debt": 34,
-  "equity_ratio": 38
- },
- {
-  "farm_id": 26,
-  "fy": 2024,
-  "sales": 60,
-  "ebitda": 10,
-  "ebitda_margin": 16.6,
-  "debt": 32,
-  "equity_ratio": 39
- },
- {
-  "farm_id": 26,
-  "fy": 2025,
-  "sales": 61,
-  "ebitda": 10.3,
-  "ebitda_margin": 16.9,
-  "debt": 32,
-  "equity_ratio": 40
- },
- {
-  "farm_id": 27,
-  "fy": 2023,
-  "sales": 231,
-  "ebitda": 36,
-  "ebitda_margin": 15.6,
-  "debt": 170,
-  "equity_ratio": 24
- },
- {
-  "farm_id": 27,
-  "fy": 2024,
-  "sales": 234,
-  "ebitda": 37.9,
-  "ebitda_margin": 16.2,
-  "debt": 165,
-  "equity_ratio": 24
- },
- {
-  "farm_id": 27,
-  "fy": 2025,
-  "sales": 242,
-  "ebitda": 40.2,
-  "ebitda_margin": 16.6,
-  "debt": 163,
-  "equity_ratio": 25
- },
- {
-  "farm_id": 28,
-  "fy": 2023,
-  "sales": 27,
-  "ebitda": 4.4,
-  "ebitda_margin": 16.4,
-  "debt": 15,
-  "equity_ratio": 41
- },
- {
-  "farm_id": 28,
-  "fy": 2024,
-  "sales": 28,
-  "ebitda": 4.7,
-  "ebitda_margin": 16.8,
-  "debt": 15,
-  "equity_ratio": 43
- },
- {
-  "farm_id": 28,
-  "fy": 2025,
-  "sales": 29,
-  "ebitda": 5.1,
-  "ebitda_margin": 17.6,
-  "debt": 14,
-  "equity_ratio": 44
- },
- {
-  "farm_id": 29,
-  "fy": 2023,
-  "sales": 405,
-  "ebitda": 64.4,
-  "ebitda_margin": 15.9,
-  "debt": 271,
-  "equity_ratio": 24
- },
- {
-  "farm_id": 29,
-  "fy": 2024,
-  "sales": 427,
-  "ebitda": 69.2,
-  "ebitda_margin": 16.2,
-  "debt": 267,
-  "equity_ratio": 25
- },
- {
-  "farm_id": 29,
-  "fy": 2025,
-  "sales": 439,
-  "ebitda": 72.9,
-  "ebitda_margin": 16.6,
-  "debt": 257,
-  "equity_ratio": 26
- },
- {
-  "farm_id": 30,
-  "fy": 2023,
-  "sales": 103,
-  "ebitda": 14.9,
-  "ebitda_margin": 14.5,
-  "debt": 70,
-  "equity_ratio": 27
- },
- {
-  "farm_id": 30,
-  "fy": 2024,
-  "sales": 103,
-  "ebitda": 14.8,
-  "ebitda_margin": 14.4,
-  "debt": 70,
-  "equity_ratio": 28
- },
- {
-  "farm_id": 30,
-  "fy": 2025,
-  "sales": 108,
-  "ebitda": 15.8,
-  "ebitda_margin": 14.6,
-  "debt": 67,
-  "equity_ratio": 29
- },
- {
-  "farm_id": 31,
-  "fy": 2023,
-  "sales": 203,
-  "ebitda": 21.9,
-  "ebitda_margin": 10.8,
-  "debt": 58,
-  "equity_ratio": 39
- },
- {
-  "farm_id": 31,
-  "fy": 2024,
-  "sales": 212,
-  "ebitda": 22,
-  "ebitda_margin": 10.4,
-  "debt": 55,
-  "equity_ratio": 40
- },
- {
-  "farm_id": 31,
-  "fy": 2025,
-  "sales": 217,
-  "ebitda": 21,
-  "ebitda_margin": 9.7,
-  "debt": 54,
-  "equity_ratio": 41
- },
- {
-  "farm_id": 32,
-  "fy": 2023,
-  "sales": 33,
-  "ebitda": 1.7,
-  "ebitda_margin": 5,
-  "debt": 2,
-  "equity_ratio": 32
- },
- {
-  "farm_id": 32,
-  "fy": 2024,
-  "sales": 34,
-  "ebitda": 1.3,
-  "ebitda_margin": 3.8,
-  "debt": 2,
-  "equity_ratio": 33
- },
- {
-  "farm_id": 32,
-  "fy": 2025,
-  "sales": 35,
-  "ebitda": 0.7,
-  "ebitda_margin": 2.1,
-  "debt": 2,
-  "equity_ratio": 34
- },
- {
-  "farm_id": 33,
-  "fy": 2023,
-  "sales": 128,
-  "ebitda": 22.5,
-  "ebitda_margin": 17.6,
-  "debt": 96,
-  "equity_ratio": 33
- },
- {
-  "farm_id": 33,
-  "fy": 2024,
-  "sales": 135,
-  "ebitda": 24.3,
-  "ebitda_margin": 18,
-  "debt": 94,
-  "equity_ratio": 34
- },
- {
-  "farm_id": 33,
-  "fy": 2025,
-  "sales": 138,
-  "ebitda": 26.1,
-  "ebitda_margin": 18.9,
-  "debt": 91,
-  "equity_ratio": 35
- },
- {
-  "farm_id": 34,
-  "fy": 2023,
-  "sales": 223,
-  "ebitda": 30.8,
-  "ebitda_margin": 13.8,
-  "debt": 121,
-  "equity_ratio": 30
- },
- {
-  "farm_id": 34,
-  "fy": 2024,
-  "sales": 230,
-  "ebitda": 32,
-  "ebitda_margin": 13.9,
-  "debt": 120,
-  "equity_ratio": 31
- },
- {
-  "farm_id": 34,
-  "fy": 2025,
-  "sales": 237,
-  "ebitda": 32.9,
-  "ebitda_margin": 13.9,
-  "debt": 116,
-  "equity_ratio": 32
- },
- {
-  "farm_id": 35,
-  "fy": 2023,
-  "sales": 474,
-  "ebitda": 107.6,
-  "ebitda_margin": 22.7,
-  "debt": 311,
-  "equity_ratio": 41
- },
- {
-  "farm_id": 35,
-  "fy": 2024,
-  "sales": 496,
-  "ebitda": 119,
-  "ebitda_margin": 24,
-  "debt": 295,
-  "equity_ratio": 43
- },
- {
-  "farm_id": 35,
-  "fy": 2025,
-  "sales": 507,
-  "ebitda": 131.3,
-  "ebitda_margin": 25.9,
-  "debt": 288,
-  "equity_ratio": 44
- },
- {
-  "farm_id": 36,
-  "fy": 2023,
-  "sales": 16,
-  "ebitda": 1.1,
-  "ebitda_margin": 6.7,
-  "debt": 3,
-  "equity_ratio": 20
- },
- {
-  "farm_id": 36,
-  "fy": 2024,
-  "sales": 16,
-  "ebitda": 0.9,
-  "ebitda_margin": 5.7,
-  "debt": 3,
-  "equity_ratio": 20
- },
- {
-  "farm_id": 36,
-  "fy": 2025,
-  "sales": 17,
-  "ebitda": 0.7,
-  "ebitda_margin": 4.4,
-  "debt": 3,
-  "equity_ratio": 21
- },
- {
-  "farm_id": 37,
-  "fy": 2023,
-  "sales": 258,
-  "ebitda": 47.5,
-  "ebitda_margin": 18.4,
-  "debt": 192,
-  "equity_ratio": 37
- },
- {
-  "farm_id": 37,
-  "fy": 2024,
-  "sales": 271,
-  "ebitda": 51.2,
-  "ebitda_margin": 18.9,
-  "debt": 183,
-  "equity_ratio": 38
- },
- {
-  "farm_id": 37,
-  "fy": 2025,
-  "sales": 280,
-  "ebitda": 55.4,
-  "ebitda_margin": 19.8,
-  "debt": 179,
-  "equity_ratio": 39
- },
- {
-  "farm_id": 38,
-  "fy": 2023,
-  "sales": 69,
-  "ebitda": 12.1,
-  "ebitda_margin": 17.6,
-  "debt": 55,
-  "equity_ratio": 28
- },
- {
-  "farm_id": 38,
-  "fy": 2024,
-  "sales": 71,
-  "ebitda": 12.6,
-  "ebitda_margin": 17.8,
-  "debt": 54,
-  "equity_ratio": 29
- },
- {
-  "farm_id": 38,
-  "fy": 2025,
-  "sales": 74,
-  "ebitda": 13.6,
-  "ebitda_margin": 18.4,
-  "debt": 53,
-  "equity_ratio": 30
- },
- {
-  "farm_id": 39,
-  "fy": 2023,
-  "sales": 54,
-  "ebitda": 8.9,
-  "ebitda_margin": 16.4,
-  "debt": 25,
-  "equity_ratio": 41
- },
- {
-  "farm_id": 39,
-  "fy": 2024,
-  "sales": 54,
-  "ebitda": 9.1,
-  "ebitda_margin": 16.8,
-  "debt": 24,
-  "equity_ratio": 43
- },
- {
-  "farm_id": 39,
-  "fy": 2025,
-  "sales": 57,
-  "ebitda": 9.9,
-  "ebitda_margin": 17.4,
-  "debt": 24,
-  "equity_ratio": 44
- },
- {
-  "farm_id": 40,
-  "fy": 2023,
-  "sales": 55,
-  "ebitda": 3.6,
-  "ebitda_margin": 6.5,
-  "debt": 8,
-  "equity_ratio": 32
- },
- {
-  "farm_id": 40,
-  "fy": 2024,
-  "sales": 56,
-  "ebitda": 3,
+  "sales": 100,
+  "ebitda": 5.4,
   "ebitda_margin": 5.4,
-  "debt": 8,
-  "equity_ratio": 33
- },
- {
-  "farm_id": 40,
-  "fy": 2025,
-  "sales": 58,
-  "ebitda": 2.3,
-  "ebitda_margin": 3.9,
-  "debt": 8,
-  "equity_ratio": 34
- },
- {
-  "farm_id": 41,
-  "fy": 2023,
-  "sales": 17,
-  "ebitda": 0.6,
-  "ebitda_margin": 3.8,
-  "debt": 0,
-  "equity_ratio": 33
- },
- {
-  "farm_id": 41,
-  "fy": 2024,
-  "sales": 18,
-  "ebitda": 0.5,
-  "ebitda_margin": 2.5,
-  "debt": 0,
-  "equity_ratio": 34
- },
- {
-  "farm_id": 41,
-  "fy": 2025,
-  "sales": 18,
-  "ebitda": 0.1,
-  "ebitda_margin": 0.5,
-  "debt": 0,
-  "equity_ratio": 35
- },
- {
-  "farm_id": 42,
-  "fy": 2023,
-  "sales": 26,
-  "ebitda": 1,
-  "ebitda_margin": 3.9,
-  "debt": 1,
-  "equity_ratio": 34
- },
- {
-  "farm_id": 42,
-  "fy": 2024,
-  "sales": 26,
-  "ebitda": 0.7,
-  "ebitda_margin": 2.5,
-  "debt": 1,
-  "equity_ratio": 35
- },
- {
-  "farm_id": 42,
-  "fy": 2025,
-  "sales": 27,
-  "ebitda": 0.1,
-  "ebitda_margin": 0.5,
-  "debt": 1,
-  "equity_ratio": 36
- },
- {
-  "farm_id": 43,
-  "fy": 2023,
-  "sales": 78,
-  "ebitda": 8.7,
-  "ebitda_margin": 11.1,
-  "debt": 37,
+  "debt": 9,
   "equity_ratio": 21
  },
  {
-  "farm_id": 43,
+  "farm_id": 13,
   "fy": 2024,
-  "sales": 81,
-  "ebitda": 8.6,
-  "ebitda_margin": 10.6,
-  "debt": 36,
+  "sales": 103,
+  "ebitda": 4.1,
+  "ebitda_margin": 4,
+  "debt": 9,
   "equity_ratio": 21
  },
  {
-  "farm_id": 43,
+  "farm_id": 13,
   "fy": 2025,
-  "sales": 83,
-  "ebitda": 8.3,
-  "ebitda_margin": 10,
-  "debt": 35,
+  "sales": 105,
+  "ebitda": 2.2,
+  "ebitda_margin": 2.1,
+  "debt": 9,
   "equity_ratio": 22
  },
  {
+  "farm_id": 14,
+  "fy": 2023,
+  "sales": 260,
+  "ebitda": 30.7,
+  "ebitda_margin": 11.8,
+  "debt": 99,
+  "equity_ratio": 34
+ },
+ {
+  "farm_id": 14,
+  "fy": 2024,
+  "sales": 267,
+  "ebitda": 30.7,
+  "ebitda_margin": 11.5,
+  "debt": 96,
+  "equity_ratio": 35
+ },
+ {
+  "farm_id": 14,
+  "fy": 2025,
+  "sales": 278,
+  "ebitda": 30,
+  "ebitda_margin": 10.8,
+  "debt": 92,
+  "equity_ratio": 36
+ },
+ {
+  "farm_id": 15,
+  "fy": 2023,
+  "sales": 414,
+  "ebitda": 66.2,
+  "ebitda_margin": 16,
+  "debt": 244,
+  "equity_ratio": 28
+ },
+ {
+  "farm_id": 15,
+  "fy": 2024,
+  "sales": 415,
+  "ebitda": 66.4,
+  "ebitda_margin": 16,
+  "debt": 239,
+  "equity_ratio": 29
+ },
+ {
+  "farm_id": 15,
+  "fy": 2025,
+  "sales": 432,
+  "ebitda": 71.3,
+  "ebitda_margin": 16.5,
+  "debt": 232,
+  "equity_ratio": 30
+ },
+ {
+  "farm_id": 16,
+  "fy": 2023,
+  "sales": 321,
+  "ebitda": 55.2,
+  "ebitda_margin": 17.2,
+  "debt": 243,
+  "equity_ratio": 25
+ },
+ {
+  "farm_id": 16,
+  "fy": 2024,
+  "sales": 334,
+  "ebitda": 57.8,
+  "ebitda_margin": 17.3,
+  "debt": 239,
+  "equity_ratio": 26
+ },
+ {
+  "farm_id": 16,
+  "fy": 2025,
+  "sales": 340,
+  "ebitda": 59.5,
+  "ebitda_margin": 17.5,
+  "debt": 233,
+  "equity_ratio": 27
+ },
+ {
+  "farm_id": 17,
+  "fy": 2023,
+  "sales": 66,
+  "ebitda": 14.3,
+  "ebitda_margin": 21.7,
+  "debt": 52,
+  "equity_ratio": 47
+ },
+ {
+  "farm_id": 17,
+  "fy": 2024,
+  "sales": 68,
+  "ebitda": 15.4,
+  "ebitda_margin": 22.6,
+  "debt": 50,
+  "equity_ratio": 49
+ },
+ {
+  "farm_id": 17,
+  "fy": 2025,
+  "sales": 71,
+  "ebitda": 17.2,
+  "ebitda_margin": 24.2,
+  "debt": 48,
+  "equity_ratio": 50
+ },
+ {
+  "farm_id": 18,
+  "fy": 2023,
+  "sales": 37,
+  "ebitda": 7.5,
+  "ebitda_margin": 20.4,
+  "debt": 33,
+  "equity_ratio": 35
+ },
+ {
+  "farm_id": 18,
+  "fy": 2024,
+  "sales": 38,
+  "ebitda": 8.1,
+  "ebitda_margin": 21.4,
+  "debt": 31,
+  "equity_ratio": 36
+ },
+ {
+  "farm_id": 18,
+  "fy": 2025,
+  "sales": 39,
+  "ebitda": 8.8,
+  "ebitda_margin": 22.5,
+  "debt": 31,
+  "equity_ratio": 37
+ },
+ {
+  "farm_id": 19,
+  "fy": 2023,
+  "sales": 15,
+  "ebitda": 0.9,
+  "ebitda_margin": 6.3,
+  "debt": 2,
+  "equity_ratio": 24
+ },
+ {
+  "farm_id": 19,
+  "fy": 2024,
+  "sales": 16,
+  "ebitda": 0.8,
+  "ebitda_margin": 5.1,
+  "debt": 2,
+  "equity_ratio": 24
+ },
+ {
+  "farm_id": 19,
+  "fy": 2025,
+  "sales": 16,
+  "ebitda": 0.5,
+  "ebitda_margin": 3.4,
+  "debt": 2,
+  "equity_ratio": 25
+ },
+ {
+  "farm_id": 20,
+  "fy": 2023,
+  "sales": 102,
+  "ebitda": 14.8,
+  "ebitda_margin": 14.5,
+  "debt": 66,
+  "equity_ratio": 27
+ },
+ {
+  "farm_id": 20,
+  "fy": 2024,
+  "sales": 108,
+  "ebitda": 15.6,
+  "ebitda_margin": 14.4,
+  "debt": 64,
+  "equity_ratio": 28
+ },
+ {
+  "farm_id": 20,
+  "fy": 2025,
+  "sales": 109,
+  "ebitda": 15.7,
+  "ebitda_margin": 14.4,
+  "debt": 62,
+  "equity_ratio": 29
+ },
+ {
+  "farm_id": 21,
+  "fy": 2023,
+  "sales": 22,
+  "ebitda": 1.8,
+  "ebitda_margin": 8.3,
+  "debt": 5,
+  "equity_ratio": 31
+ },
+ {
+  "farm_id": 21,
+  "fy": 2024,
+  "sales": 24,
+  "ebitda": 1.8,
+  "ebitda_margin": 7.4,
+  "debt": 5,
+  "equity_ratio": 32
+ },
+ {
+  "farm_id": 21,
+  "fy": 2025,
+  "sales": 24,
+  "ebitda": 1.5,
+  "ebitda_margin": 6.1,
+  "debt": 5,
+  "equity_ratio": 33
+ },
+ {
+  "farm_id": 22,
+  "fy": 2023,
+  "sales": 499,
+  "ebitda": 90.8,
+  "ebitda_margin": 18.2,
+  "debt": 256,
+  "equity_ratio": 45
+ },
+ {
+  "farm_id": 22,
+  "fy": 2024,
+  "sales": 512,
+  "ebitda": 94.7,
+  "ebitda_margin": 18.5,
+  "debt": 255,
+  "equity_ratio": 47
+ },
+ {
+  "farm_id": 22,
+  "fy": 2025,
+  "sales": 531,
+  "ebitda": 101.4,
+  "ebitda_margin": 19.1,
+  "debt": 245,
+  "equity_ratio": 48
+ },
+ {
+  "farm_id": 23,
+  "fy": 2023,
+  "sales": 27,
+  "ebitda": 1.2,
+  "ebitda_margin": 4.4,
+  "debt": 1,
+  "equity_ratio": 25
+ },
+ {
+  "farm_id": 23,
+  "fy": 2024,
+  "sales": 28,
+  "ebitda": 0.8,
+  "ebitda_margin": 3,
+  "debt": 1,
+  "equity_ratio": 26
+ },
+ {
+  "farm_id": 23,
+  "fy": 2025,
+  "sales": 29,
+  "ebitda": 0.3,
+  "ebitda_margin": 0.9,
+  "debt": 1,
+  "equity_ratio": 27
+ },
+ {
+  "farm_id": 24,
+  "fy": 2023,
+  "sales": 403,
+  "ebitda": 58,
+  "ebitda_margin": 14.4,
+  "debt": 269,
+  "equity_ratio": 24
+ },
+ {
+  "farm_id": 24,
+  "fy": 2024,
+  "sales": 409,
+  "ebitda": 59.3,
+  "ebitda_margin": 14.5,
+  "debt": 257,
+  "equity_ratio": 24
+ },
+ {
+  "farm_id": 24,
+  "fy": 2025,
+  "sales": 427,
+  "ebitda": 61.5,
+  "ebitda_margin": 14.4,
+  "debt": 251,
+  "equity_ratio": 25
+ },
+ {
+  "farm_id": 25,
+  "fy": 2023,
+  "sales": 24,
+  "ebitda": 2.2,
+  "ebitda_margin": 9.2,
+  "debt": 7,
+  "equity_ratio": 29
+ },
+ {
+  "farm_id": 25,
+  "fy": 2024,
+  "sales": 24,
+  "ebitda": 2,
+  "ebitda_margin": 8.4,
+  "debt": 7,
+  "equity_ratio": 30
+ },
+ {
+  "farm_id": 25,
+  "fy": 2025,
+  "sales": 25,
+  "ebitda": 1.8,
+  "ebitda_margin": 7.3,
+  "debt": 7,
+  "equity_ratio": 31
+ },
+ {
+  "farm_id": 26,
+  "fy": 2023,
+  "sales": 33,
+  "ebitda": 2,
+  "ebitda_margin": 6.2,
+  "debt": 5,
+  "equity_ratio": 19
+ },
+ {
+  "farm_id": 26,
+  "fy": 2024,
+  "sales": 34,
+  "ebitda": 1.7,
+  "ebitda_margin": 5.1,
+  "debt": 5,
+  "equity_ratio": 19
+ },
+ {
+  "farm_id": 26,
+  "fy": 2025,
+  "sales": 35,
+  "ebitda": 1.2,
+  "ebitda_margin": 3.4,
+  "debt": 5,
+  "equity_ratio": 20
+ },
+ {
+  "farm_id": 27,
+  "fy": 2023,
+  "sales": 314,
+  "ebitda": 60.3,
+  "ebitda_margin": 19.2,
+  "debt": 186,
+  "equity_ratio": 39
+ },
+ {
+  "farm_id": 27,
+  "fy": 2024,
+  "sales": 327,
+  "ebitda": 63.4,
+  "ebitda_margin": 19.4,
+  "debt": 181,
+  "equity_ratio": 40
+ },
+ {
+  "farm_id": 27,
+  "fy": 2025,
+  "sales": 332,
+  "ebitda": 67.4,
+  "ebitda_margin": 20.3,
+  "debt": 174,
+  "equity_ratio": 41
+ },
+ {
+  "farm_id": 28,
+  "fy": 2023,
+  "sales": 429,
+  "ebitda": 72.1,
+  "ebitda_margin": 16.8,
+  "debt": 307,
+  "equity_ratio": 26
+ },
+ {
+  "farm_id": 28,
+  "fy": 2024,
+  "sales": 450,
+  "ebitda": 77.4,
+  "ebitda_margin": 17.2,
+  "debt": 300,
+  "equity_ratio": 27
+ },
+ {
+  "farm_id": 28,
+  "fy": 2025,
+  "sales": 456,
+  "ebitda": 81.2,
+  "ebitda_margin": 17.8,
+  "debt": 286,
+  "equity_ratio": 28
+ },
+ {
+  "farm_id": 29,
+  "fy": 2023,
+  "sales": 27,
+  "ebitda": 3.5,
+  "ebitda_margin": 13.1,
+  "debt": 11,
+  "equity_ratio": 39
+ },
+ {
+  "farm_id": 29,
+  "fy": 2024,
+  "sales": 28,
+  "ebitda": 3.6,
+  "ebitda_margin": 12.9,
+  "debt": 10,
+  "equity_ratio": 41
+ },
+ {
+  "farm_id": 29,
+  "fy": 2025,
+  "sales": 29,
+  "ebitda": 3.6,
+  "ebitda_margin": 12.5,
+  "debt": 10,
+  "equity_ratio": 42
+ },
+ {
+  "farm_id": 30,
+  "fy": 2023,
+  "sales": 378,
+  "ebitda": 54.4,
+  "ebitda_margin": 14.4,
+  "debt": 212,
+  "equity_ratio": 25
+ },
+ {
+  "farm_id": 30,
+  "fy": 2024,
+  "sales": 388,
+  "ebitda": 56.3,
+  "ebitda_margin": 14.5,
+  "debt": 211,
+  "equity_ratio": 26
+ },
+ {
+  "farm_id": 30,
+  "fy": 2025,
+  "sales": 396,
+  "ebitda": 57.4,
+  "ebitda_margin": 14.5,
+  "debt": 203,
+  "equity_ratio": 27
+ },
+ {
+  "farm_id": 31,
+  "fy": 2023,
+  "sales": 218,
+  "ebitda": 23.3,
+  "ebitda_margin": 10.7,
+  "debt": 68,
+  "equity_ratio": 39
+ },
+ {
+  "farm_id": 31,
+  "fy": 2024,
+  "sales": 223,
+  "ebitda": 22.3,
+  "ebitda_margin": 10,
+  "debt": 67,
+  "equity_ratio": 40
+ },
+ {
+  "farm_id": 31,
+  "fy": 2025,
+  "sales": 233,
+  "ebitda": 21.4,
+  "ebitda_margin": 9.2,
+  "debt": 64,
+  "equity_ratio": 41
+ },
+ {
+  "farm_id": 32,
+  "fy": 2023,
+  "sales": 220,
+  "ebitda": 18.5,
+  "ebitda_margin": 8.4,
+  "debt": 59,
+  "equity_ratio": 32
+ },
+ {
+  "farm_id": 32,
+  "fy": 2024,
+  "sales": 231,
+  "ebitda": 17.6,
+  "ebitda_margin": 7.6,
+  "debt": 57,
+  "equity_ratio": 33
+ },
+ {
+  "farm_id": 32,
+  "fy": 2025,
+  "sales": 237,
+  "ebitda": 15.2,
+  "ebitda_margin": 6.4,
+  "debt": 56,
+  "equity_ratio": 34
+ },
+ {
+  "farm_id": 33,
+  "fy": 2023,
+  "sales": 129,
+  "ebitda": 22.6,
+  "ebitda_margin": 17.5,
+  "debt": 95,
+  "equity_ratio": 30
+ },
+ {
+  "farm_id": 33,
+  "fy": 2024,
+  "sales": 130,
+  "ebitda": 22.9,
+  "ebitda_margin": 17.6,
+  "debt": 93,
+  "equity_ratio": 31
+ },
+ {
+  "farm_id": 33,
+  "fy": 2025,
+  "sales": 135,
+  "ebitda": 24.8,
+  "ebitda_margin": 18.4,
+  "debt": 91,
+  "equity_ratio": 32
+ },
+ {
+  "farm_id": 34,
+  "fy": 2023,
+  "sales": 43,
+  "ebitda": 4.8,
+  "ebitda_margin": 11.1,
+  "debt": 14,
+  "equity_ratio": 39
+ },
+ {
+  "farm_id": 34,
+  "fy": 2024,
+  "sales": 44,
+  "ebitda": 4.6,
+  "ebitda_margin": 10.4,
+  "debt": 13,
+  "equity_ratio": 40
+ },
+ {
+  "farm_id": 34,
+  "fy": 2025,
+  "sales": 45,
+  "ebitda": 4.4,
+  "ebitda_margin": 9.7,
+  "debt": 13,
+  "equity_ratio": 41
+ },
+ {
+  "farm_id": 35,
+  "fy": 2023,
+  "sales": 349,
+  "ebitda": 61.1,
+  "ebitda_margin": 17.5,
+  "debt": 295,
+  "equity_ratio": 21
+ },
+ {
+  "farm_id": 35,
+  "fy": 2024,
+  "sales": 366,
+  "ebitda": 65.5,
+  "ebitda_margin": 17.9,
+  "debt": 288,
+  "equity_ratio": 21
+ },
+ {
+  "farm_id": 35,
+  "fy": 2025,
+  "sales": 372,
+  "ebitda": 67.7,
+  "ebitda_margin": 18.2,
+  "debt": 280,
+  "equity_ratio": 22
+ },
+ {
+  "farm_id": 36,
+  "fy": 2023,
+  "sales": 371,
+  "ebitda": 64.9,
+  "ebitda_margin": 17.5,
+  "debt": 339,
+  "equity_ratio": 24
+ },
+ {
+  "farm_id": 36,
+  "fy": 2024,
+  "sales": 394,
+  "ebitda": 71.3,
+  "ebitda_margin": 18.1,
+  "debt": 324,
+  "equity_ratio": 24
+ },
+ {
+  "farm_id": 36,
+  "fy": 2025,
+  "sales": 399,
+  "ebitda": 73.8,
+  "ebitda_margin": 18.5,
+  "debt": 317,
+  "equity_ratio": 25
+ },
+ {
+  "farm_id": 37,
+  "fy": 2023,
+  "sales": 267,
+  "ebitda": 53.9,
+  "ebitda_margin": 20.2,
+  "debt": 183,
+  "equity_ratio": 39
+ },
+ {
+  "farm_id": 37,
+  "fy": 2024,
+  "sales": 282,
+  "ebitda": 59.2,
+  "ebitda_margin": 21,
+  "debt": 177,
+  "equity_ratio": 41
+ },
+ {
+  "farm_id": 37,
+  "fy": 2025,
+  "sales": 288,
+  "ebitda": 62.8,
+  "ebitda_margin": 21.8,
+  "debt": 174,
+  "equity_ratio": 42
+ },
+ {
+  "farm_id": 38,
+  "fy": 2023,
+  "sales": 226,
+  "ebitda": 33,
+  "ebitda_margin": 14.6,
+  "debt": 106,
+  "equity_ratio": 37
+ },
+ {
+  "farm_id": 38,
+  "fy": 2024,
+  "sales": 230,
+  "ebitda": 33.6,
+  "ebitda_margin": 14.6,
+  "debt": 102,
+  "equity_ratio": 38
+ },
+ {
+  "farm_id": 38,
+  "fy": 2025,
+  "sales": 236,
+  "ebitda": 34.2,
+  "ebitda_margin": 14.5,
+  "debt": 98,
+  "equity_ratio": 39
+ },
+ {
+  "farm_id": 39,
+  "fy": 2023,
+  "sales": 37,
+  "ebitda": 2.1,
+  "ebitda_margin": 5.7,
+  "debt": 3,
+  "equity_ratio": 30
+ },
+ {
+  "farm_id": 39,
+  "fy": 2024,
+  "sales": 39,
+  "ebitda": 1.7,
+  "ebitda_margin": 4.4,
+  "debt": 3,
+  "equity_ratio": 31
+ },
+ {
+  "farm_id": 39,
+  "fy": 2025,
+  "sales": 40,
+  "ebitda": 1,
+  "ebitda_margin": 2.6,
+  "debt": 3,
+  "equity_ratio": 32
+ },
+ {
+  "farm_id": 40,
+  "fy": 2023,
+  "sales": 47,
+  "ebitda": 2.5,
+  "ebitda_margin": 5.3,
+  "debt": 4,
+  "equity_ratio": 26
+ },
+ {
+  "farm_id": 40,
+  "fy": 2024,
+  "sales": 48,
+  "ebitda": 2,
+  "ebitda_margin": 4.1,
+  "debt": 4,
+  "equity_ratio": 27
+ },
+ {
+  "farm_id": 40,
+  "fy": 2025,
+  "sales": 50,
+  "ebitda": 1.1,
+  "ebitda_margin": 2.2,
+  "debt": 4,
+  "equity_ratio": 28
+ },
+ {
+  "farm_id": 41,
+  "fy": 2023,
+  "sales": 141,
+  "ebitda": 18.6,
+  "ebitda_margin": 13.2,
+  "debt": 50,
+  "equity_ratio": 45
+ },
+ {
+  "farm_id": 41,
+  "fy": 2024,
+  "sales": 145,
+  "ebitda": 18.9,
+  "ebitda_margin": 13,
+  "debt": 49,
+  "equity_ratio": 47
+ },
+ {
+  "farm_id": 41,
+  "fy": 2025,
+  "sales": 149,
+  "ebitda": 18.9,
+  "ebitda_margin": 12.7,
+  "debt": 48,
+  "equity_ratio": 48
+ },
+ {
+  "farm_id": 42,
+  "fy": 2023,
+  "sales": 130,
+  "ebitda": 23.9,
+  "ebitda_margin": 18.4,
+  "debt": 90,
+  "equity_ratio": 37
+ },
+ {
+  "farm_id": 42,
+  "fy": 2024,
+  "sales": 135,
+  "ebitda": 25.8,
+  "ebitda_margin": 19.1,
+  "debt": 85,
+  "equity_ratio": 38
+ },
+ {
+  "farm_id": 42,
+  "fy": 2025,
+  "sales": 140,
+  "ebitda": 27.6,
+  "ebitda_margin": 19.7,
+  "debt": 84,
+  "equity_ratio": 39
+ },
+ {
+  "farm_id": 43,
+  "fy": 2023,
+  "sales": 36,
+  "ebitda": 6.5,
+  "ebitda_margin": 18,
+  "debt": 35,
+  "equity_ratio": 24
+ },
+ {
+  "farm_id": 43,
+  "fy": 2024,
+  "sales": 36,
+  "ebitda": 6.7,
+  "ebitda_margin": 18.5,
+  "debt": 33,
+  "equity_ratio": 24
+ },
+ {
+  "farm_id": 43,
+  "fy": 2025,
+  "sales": 38,
+  "ebitda": 7.3,
+  "ebitda_margin": 19.1,
+  "debt": 32,
+  "equity_ratio": 25
+ },
+ {
   "farm_id": 44,
   "fy": 2023,
-  "sales": 100,
-  "ebitda": 15.7,
-  "ebitda_margin": 15.7,
-  "debt": 66,
-  "equity_ratio": 36
+  "sales": 42,
+  "ebitda": 7.1,
+  "ebitda_margin": 16.9,
+  "debt": 27,
+  "equity_ratio": 35
  },
  {
   "farm_id": 44,
   "fy": 2024,
-  "sales": 105,
-  "ebitda": 16.7,
-  "ebitda_margin": 15.9,
-  "debt": 64,
-  "equity_ratio": 37
+  "sales": 44,
+  "ebitda": 7.5,
+  "ebitda_margin": 17.1,
+  "debt": 26,
+  "equity_ratio": 36
  },
  {
   "farm_id": 44,
   "fy": 2025,
-  "sales": 108,
-  "ebitda": 17.5,
-  "ebitda_margin": 16.2,
-  "debt": 63,
-  "equity_ratio": 38
+  "sales": 45,
+  "ebitda": 8,
+  "ebitda_margin": 17.7,
+  "debt": 25,
+  "equity_ratio": 37
  }
 ]

@@ -102,6 +102,36 @@
       "evidence_keys": [ { "kind": "ctx", "key": "feedSelf" } ]
     },
     {
+      "rule_id": "calving_interval_long",
+      "priority": 1,
+      "condition": { "all": [ { "var": "hasRepro", "op": "==", "value": true }, { "var": "ciGrade", "op": "in", "value": [ "D", "E", "F" ] } ] },
+      "template": {
+        "title": "分娩間隔が長い（{calvingInterval}ヶ月・{ciRank}位・判定{ciGrade}）。",
+        "body": "1ヶ月の短縮は母牛100頭あたり年間約{ciGainPer100}頭の子牛増に相当。発情発見・授精適期・分娩後の栄養管理を見直す。"
+      },
+      "evidence_keys": [ { "kind": "metric", "id": "calvingInterval" }, { "kind": "metric", "id": "calfSurvival" } ]
+    },
+    {
+      "rule_id": "conception_low",
+      "priority": 2,
+      "condition": { "all": [ { "var": "hasRepro", "op": "==", "value": true }, { "var": "crGrade", "op": "in", "value": [ "D", "E", "F" ] } ] },
+      "template": {
+        "title": "受胎率が低い（{conceptionRate}%・{crRank}位・判定{crGrade}）。",
+        "body": "授精回数は{servicesPerConception}回。授精回数が増えるほど分娩間隔が延び、母牛の生産効率が落ちる。授精技術・種雄牛選定・母牛のボディコンディションを確認。"
+      },
+      "evidence_keys": [ { "kind": "metric", "id": "conceptionRate" }, { "kind": "metric", "id": "servicesPerConception" } ]
+    },
+    {
+      "rule_id": "repro_strength",
+      "priority": 3,
+      "condition": { "all": [ { "var": "hasRepro", "op": "==", "value": true }, { "var": "ciGrade", "op": "in", "value": [ "A", "B" ] }, { "var": "crGrade", "op": "in", "value": [ "A", "B" ] } ] },
+      "template": {
+        "title": "繁殖は強み（分娩間隔{calvingInterval}ヶ月・受胎率{conceptionRate}%／判定{ciGrade}・{crGrade}）。",
+        "body": "繁殖基盤は維持でよい。資源は販売側（単価・出荷先・格付）の改善に寄せた方がリターンが大きい。"
+      },
+      "evidence_keys": [ { "kind": "metric", "id": "calvingInterval" }, { "kind": "metric", "id": "conceptionRate" } ]
+    },
+    {
       "rule_id": "successor_risk",
       "priority": 2,
       "condition": { "all": [ { "var": "succ", "op": "==", "value": "未定" }, { "var": "age", "op": ">=", "value": 60 } ] },

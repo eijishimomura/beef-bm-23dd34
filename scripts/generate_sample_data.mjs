@@ -13,6 +13,13 @@ function rng(s){return function(){s|=0;s=s+0x6D2B79F5|0;var t=Math.imul(s^s>>>15
 export const SEED = 20260709;
 
 export const METRICS = [
+  // 繁殖KPI（繁殖・一貫のみ。肥育は素牛を市場購入するため持たない。黒毛和種は単胎のため産子数は使わない）
+  { metric_id:'calvingInterval',       label:'分娩間隔',   unit:'ヶ月', group:'repro', dir:-1, formula:'分娩から次の分娩までの平均月数', source:'繁殖台帳' },
+  { metric_id:'firstCalvingAge',       label:'初産月齢',   unit:'ヶ月', group:'repro', dir:-1, formula:'初回分娩時の月齢', source:'繁殖台帳' },
+  { metric_id:'conceptionRate',        label:'受胎率',     unit:'%',   group:'repro', dir: 1, formula:'受胎数 ÷ 人工授精回数 × 100', source:'授精記録' },
+  { metric_id:'servicesPerConception', label:'授精回数',   unit:'回',  group:'repro', dir:-1, formula:'妊娠成立までの平均授精回数', source:'授精記録' },
+  { metric_id:'calvingRate',           label:'分娩率',     unit:'%',   group:'repro', dir: 1, formula:'年間分娩頭数 ÷ 母牛頭数 × 100', source:'繁殖台帳' },
+  { metric_id:'calfSurvival',          label:'子牛生存率', unit:'%',   group:'repro', dir: 1, formula:'100 − 哺乳期間の死亡率', source:'飼養記録' },
   { metric_id:'carcassWt',  label:'枝肉重量',          unit:'kg',   group:'prod', dir: 1, formula:'出荷牛の平均枝肉重量', source:'と畜成績（枝肉証明書）' },
   { metric_id:'price',      label:'枝肉単価',          unit:'円/kg', group:'prod', dir: 1, formula:'枝肉売上 ÷ 枝肉重量', source:'市場データ' },
   { metric_id:'dg',         label:'増体 DG',           unit:'g/日',  group:'prod', dir: 1, formula:'(出荷体重 − 導入体重) ÷ 飼養日数', source:'飼養記録' },
@@ -26,9 +33,10 @@ export const METRICS = [
   { metric_id:'debtEbitda', label:'有利子負債/EBITDA', unit:'年',   group:'econ', dir:-1, formula:'有利子負債残高 ÷ EBITDA', source:'決算書' }
 ];
 const MMAP = Object.fromEntries(METRICS.map(m=>[m.metric_id,m]));
+const REPRO=['calvingInterval','firstCalvingAge','conceptionRate','servicesPerConception','calvingRate','calfSurvival'];
 const PROD=['carcassWt','price','dg','mort','fatDays'];
 const ECON=['ebitdaM','invTurn','capTurn','equity','ordP','debtEbitda'];
-const SCORE=PROD.concat(ECON);
+const SCORE=PROD.concat(ECON); // 時系列・格差推移の対象。繁殖KPIは直近値のみ（REPRO）
 
 const KUS=['繁殖','肥育','一貫'], REGS=['北海道','東北','関東','中国','九州'];
 // 架空名のみ。実在農場を想起させる名前は使わない。45件目（ほしぞら）は重複回避のため追加。
@@ -60,6 +68,17 @@ export function generate(){
     f.carcassWt=Math.round(400+skill*110+gauss()*20); f.price=Math.round(1950+skill*520+gauss()*90);
     f.dg=Math.round(760+skill*230+gauss()*40); f.mort=+(5.5-skill*3.8+Math.abs(gauss())*1.2).toFixed(1);
     f.fatDays=Math.round(690-skill*130+gauss()*30);
+    // 繁殖KPI（繁殖・一貫のみ。肥育は素牛を市場購入するため生成しない＝null）。
+    // すべて同一の skill から導出し、指標間で不自然な逆転（分娩間隔は最良なのに受胎率は最下位 等）が出ないようにする。
+    // 一貫は生産KPIも同じ skill 由来のため「良い繁殖→良い素牛→良い枝肉」が緩く連動する。
+    if(f.ku!=='肥育'){
+      f.calvingInterval=+(14.5-skill*2.5+gauss()*0.25).toFixed(1);       // 12.0〜14.5ヶ月・短いほど良い
+      f.firstCalvingAge=+(27-skill*4+gauss()*0.35).toFixed(1);           // 23〜27ヶ月
+      f.conceptionRate=Math.round(45+skill*27+gauss()*2);                // 45〜72%
+      f.servicesPerConception=+(2.3-skill*1.0+Math.abs(gauss())*0.08).toFixed(1); // 1.3〜2.3回
+      f.calvingRate=Math.round(76+skill*18+gauss()*1.5);                 // 76〜94%
+      f.calfSurvival=Math.min(98,Math.round(84+skill*14+gauss()*1.2));   // 84〜98%
+    }
     // コンテキスト（前提条件）
     f.barnCap=Math.round(head*(1.03+rnd()*0.32)); f.workers=Math.max(1,Math.round(head/70+rnd()*2));
     f.calfSrc=(f.ku==='肥育')?'市場購入':'自家産'; f.feedSelf=Math.round(rnd()*45);
@@ -79,8 +98,10 @@ export function generate(){
     carcassWt:472,price:2680,fatDays:566,mort:1.2,dg:960,feedSelf:35,calfSrc:'自家産',calfNoise:-0.02,feedNoise:-0.03,
     skill:0.95,debtTarget:1.4});   // 小規模だが高収益・低負債
   // 「量はあるが単価が弱い」典型（PigINFO 日高牧場型）を母集団に必ず1件保証する。
-  // 枝肉重量・増体は上位、枝肉単価は下位圏 → 個票のギザギザなプロファイルのデフォルト表示に使う。
-  Object.assign(farms[20],{carcassWt:506,price:2020,dg:965,mort:2.4,fatDays:600,skill:0.55});
+  // 実物の日高牧場と同じく「繁殖は上位A なのに枝肉単価は下位圏」——繁殖・増体は強く、単価だけ弱い。
+  // farms[20] は繁殖経営（関東）。個票のギザギザなプロファイルのデフォルト表示に使う。
+  Object.assign(farms[20],{carcassWt:506,price:2020,dg:965,mort:2.4,fatDays:600,skill:0.55,
+    calvingInterval:12.4,firstCalvingAge:23.4,conceptionRate:68,servicesPerConception:1.4,calvingRate:92,calfSurvival:96});
 
   // 規模帯（band）は頭数から派生させる（独立に持たない）。異常値の頭数上書き後に必ず再計算し、
   // 「層別の中央値」「規模フィルタ」と頭数表示が矛盾しないことを保証する（巨牛=大規模／匠=小規模）。
@@ -150,11 +171,14 @@ export function generate(){
   });
 
   // ---- ベンチマーク分布（segment別 p10/p25/p50/p75/p90・生値の昇順分位。方向は metrics.dir で解釈） ----
+  // 繁殖KPIの母集団は「値を持つ農場（繁殖＋一貫）」のみ。肥育を分母に入れない。
   const benchmarks=[];
   function seg(name,sub){
     if(!sub.length)return;
-    SCORE.forEach(m=>{
-      const v=sub.map(f=>f[m]).sort((a,b)=>a-b);
+    SCORE.concat(REPRO).forEach(m=>{
+      const pop=sub.filter(f=>f[m]!==undefined);
+      if(!pop.length)return;
+      const v=pop.map(f=>f[m]).sort((a,b)=>a-b);
       benchmarks.push({metric_id:m,segment:name,n:v.length,
         p10:r3(quantile(v,.10)),p25:r3(quantile(v,.25)),p50:r3(quantile(v,.50)),p75:r3(quantile(v,.75)),p90:r3(quantile(v,.90))});
     });
@@ -171,7 +195,7 @@ export function generate(){
     farms: farms.map(f=>({farm_id:f.id,name:f.name,ku:f.ku,region:f.reg,band:f.band,head:f.head})),
     context: farms.map(f=>({farm_id:f.id,barn_cap:f.barnCap,workers:f.workers,calf_source:f.calfSrc,feed_self_pct:f.feedSelf,debt_myen:f.debt,owner_age:f.age,successor:f.succ})),
     metrics: METRICS,
-    farm_metrics: farms.flatMap(f=>SCORE.map(m=>({farm_id:f.id,metric_id:m,value:f[m],period}))),
+    farm_metrics: farms.flatMap(f=>SCORE.concat(REPRO).filter(m=>f[m]!==undefined).map(m=>({farm_id:f.id,metric_id:m,value:f[m],period}))),
     timeseries: farms.flatMap(f=>SCORE.flatMap(m=>f.ts[m].map((v,i)=>({farm_id:f.id,metric_id:m,ym:ymList[i],value:r3(v)})))),
     fiscal,
     benchmarks
