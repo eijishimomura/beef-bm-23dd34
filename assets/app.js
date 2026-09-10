@@ -156,16 +156,13 @@
     document.getElementById('stratTbl').innerHTML = h;
   }
 
-  var st = { ku: 'all', sc: 'all', x: 'carcassWt', y: 'ebitdaM', col: 'ku' };
+  var ST_DEFAULT_X = 'carcassWt', ST_DEFAULT_Y = 'ebitdaM'; // 散布図の初期軸（初期表示農場の異常値除外もこの軸で判定する）
+  var st = { ku: 'all', sc: 'all', x: ST_DEFAULT_X, y: ST_DEFAULT_Y, col: 'ku' };
   function filt() { return farms.filter(function (f) { return (st.ku === 'all' || f.ku === st.ku) && (st.sc === 'all' || f.band === st.sc); }); }
 
-  function drawSc() {
-    var fs = filt(), xm = st.x, ym = st.y;
-    var xs = farms.map(function (f) { return f[xm]; }), ys = farms.map(function (f) { return f[ym]; });
-    var xn = Math.min.apply(0, xs), xx = Math.max.apply(0, xs), yn = Math.min.apply(0, ys), yx = Math.max.apply(0, ys);
-    var dx = (xx - xn) * .07, dy = (yx - yn) * .07; xn -= dx; xx += dx; yn -= dy; yx += dy;
-    function R(h) { return 6 + (Math.sqrt(h) - Math.sqrt(30)) / (Math.sqrt(950) - Math.sqrt(30)) * 18; }
-    // 異常値＝稀だから意味を持つ。各軸の最上位・最下位（計最大4）＋「規模突出だが収益中位以下」1件に限定（ラベル最大5件）
+  // 散布図の異常値判定（描画と初期表示農場の除外が同じロジックを共用する。G-1b：農場名のハードコード禁止）
+  // 異常値＝稀だから意味を持つ。各軸の最上位・最下位（計最大4）＋「規模突出だが収益中位以下」1件に限定（ラベル最大5件）
+  function outlierIds(fs, xm, ym) {
     var outIds = {};
     if (fs.length) {
       var byX = fs.slice().sort(function (a, b) { return a[xm] - b[xm]; });
@@ -174,6 +171,16 @@
       var bigF = fs.slice().sort(function (a, b) { return b.head - a.head; })[0];
       if (bigF && bigF.head >= 500 && bf(bigF, ym) < .5) outIds[bigF.id] = 1;
     }
+    return outIds;
+  }
+
+  function drawSc() {
+    var fs = filt(), xm = st.x, ym = st.y;
+    var xs = farms.map(function (f) { return f[xm]; }), ys = farms.map(function (f) { return f[ym]; });
+    var xn = Math.min.apply(0, xs), xx = Math.max.apply(0, xs), yn = Math.min.apply(0, ys), yx = Math.max.apply(0, ys);
+    var dx = (xx - xn) * .07, dy = (yx - yn) * .07; xn -= dx; xx += dx; yn -= dy; yx += dy;
+    function R(h) { return 6 + (Math.sqrt(h) - Math.sqrt(30)) / (Math.sqrt(950) - Math.sqrt(30)) * 18; }
+    var outIds = outlierIds(fs, xm, ym);
     scatterChart(document.getElementById('plot'), {
       xMin: xn, xMax: xx, yMin: yn, yMax: yx, xMed: STATS[xm].med, yMed: STATS[ym].med,
       xLabel: METRICS[xm].lb + ' (' + METRICS[xm].u + ')', yLabel: METRICS[ym].lb + ' (' + METRICS[ym].u + ')',
@@ -316,9 +323,8 @@
 
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
-  var penSeq = 0; // 農場を素早く切り替えたとき、古い非同期描画が新しい画面を上書きしないように
-  async function renderPen(f) {
-    var seq = ++penSeq;
+  // ルール評価～指摘リスト生成（表示とは分離。G-1 の初期表示選定でも件数を数えるために使う）
+  function penItems(f) {
     var ctx = buildPenContext(f);
     var items = [];
     RULES.forEach(function (r) {
@@ -328,6 +334,13 @@
       var evidence = evidenceLine(f, ctx, r.evidence_keys || []);
       items.push({ rule_id: r.rule_id, p: r.priority, title: title, body: body, evidence: evidence });
     });
+    return items;
+  }
+
+  var penSeq = 0; // 農場を素早く切り替えたとき、古い非同期描画が新しい画面を上書きしないように
+  async function renderPen(f) {
+    var seq = ++penSeq;
+    var items = penItems(f);
     // LLM肉付け口（未接続時はルール文のまま）。非同期関数にも対応し、
     // タイムアウト・例外・数値照合ゲート不通過はすべてルールベース文へフォールバックする。
     if (typeof PenLLM.enhance === 'function') {
@@ -733,6 +746,13 @@
     });
     var f0 = pickDefaultFarm(), grades = scoreKeys(f0).map(function (m) { return gr(bf(f0, m)); });
     if (f0.ku !== '肥育') fails.push('D-2 デフォルト農場が肥育でない（' + f0.ku + '）');
+    // G-1: 初期表示農場は赤ペン先生の指摘が4件以上（目玉機能が2行しか出ない初期画面を防ぐ）
+    var penCount0 = penItems(f0).length;
+    if (penCount0 < 4 && defaultFarmCandidates().some(function (f) { return penItems(f).length >= 4; }))
+      fails.push('G-1 初期表示農場の赤ペン指摘が' + penCount0 + '件（4件以上の候補があるのに選ばれていない）');
+    if (penCount0 < 4) fails.push('G-1 初期表示農場の赤ペン指摘が' + penCount0 + '件（<4）');
+    // G-1b: 異常値の除外が動的（散布図の初期軸での異常値判定と同じ関数）で、初期表示農場がその集合に入っていない
+    if (outlierIds(farms, ST_DEFAULT_X, ST_DEFAULT_Y)[f0.id]) fails.push('G-1b 初期表示農場が散布図の異常値に含まれている');
     if (grades.indexOf('A') < 0 && grades.indexOf('B') < 0) fails.push('A-3 デフォルト農場に上位判定がない');
     if (!grades.some(function (g) { return 'DEF'.indexOf(g) >= 0; })) fails.push('A-3 デフォルト農場に下位判定がない');
     var pctx = buildPenContext(f0);
@@ -772,22 +792,34 @@
   // 「全部A」の優等生でも「全部F」の脱落農場でもなく、強みと弱みが混在するギザギザな
   // プロファイル（PigINFO 日高牧場型：量は出るが単価で負ける、等）を最初に見せる。
   // D-2: 母集団は肥育に限定する（組合員の8割が肥育。初期画面は肥育農家の景色にする）。
-  // 意図的な異常値2農場（巨牛ファーム=5・匠牧場=12）は散布図の山場用の極端例なので、
-  // 「典型的な農場の個票」であるべき初期表示の候補からは除外する。
-  var ANOMALY_IDS = { 5: 1, 12: 1 };
-  function pickDefaultFarm() {
-    var cand = farms.filter(function (f) { return f.ku === '肥育' && !ANOMALY_IDS[f.id]; });
-    var bestMix = -1, best = cand[0] || farms[0];
-    cand.forEach(function (f) {
-      var good = 0, bad = 0, ranks = [];
-      scoreKeys(f).forEach(function (m) {
-        var g = gr(bf(f, m)); ranks.push(rk(f, m));
-        if (g === 'A' || g === 'B') good++; else if (g !== 'C') bad++;
-      });
-      var mix = good * bad * 1000 + (Math.max.apply(0, ranks) - Math.min.apply(0, ranks));
-      if (mix > bestMix) { bestMix = mix; best = f; }
+  // G-1b: 散布図（初期軸・全農場）で異常値として名指しされる農場は、初期表示の候補から動的に除外する。
+  //       農場名・IDのハードコードはしない（データ差し替えで名前だけが残る事故＝B-1の再発防止）。
+  function defaultFarmCandidates() {
+    var out = outlierIds(farms, ST_DEFAULT_X, ST_DEFAULT_Y);
+    return farms.filter(function (f) { return f.ku === '肥育' && !out[f.id]; });
+  }
+  function mixScore(f) {
+    var good = 0, bad = 0, ranks = [];
+    scoreKeys(f).forEach(function (m) {
+      var g = gr(bf(f, m)); ranks.push(rk(f, m));
+      if (g === 'A' || g === 'B') good++; else if (g !== 'C') bad++;
     });
-    return best;
+    return good * bad * 1000 + (Math.max.apply(0, ranks) - Math.min.apply(0, ranks));
+  }
+  // G-1: 初期表示は「赤ペン先生の指摘が4件以上」を必須条件とし、満たす農場の中から混在度最大を選ぶ。
+  //      理事長が最初に開く画面で、目玉の赤ペン先生が2行しか出ない事態を防ぐ（こはる牧場問題）。
+  //      条件を満たす農場が無い場合は指摘件数の多い順（同数なら混在度）にフォールバックする。
+  function pickDefaultFarm() {
+    var cand = defaultFarmCandidates();
+    if (!cand.length) return farms[0];
+    var withPen = cand.map(function (f) { return { f: f, pen: penItems(f).length, mix: mixScore(f) }; });
+    var ok = withPen.filter(function (c) { return c.pen >= 4; });
+    if (ok.length) {
+      ok.sort(function (a, b) { return b.mix - a.mix; });
+      return ok[0].f;
+    }
+    withPen.sort(function (a, b) { return b.pen - a.pen || b.mix - a.mix; }); // フォールバック：指摘件数の多い順
+    return withPen[0].f;
   }
 
   // ================= ルーティング・初期化 =================
