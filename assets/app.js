@@ -19,8 +19,16 @@
 
   // ---- データ読み込み（正規化JSON＝簡易DB） ----
   function load(name) { return fetch('data/' + name + '.json').then(function (r) { if (!r.ok) throw new Error(name + ': ' + r.status); return r.json(); }); }
-  Promise.all(['farms', 'context', 'metrics', 'farm_metrics', 'timeseries', 'fiscal', 'benchmarks', 'advice_rules', 'params'].map(load))
-    .then(function (t) { PARAMS = t[8]; build(t[0], t[1], t[2], t[3], t[4], t[5], t[6], t[7]); init(); })
+  Promise.all(['farms', 'context', 'metrics', 'farm_metrics', 'timeseries', 'fiscal', 'benchmarks', 'advice_rules', 'params', 'tree', 'tree_benchmarks'].map(load))
+    .then(function (t) {
+      PARAMS = t[8]; build(t[0], t[1], t[2], t[3], t[4], t[5], t[6], t[7]);
+      // E系：生産性ツリー（描画・検査は assets/tree.js。ここでは文脈だけ渡す）
+      window.TreeView.init({
+        farms: farms, PARAMS: PARAMS, rk: rk, bf: bf, gr: gr, gc: gc,
+        statN: function (m) { return STATS[m].all.length; }
+      }, t[9], t[10]);
+      init();
+    })
     .catch(function (e) {
       document.getElementById('loading').innerHTML = '<p class="psub" style="margin:0;color:var(--gF)">データの読み込みに失敗しました（' + e.message + '）。ローカルで開く場合は python3 scripts/dev_server.py を起動し http://localhost:8642 を開いてください。</p>';
     });
@@ -350,28 +358,82 @@
   }
 
   // ================= 画面B：農場個票 =================
+  var scoreSort = 'sec'; // E-2: 'sec'=セクション順（既定・D-1どおり） / 'rank'=判定順（JASV式・順位の昇順）
   function renderScore(f) {
-    var h = '<thead><tr><th style="text-align:left">指標</th><th>データ数</th><th>順位</th><th>判定</th><th>位置</th><th>上位10%</th><th>上位25%</th><th>中央値</th><th>下位25%</th><th>下位10%</th><th>自農場</th></tr></thead><tbody>';
+    // E-3: 自農場の値を項目名の直後に置く（JASVの列順に合わせる。自分の値が一番遠い最右列だと読みにくい）
+    var h = '<thead><tr><th style="text-align:left">指標</th><th>自農場</th><th>データ数</th><th>順位</th><th>判定</th><th>位置</th><th>上位10%</th><th>上位25%</th><th>中央値</th><th>下位25%</th><th>下位10%</th></tr></thead><tbody>';
+    function row(m) {
+      var s = benchOf(m, 'all'), g = gr(bf(f, m)), lo = s.lo10, hi = s.hi10;
+      var pos = Math.max(2, Math.min(98, (f[m] - lo) / ((hi - lo) || 1) * 100)), mp = Math.max(0, Math.min(100, (s.med - lo) / ((hi - lo) || 1) * 100));
+      return '<tr class="mrow" data-m="' + m + '" style="cursor:pointer"><td class="k">' + METRICS[m].lb + ' <span style="font-weight:400;color:#8595a8">' + METRICS[m].u + (METRICS[m].dir < 0 ? ' ↓良' : '') + '</span></td>' +
+        '<td class="self">' + f[m] + '</td>' +
+        '<td>' + s.n + '</td><td>' + rk(f, m) + '</td>' +
+        '<td style="background:' + gc(g) + ';color:#fff;font-weight:800">' + g + '</td>' +
+        '<td><span class="mini"><span class="md" style="left:' + mp.toFixed(0) + '%"></span><span class="m" style="left:' + pos.toFixed(0) + '%;background:' + gc(g) + '"></span></span></td>' +
+        '<td>' + fmt(s.hi10) + '</td><td>' + fmt(s.hi25) + '</td><td>' + fmt(s.med) + '</td><td>' + fmt(s.lo25) + '</td><td>' + fmt(s.lo10) + '</td></tr>';
+    }
     function sec(ttl, keys) {
       h += '<tr><td colspan="11" style="text-align:left;background:var(--ink);color:#fff;font-weight:800;font-size:10.5px;letter-spacing:.06em">' + ttl + '</td></tr>';
-      keys.forEach(function (m) {
-        var s = benchOf(m, 'all'), g = gr(bf(f, m)), lo = s.lo10, hi = s.hi10;
-        var pos = Math.max(2, Math.min(98, (f[m] - lo) / ((hi - lo) || 1) * 100)), mp = Math.max(0, Math.min(100, (s.med - lo) / ((hi - lo) || 1) * 100));
-        h += '<tr><td class="k">' + METRICS[m].lb + ' <span style="font-weight:400;color:#8595a8">' + METRICS[m].u + (METRICS[m].dir < 0 ? ' ↓良' : '') + '</span></td>' +
-          '<td>' + s.n + '</td><td>' + rk(f, m) + '</td>' +
-          '<td style="background:' + gc(g) + ';color:#fff;font-weight:800">' + g + '</td>' +
-          '<td><span class="mini"><span class="md" style="left:' + mp.toFixed(0) + '%"></span><span class="m" style="left:' + pos.toFixed(0) + '%;background:' + gc(g) + '"></span></span></td>' +
-          '<td>' + fmt(s.hi10) + '</td><td>' + fmt(s.hi25) + '</td><td>' + fmt(s.med) + '</td><td>' + fmt(s.lo25) + '</td><td>' + fmt(s.lo10) + '</td>' +
-          '<td class="self">' + f[m] + '</td></tr>';
-      });
+      keys.forEach(function (m) { h += row(m); });
     }
-    // D-1: セクション順は 生産 → 経営 → 繁殖（組合員の8割が肥育。肥育農家が最初に見るのは自分の成績）
-    sec('生産', PROD); sec('経営', ECON);
-    // 繁殖セクション：繁殖・一貫のみ実数を表示。肥育は「該当なし」の1行を末尾に（非表示にしない＝モデルの透明性）
-    if (f.calvingInterval !== undefined) sec('繁殖', REPRO);
-    else h += '<tr><td colspan="11" style="text-align:left;background:var(--ink);color:#fff;font-weight:800;font-size:10.5px;letter-spacing:.06em">繁殖</td></tr>' +
-      '<tr><td colspan="11" style="text-align:left;color:var(--muted)">該当なし（肥育経営。素牛は市場購入のため繁殖成績を持たない）</td></tr>';
+    if (scoreSort === 'rank') {
+      // E-2: 判定順＝順位の昇順（上から強み→弱み）。セクション見出しなしの1本の表
+      scoreKeys(f).slice().sort(function (a, b) { return rk(f, a) / STATS[a].all.length - rk(f, b) / STATS[b].all.length; })
+        .forEach(function (m) { h += row(m); });
+    } else {
+      // D-1: セクション順は 生産 → 経営 → 繁殖（組合員の8割が肥育。肥育農家が最初に見るのは自分の成績）
+      sec('生産', PROD); sec('経営', ECON);
+      // 繁殖セクション：繁殖・一貫のみ実数を表示。肥育は「該当なし」の1行を末尾に（非表示にしない＝モデルの透明性）
+      if (f.calvingInterval !== undefined) sec('繁殖', REPRO);
+      else h += '<tr><td colspan="11" style="text-align:left;background:var(--ink);color:#fff;font-weight:800;font-size:10.5px;letter-spacing:.06em">繁殖</td></tr>' +
+        '<tr><td colspan="11" style="text-align:left;color:var(--muted)">該当なし（肥育経営。素牛は市場購入のため繁殖成績を持たない）</td></tr>';
+    }
     h += '</tbody>'; document.getElementById('scoreTbl').innerHTML = h;
+    // E-4: 指標名クリックで「指標ごとの個票」（時系列4本＋分布ヒストグラム）を開く
+    document.querySelectorAll('#scoreTbl .mrow').forEach(function (tr) {
+      tr.onclick = function () { renderMetricDetail(f, tr.getAttribute('data-m')); };
+    });
+  }
+
+  // E-4: 指標ごとの個票 — 左：12ヶ月ローリングの推移4本（上位10%・中央値・下位10%・自農場）、
+  //      右：全農場分布のヒストグラム＋自農場の位置（★）。JASVで最も再訪される画面の形。
+  function renderMetricDetail(f, m) {
+    var box = document.getElementById('metricDetail');
+    var g = gr(bf(f, m)), hasTs = SCORE.indexOf(m) >= 0;
+    var h = '<div style="border:1px solid var(--line);border-radius:11px;padding:12px 14px;margin-top:10px;background:var(--bg)">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px">' +
+      '<div style="font-size:12.5px;font-weight:800">' + METRICS[m].lb + ' <span style="font-weight:600;color:var(--muted)">' + METRICS[m].u + (METRICS[m].dir < 0 ? '・低いほど良い' : '') + '</span></div>' +
+      '<div style="display:flex;align-items:center;gap:8px"><span style="font-size:19px;font-weight:800">' + f[m] + METRICS[m].u + '</span>' +
+      '<span class="gchip" style="background:' + gc(g) + '">' + g + '</span><span style="font-size:11px;color:var(--muted)">' + rk(f, m) + '位/' + STATS[m].all.length + '農場</span>' +
+      '<button id="mdClose" style="border:1px solid var(--line);background:#fff;border-radius:7px;font-size:11px;padding:3px 10px;cursor:pointer">閉じる</button></div></div>' +
+      '<div class="grid2">' +
+      '<div><div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:4px">推移（12ヶ月ローリング）</div><div id="mdTs">' + (hasTs ? '' : '<div class="note">この指標の月次時系列は未取得（繁殖KPIは直近値のみ）。</div>') + '</div>' +
+      (hasTs ? '<div class="legend"><b><span class="dot" style="background:#1e8f5b"></span>上位10%</b><b><span class="dot" style="background:#5f7085"></span>中央値</b><b><span class="dot" style="background:#c0392b"></span>下位10%</b><b><span class="dot" style="background:#3b5bdb"></span>自農場</b></div>' : '') + '</div>' +
+      '<div><div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:4px">全農場の分布（★＝自農場）</div><div id="mdHist"></div></div>' +
+      '</div></div>';
+    box.style.display = ''; box.innerHTML = h;
+    document.getElementById('mdClose').onclick = function () { box.style.display = 'none'; box.innerHTML = ''; };
+    if (hasTs) {
+      var hi = [], md = [], lo = [], i;
+      for (i = 0; i < NP; i++) { var q = gapAt(i, m); hi.push(q.hi); md.push(q.med); lo.push(q.lo); }
+      lineChart(document.getElementById('mdTs'), [{ data: hi, c: '#1e8f5b' }, { data: md, c: '#5f7085', w: 1.8 }, { data: lo, c: '#c0392b' }, { data: f.rl[m], c: '#3b5bdb', w: 2.6 }], { h: 210 });
+    }
+    // ヒストグラム（12ビン・SVG手描き）
+    var vals = STATS[m].all, mn = vals[0], mx = vals[vals.length - 1], nb = 12, bw = (mx - mn) / nb || 1, bins = [];
+    for (i = 0; i < nb; i++) bins.push(0);
+    vals.forEach(function (v) { bins[Math.min(nb - 1, Math.floor((v - mn) / bw))]++; });
+    var W = 420, H = 210, p = { l: 8, r: 8, t: 20, b: 22 }, bmax = Math.max.apply(0, bins);
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '">';
+    for (i = 0; i < nb; i++) {
+      var bh = bins[i] / bmax * (H - p.t - p.b), x = p.l + i * (W - p.l - p.r) / nb;
+      s += '<rect x="' + (x + 1) + '" y="' + (H - p.b - bh) + '" width="' + ((W - p.l - p.r) / nb - 2) + '" height="' + bh + '" rx="2" fill="#9fb0c4" fill-opacity="0.55"/>';
+    }
+    var sx = p.l + (Math.min(0.999, Math.max(0, (f[m] - mn) / ((mx - mn) || 1)))) * (W - p.l - p.r);
+    s += '<text x="' + sx + '" y="' + (p.t - 4) + '" text-anchor="middle" font-size="15" fill="#3b5bdb">★</text>' +
+      '<line x1="' + sx + '" y1="' + p.t + '" x2="' + sx + '" y2="' + (H - p.b) + '" stroke="#3b5bdb" stroke-width="1.4" stroke-dasharray="3 3"/>';
+    s += '<text x="' + p.l + '" y="' + (H - 6) + '" font-size="10" fill="#8595a8">' + fmt(mn) + '</text>' +
+      '<text x="' + (W - p.r) + '" y="' + (H - 6) + '" text-anchor="end" font-size="10" fill="#8595a8">' + fmt(mx) + '</text></svg>';
+    document.getElementById('mdHist').innerHTML = s;
   }
 
   function renderMgmt(f) {
@@ -505,6 +567,7 @@
       '<div><div class="cl">飼料自給率</div><div class="cv">' + f.feedSelf + '%</div></div>' +
       '<div><div class="cl">有利子負債</div><div class="cv">' + f.debt + '百万円 <small>（EBITDAの' + f.debtEbitda + '年分）</small></div></div>' +
       '<div><div class="cl">経営者・後継者</div><div class="cv">' + f.age + '歳 <small>／ 後継者' + f.succ + '</small></div></div>';
+    var md = document.getElementById('metricDetail'); md.style.display = 'none'; md.innerHTML = ''; // 農場切替で指標個票を閉じる
     renderPen(f); renderScore(f); renderMgmt(f); renderFiscal(f); renderTree(f); initSim(f, occ); drawTS(fid);
   }
 
@@ -642,11 +705,22 @@
       });
     }
     // D-1: 成績表の先頭セクションが「生産」（デフォルト農場を実レンダリングしてDOMで確認）
+    var keepSort = scoreSort; scoreSort = 'sec';
     renderScore(f0);
     var firstSec = document.querySelector('#scoreTbl td[colspan]');
     if (!firstSec || firstSec.textContent !== '生産') fails.push('D-1 成績表の先頭セクションが生産でない（' + (firstSec && firstSec.textContent) + '）');
     var secs = Array.prototype.map.call(document.querySelectorAll('#scoreTbl td[colspan]'), function (td) { return td.textContent; }).filter(function (t) { return ['生産', '経営', '繁殖'].indexOf(t) >= 0; });
     if (secs.join('→') !== '生産→経営→繁殖') fails.push('D-1 セクション順不正 ' + secs.join('→'));
+    // E-3: 自農場の値が項目名の直後（2列目）にある
+    var head2 = document.querySelector('#scoreTbl thead th:nth-child(2)');
+    if (!head2 || head2.textContent !== '自農場') fails.push('E-3 自農場列が項目直後にない（' + (head2 && head2.textContent) + '）');
+    scoreSort = keepSort;
+    // E系（生産性ツリー）：導出ノードの表示値整合・未取得ノードの順位/判定なし・tree_benchmarks分位点・dg傍系
+    fails = fails.concat(window.TreeView.runChecksTree());
+    // E系：読み取り専用ファイルの不変（行数のセンチネル。バイト単位の検証は git 差分で行う）
+    if (Object.keys(METRICS).length !== 22) fails.push('E metrics.json が変更されている（' + Object.keys(METRICS).length + '指標）');
+    var benchRows = 0; Object.keys(BENCH).forEach(function (seg) { benchRows += Object.keys(BENCH[seg]).length; });
+    if (benchRows !== 257) fails.push('E benchmarks.json が変更されている（' + benchRows + '行）');
     return {
       pass: fails.length === 0, failures: fails, defaultFarm: f0.name, defaultGrades: grades.join(''),
       gapGrowthPct: { ebitdaM: +(gapGrowth('ebitdaM') * 100).toFixed(1), price: +(gapGrowth('price') * 100).toFixed(1), invTurn: +(gapGrowth('invTurn') * 100).toFixed(1) }
@@ -676,10 +750,20 @@
     A.querySelectorAll('.tab').forEach(function (x) { x.classList.toggle('on', x.getAttribute('data-v') === v); });
     document.getElementById('viewOv').style.display = v === 'ov' ? '' : 'none';
     document.getElementById('viewFm').style.display = v === 'fm' ? '' : 'none';
+    document.getElementById('viewTree').style.display = v === 'tree' ? '' : 'none';
+  }
+  // E-1: ツリーは個票と同じ農場を表示する（セレクタの選択＝curFarm を共有）
+  function renderTreeView(fid) {
+    curFarm = fid;
+    var f = farms[fid];
+    document.getElementById('selFarmTree').value = fid;
+    window.TreeView.render(f, document.getElementById('treePlot'), document.getElementById('treeCmt'), document.getElementById('treeNote'));
   }
   function route() {
     var m = location.hash.match(/^#\/farm\/(\d+)/);
+    var mt = location.hash.match(/^#\/tree(?:\/(\d+))?/);
     if (m && farms[+m[1]]) { setTab('fm'); renderFarm(+m[1]); }
+    else if (mt) { setTab('tree'); renderTreeView(mt[1] !== undefined && farms[+mt[1]] ? +mt[1] : curFarm); }
     else setTab('ov');
   }
 
@@ -706,12 +790,31 @@
     }
     seg('segKu', 'ku', 'data-k'); seg('segSc', 'sc', 'data-s'); seg('segCol', 'col', 'data-c');
 
-    var selFarm = document.getElementById('selFarm');
-    farms.forEach(function (f) { var o = document.createElement('option'); o.value = f.id; o.textContent = f.name + '（' + f.ku + '・' + f.reg + '・' + f.band + '）'; selFarm.appendChild(o); });
+    // E-2: 成績表の並び切替（既定＝セクション順。判定順＝順位の昇順で強み→弱み）
+    var segSort = document.getElementById('segScoreSort');
+    segSort.querySelectorAll('button').forEach(function (b) {
+      b.onclick = function () {
+        segSort.querySelectorAll('button').forEach(function (x) { x.classList.remove('on'); }); b.classList.add('on');
+        scoreSort = b.getAttribute('data-o'); renderScore(farms[curFarm]);
+      };
+    });
+
+    var selFarm = document.getElementById('selFarm'), selFarmTree = document.getElementById('selFarmTree');
+    farms.forEach(function (f) {
+      [selFarm, selFarmTree].forEach(function (sel) {
+        var o = document.createElement('option'); o.value = f.id; o.textContent = f.name + '（' + f.ku + '・' + f.reg + '・' + f.band + '）'; sel.appendChild(o);
+      });
+    });
     selFarm.onchange = function () { location.hash = '#/farm/' + selFarm.value; };
+    selFarmTree.onchange = function () { location.hash = '#/tree/' + selFarmTree.value; };
+    document.getElementById('toTree').onclick = function (e) { e.preventDefault(); location.hash = '#/tree/' + curFarm; };
+    document.getElementById('toFm').onclick = function (e) { e.preventDefault(); location.hash = '#/farm/' + curFarm; };
 
     A.querySelectorAll('.tab').forEach(function (t) {
-      t.onclick = function () { location.hash = t.getAttribute('data-v') === 'fm' ? '#/farm/' + curFarm : '#/'; };
+      t.onclick = function () {
+        var v = t.getAttribute('data-v');
+        location.hash = v === 'fm' ? '#/farm/' + curFarm : v === 'tree' ? '#/tree/' + curFarm : '#/';
+      };
     });
     initTsChk();
 

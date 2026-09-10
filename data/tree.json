@@ -1,0 +1,28 @@
+{
+  "_readme": "生産性ツリー（E系）のノード定義。頂点＝粗利益（飼養1頭/年）。kind: measured=実測（既存指標。順位・判定は成績表と同じ算出を使う）／derived=導出（全45農場を同じ式で計算し、その分布から順位・判定。分位点は tree_benchmarks.json）／missing=未取得（グレー＋『実データで取得』バッジ。順位・判定を出さない）。side=true は傍系ノード（線でぶら下げるが計算には使わない）。値の計算は assets/tree.js の computeAll()（子ノードの表示値から親を計算し、丸め後も画面上で検算が一致する）。座標はSVGレイアウト（viewBox 1250x790）。",
+  "layout": { "w": 1250, "h": 790, "nodeW": 186, "nodeH": 64 },
+  "nodes": [
+    { "node_id": "gp",            "label": "粗利益（飼養1頭/年）",   "unit": "円", "kind": "derived",  "dir": 1,  "dec": 0, "formulaText": "販売額 − 変動費",                    "x": 22,  "y": 300 },
+    { "node_id": "sales",         "label": "販売額（飼養1頭/年）",   "unit": "円", "kind": "derived",  "dir": 1,  "dec": 0, "formulaText": "出荷頭数 × 枝肉販売額",              "parent": "gp",        "op": "＋", "x": 260, "y": 150 },
+    { "node_id": "varCost",       "label": "変動費（飼養1頭/年）",   "unit": "円", "kind": "derived",  "dir": -1, "dec": 0, "formulaText": "素牛費＋飼料費＋その他",             "parent": "gp",        "op": "−",  "x": 260, "y": 470 },
+    { "node_id": "shipRate",      "label": "出荷頭数（飼養1頭/年）", "unit": "頭", "kind": "derived",  "dir": 1,  "dec": 3, "formulaText": "365 ÷ 肥育日数 ×（1−事故率）",        "parent": "sales",     "op": "×",  "x": 500, "y": 56 },
+    { "node_id": "revPerHead",    "label": "枝肉販売額（/頭）",      "unit": "円", "kind": "derived",  "dir": 1,  "dec": 0, "formulaText": "枝肉重量 × 枝肉単価",                "parent": "sales",     "op": "×",  "x": 500, "y": 234 },
+    { "node_id": "fatDays",       "label": "肥育日数",               "unit": "日", "kind": "measured", "metric": "fatDays",   "dec": 0, "parent": "shipRate",  "op": "÷", "x": 742, "y": 16 },
+    { "node_id": "mort",          "label": "事故率",                 "unit": "%",  "kind": "measured", "metric": "mort",      "dec": 1, "parent": "shipRate",  "op": "−", "x": 742, "y": 96 },
+    { "node_id": "carcassWt",     "label": "枝肉重量（/頭）",        "unit": "kg", "kind": "measured", "metric": "carcassWt", "dec": 0, "parent": "revPerHead","op": "×", "x": 742, "y": 194 },
+    { "node_id": "price",         "label": "枝肉単価",               "unit": "円/kg", "kind": "measured", "metric": "price",  "dec": 0, "parent": "revPerHead","op": "×", "x": 742, "y": 274 },
+    { "node_id": "calfCostY",     "label": "素牛費（飼養1頭/年）",   "unit": "円", "kind": "derived",  "dir": -1, "dec": 0, "formulaText": "実効素牛費 × 出荷頭数",              "parent": "varCost",   "op": "＋", "x": 500, "y": 388 },
+    { "node_id": "calfCostPerHead","label": "実効素牛費（/頭）",     "unit": "円", "kind": "missing",  "dec": 0, "formulaText": "売上からの逆算値",                    "parent": "calfCostY", "op": "×",  "x": 742, "y": 388,
+      "hover": "実測の素牛購買価格ではなく、1頭限界利益率が薄利レンジ（5〜18%）に収まるよう1頭売上から逆算したサンプル値（既知の限界B-2）。実データ接続時は市場・自家育成の実購買原価を取得する。" },
+    { "node_id": "feedCostY",     "label": "飼料費（飼養1頭/年）",   "unit": "円", "kind": "derived",  "dir": -1, "dec": 0, "formulaText": "1頭飼料費 × 出荷頭数",               "parent": "varCost",   "op": "＋", "x": 500, "y": 512 },
+    { "node_id": "feedPerHead",   "label": "1頭飼料費",              "unit": "円", "kind": "derived",  "dir": -1, "dec": 0, "formulaText": "肥育日数 × 日当たり飼料費",          "parent": "feedCostY", "op": "×",  "x": 742, "y": 512 },
+    { "node_id": "feedPerDay",    "label": "日当たり飼料費",         "unit": "円/日・頭", "kind": "missing", "dec": 0, "formulaText": "params.json の共通値",             "parent": "feedPerHead","op": "×", "x": 984, "y": 552,
+      "hover": "サンプルは全農場共通の550円/日・頭。農場別の飼料単価・飼料要求率は未取得。実データ接続時に飼料伝票・給与記録から取得する。" },
+    { "node_id": "otherCostY",    "label": "その他変動費（飼養1頭/年）", "unit": "円", "kind": "derived", "dir": -1, "dec": 0, "formulaText": "3万円/頭 × 出荷頭数",            "parent": "varCost",   "op": "＋", "x": 500, "y": 650 },
+    { "node_id": "gpPerWorker",   "label": "従業員1人当たり粗利",    "unit": "万円/人", "kind": "measured", "metric": "gpPerWorker", "dec": 0, "side": true, "anchor": "gp",        "x": 22,  "y": 420 },
+    { "node_id": "shipPerYear",   "label": "年間出荷頭数",           "unit": "頭/年",   "kind": "measured", "metric": "shipPerYear", "dec": 0, "side": true, "anchor": "shipRate",  "x": 260, "y": 16 },
+    { "node_id": "dg",            "label": "増体DG",                 "unit": "g/日",    "kind": "measured", "metric": "dg",          "dec": 0, "side": true, "anchor": "carcassWt", "x": 984, "y": 194 },
+    { "node_id": "feedRatio",     "label": "売上高飼料費比率",       "unit": "%",       "kind": "measured", "metric": "feedRatio",   "dec": 1, "side": true, "anchor": "feedCostY", "x": 260, "y": 580 },
+    { "node_id": "vetCost",       "label": "出荷1頭当たり衛生費",    "unit": "円/頭",   "kind": "measured", "metric": "vetCost",     "dec": 0, "side": true, "anchor": "otherCostY","x": 260, "y": 690 }
+  ]
+}

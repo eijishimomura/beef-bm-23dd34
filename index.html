@@ -13,7 +13,10 @@
 
   <div class="head">
     <div class="title">肉牛ベンチマーク<small>DEMO ／ 組合版ベンチマーク（サンプル）</small></div>
-    <div class="flag">サンプルデータ（実農場ではありません）</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <div class="flag">参照データ: 45農場（サンプル）</div>
+      <div class="flag">サンプルデータ（実農場ではありません）</div>
+    </div>
   </div>
 
   <div class="intro" id="intro">
@@ -30,6 +33,7 @@
   <div class="tabs">
     <div class="tab on" data-v="ov">① 全体ダッシュボード</div>
     <div class="tab" data-v="fm">② 農場個票</div>
+    <div class="tab" data-v="tree">③ 生産性ツリー</div>
   </div>
 
   <div id="loading" class="panel"><p class="psub" style="margin:0">データを読み込んでいます…</p></div>
@@ -76,7 +80,10 @@
       <div class="ctrls"><div class="grp"><span>農場</span><select id="selFarm"></select></div></div>
       <div class="fhead">
         <div><div class="fname" id="fName"></div><div class="fmeta" id="fMeta"></div></div>
-        <div class="big" style="display:flex;align-items:center;gap:9px"><div style="font-size:10.5px;color:var(--muted)">総合判定</div><div class="gchip" id="fGrade"></div></div>
+        <div style="display:flex;align-items:center;gap:14px">
+          <a id="toTree" href="#" style="font-size:11.5px;font-weight:700;color:var(--accent);white-space:nowrap">③ 生産性ツリーで見る →</a>
+          <div class="big" style="display:flex;align-items:center;gap:9px"><div style="font-size:10.5px;color:var(--muted)">総合判定</div><div class="gchip" id="fGrade"></div></div>
+        </div>
       </div>
       <div class="subttl" style="margin-top:6px">前提条件（コンテキスト）</div>
       <div class="ctx" id="ctxBox"></div>
@@ -89,9 +96,13 @@
       <div class="note">※生成方式＝ハイブリッド（ルールで骨・LLMで肉付け）。本デモはルールベースで完結（ルール定義は data/advice_rules.json に外部化）。数値と根拠はルール側で確定し、必ず指摘に同居させる。獣医学的診断・投資/財務の断定的助言はしない。</div>
     </div>
     <div class="panel">
-      <p class="ph">成績表（数値＋位置）</p>
-      <p class="psub">PigINFO型の数値表に、位置バーを1列として内包。数字の厳密さと一目の分かりやすさを両立。</p>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap">
+        <div><p class="ph">成績表（数値＋位置）</p>
+        <p class="psub">PigINFO型の数値表に、位置バーを1列として内包。指標名をタップすると分布と推移が開く。</p></div>
+        <div class="grp"><span>並び</span><div class="seg" id="segScoreSort"><button data-o="sec" class="on">セクション順</button><button data-o="rank">判定順</button></div></div>
+      </div>
       <div class="scroll"><table id="scoreTbl"></table></div>
+      <div id="metricDetail" style="display:none"></div>
       <div class="note">位置バー：左＝下位10% / 右＝上位10% / 細線＝中央値。↓良＝低いほど良い指標。総合判定は区分が持つ指標で採点する（肥育15指標／繁殖・一貫22指標。分母が区分で異なる）。</div>
     </div>
     <div class="panel">
@@ -139,10 +150,25 @@
     </div>
   </div>
 
+  <div id="viewTree" style="display:none">
+    <div class="panel">
+      <div class="ctrls">
+        <div class="grp"><span>農場</span><select id="selFarmTree"></select></div>
+        <a id="toFm" href="#" style="font-size:11.5px;font-weight:700;color:var(--accent)">② 農場個票へ →</a>
+      </div>
+      <p class="ph">生産性ツリー — 粗利益（飼養1頭/年）の要因分解</p>
+      <p class="psub">成績表は順位が並ぶだけで、どこから手をつけるか分からない。ツリーは自分の弱点がどの経路で粗利益に効いているかを線で追える。グレー＝未取得（実データで埋まる）。</p>
+      <div class="scroll"><div id="treePlot"></div></div>
+      <div class="cmt" id="treeCmt"></div>
+      <div class="note" id="treeNote"></div>
+    </div>
+  </div>
+
 </div>
 <footer>本サイトの数値はすべてサンプルデータです（実在の農場・団体の実績ではありません）。限定共有用デモにつきURLの転載はご遠慮ください。</footer>
 <script src="assets/charts.js"></script>
 <script src="assets/sim_model.js"></script>
+<script src="assets/tree.js"></script>
 <script src="assets/app.js"></script>
 </body>
 </html>
