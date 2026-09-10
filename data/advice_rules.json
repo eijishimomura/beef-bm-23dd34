@@ -83,7 +83,7 @@
     },
     {
       "rule_id": "labor_productivity",
-      "priority": 3,
+      "priority": 2,
       "condition": { "all": [ { "var": "perW", "op": "<", "value": 45 } ] },
       "template": {
         "title": "1人あたり飼養頭数が{perW}頭と少ない。",
@@ -100,6 +100,16 @@
         "body": "粗飼料の自給拡大は、単年の利益より「相場変動への耐性」を買う投資（仮説）。EBITDAの振れ幅を抑える。"
       },
       "evidence_keys": [ { "kind": "ctx", "key": "feedSelf" } ]
+    },
+    {
+      "rule_id": "vet_low_mort_high",
+      "priority": 2,
+      "condition": { "all": [ { "var": "vetGrade", "op": "in", "value": [ "A", "B" ] }, { "var": "mortGrade", "op": "in", "value": [ "D", "E", "F" ] } ] },
+      "template": {
+        "title": "衛生費は少ない（{vetCost}円/頭・判定{vetGrade}）一方で、事故率が下位圏（{mort}%・判定{mortGrade}）。",
+        "body": "衛生管理への支出が少ない一方で事故率が高い、という2つの事実が並んでいる。獣医・防疫の体制を点検する余地がある（仮説）。支出と事故率の因果関係はこのデータでは確認できない。"
+      },
+      "evidence_keys": [ { "kind": "metric", "id": "vetCost" }, { "kind": "metric", "id": "mort" } ]
     },
     {
       "rule_id": "calving_interval_long",

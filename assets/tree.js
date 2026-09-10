@@ -72,16 +72,21 @@
 
   // ノードの表示情報（値・順位・判定・状態）をまとめる
   function nodeInfo(f, values, n) {
-    var info = { id: n.node_id, label: n.label, unit: n.unit, kind: n.kind, hover: n.hover, formulaText: n.formulaText };
+    var info = { id: n.node_id, label: n.label, unit: n.unit, kind: n.kind, hover: n.hover, formulaText: n.formulaText, noGrade: !!n.noGrade };
     if (n.kind === 'measured') {
       info.value = f[n.metric]; info.text = fmtVal(info.value, n.dec);
-      info.rank = ctx.rk(f, n.metric); info.n = ctx.statN(n.metric);
+      info.rank = ctx.rk(f, n.metric); info.n = ctx.statN(n.metric, f); // F-1: shipPerYear は規模帯内のn
       info.grade = ctx.gr(ctx.bf(f, n.metric));
-    } else if (n.kind === 'derived') {
+    } else if (n.kind === 'derived' && !n.noGrade) {
       info.value = values[n.node_id]; info.text = fmtVal(info.value, n.dec);
       info.rank = derivedRank(n.node_id, info.value, n.dir); info.n = ctx.farms.length;
       info.grade = grOf(derivedPct(n.node_id, info.value, n.dir));
-    } else { // missing：値は出すが順位・判定は出さない
+    } else if (n.kind === 'derived') {
+      // F-4: コスト系ノードは値と算出式のみ表示し、優劣を付けない（回転が速い農場ほど年間コストは増え、
+      // 飼料費は数式上ほぼ事故率の関数になるため。JASVもコストの絶対額に判定を付けていない）
+      info.value = values[n.node_id]; info.text = fmtVal(info.value, n.dec);
+      info.rank = null; info.grade = null;
+    } else { // missing：値は出すが順位・判定は出さない（データがない＝グレー）
       info.value = values[n.node_id]; info.text = fmtVal(info.value, n.dec);
       info.rank = null; info.grade = null;
     }
@@ -125,8 +130,13 @@
       if (miss) {
         s += '<rect x="' + (n.x + 10) + '" y="' + (n.y + 44) + '" width="86" height="15" rx="7" fill="#8a6d00" opacity="0.14"/>' +
           '<text x="' + (n.x + 53) + '" y="' + (n.y + 55) + '" text-anchor="middle" font-size="9.5" font-weight="700" fill="#8a6d00">実データで取得</text>';
+      } else if (i.noGrade) {
+        // F-4: 優劣を付けないコスト系ノード。グレー（データなし）とは別の見た目＝判定バッジ位置に「—」
+        s += '<text x="' + (n.x + 10) + '" y="' + (n.y + 56) + '" font-size="9.5" fill="#8595a8">優劣を付けない（コストの絶対額）</text>';
+        s += '<rect x="' + (n.x + NW - 30) + '" y="' + (n.y + 38) + '" width="20" height="20" rx="5" fill="none" stroke="#c3ccd8"/>' +
+          '<text x="' + (n.x + NW - 20) + '" y="' + (n.y + 52.5) + '" text-anchor="middle" font-size="11.5" font-weight="800" fill="#8595a8">—</text>';
       } else {
-        s += '<text x="' + (n.x + 10) + '" y="' + (n.y + 56) + '" font-size="10" fill="#8595a8">' + i.rank + '位/' + i.n + '農場</text>';
+        s += '<text x="' + (n.x + 10) + '" y="' + (n.y + 56) + '" font-size="10" fill="#8595a8">' + i.rank + '位/' + i.n + '農場' + (n.metric === 'shipPerYear' ? '・同規模帯' : '') + '</text>';
         s += '<rect x="' + (n.x + NW - 30) + '" y="' + (n.y + 38) + '" width="20" height="20" rx="5" fill="' + ctx.gc(i.grade) + '"/>' +
           '<text x="' + (n.x + NW - 20) + '" y="' + (n.y + 52.5) + '" text-anchor="middle" font-size="11.5" font-weight="800" fill="#fff">' + i.grade + '</text>';
       }
@@ -136,10 +146,12 @@
       s += '</g>';
     });
     s += '</svg>';
-    plotEl.innerHTML = s;
+    // F-5: 一貫の注記はツリーの直上に出す（脚注では見落とされたため）
+    plotEl.innerHTML = (f.ku === '一貫' ? '<div class="note" style="margin:0 0 6px"><b>一貫経営：</b>素牛費は自家育成原価相当として表示（市場購入価格ではない）。</div>' : '') + s;
 
     // 自動コメント：主系列で最も判定の低いノードと、その粗利益への経路（数値・順位を必ず併記）
-    var mains = TREE.nodes.filter(function (n) { return !n.anchor && n.kind !== 'missing' && n.node_id !== 'gp'; });
+    // F-4: 判定を持つノードだけから選ぶ（優劣を付けないコスト系・未取得は対象外）
+    var mains = TREE.nodes.filter(function (n) { return !n.anchor && n.kind !== 'missing' && !n.noGrade && n.node_id !== 'gp'; });
     function pctOf(n) { var i = infos[n.node_id]; return n.kind === 'measured' ? ctx.bf(f, n.metric) : derivedPct(n.node_id, i.value, n.dir); }
     var worst = mains.slice().sort(function (a, b) { return pctOf(a) - pctOf(b); })[0];
     var best = mains.slice().sort(function (a, b) { return pctOf(b) - pctOf(a); })[0];
@@ -151,9 +163,12 @@
       '<p style="color:var(--muted)">グレーのノード（実効素牛費・日当たり飼料費）は未取得のサンプル値。実データ接続で埋まる＝組合がこれから集めるデータの設計図。</p>';
     cmtEl.innerHTML = h;
 
-    noteEl.innerHTML = '単位の正規化＝<b>飼養1頭あたり年間</b>（牛房1枠あたり年間。豚の「母豚1頭あたり年間」に対応）。実線＝計算の親子（演算子つき）、破線＝傍系（参考指標。計算には使わない。増体DGは枝肉重量との整合データ＝歩留・生体重が未取得のため傍系）。' +
+    noteEl.innerHTML = '<b>粗利益＝販売額−変動費。労務費・減価償却などの固定費は含まない（EBITDAとは別の指標）。</b>' +
+      ' 単位の正規化＝<b>飼養1頭あたり年間</b>（牛房1枠あたり年間。豚の「母豚1頭あたり年間」に対応）。実線＝計算の親子（演算子つき）、破線＝傍系（参考指標。計算には使わない。増体DGは枝肉重量との整合データ＝歩留・生体重が未取得のため傍系）。' +
+      ' <b>コストの絶対額（変動費・素牛費・飼料費・1頭飼料費・その他変動費）には優劣を付けない</b>（回転が速い農場ほど年間のコストは増えるため）。効率は売上高飼料費比率と粗利益で見る。' +
+      ' 年間出荷頭数は同じ規模帯の中で比較（規模の大小は経営の巧拙ではないため）。' +
       (f.ku === '一貫' ? ' <b>一貫経営のため、素牛費は自家育成原価相当として表示している。</b>' : '') +
-      ' 判定：A=上位10%／B=〜25%／C=〜50%／D=〜75%／E=〜90%／F=下位10%（コスト系は低いほど上位）。';
+      ' 判定：A=上位10%／B=〜25%／C=〜50%／D=〜75%／E=〜90%／F=下位10%。';
   }
 
   // E系の受け入れ検査（app.js の runChecks から呼ばれる）
@@ -177,6 +192,12 @@
       ['calfCostPerHead', 'feedPerDay'].forEach(function (id) {
         var i = nodeInfo(f, v, nodeById(id));
         if (i.rank !== null || i.grade !== null) fails.push('E-1 未取得ノードに順位/判定 ' + id);
+      });
+      // F-4: コスト系5ノードに順位・判定が付いていないこと（値と式は表示する）
+      ['varCost', 'calfCostY', 'feedCostY', 'feedPerHead', 'otherCostY'].forEach(function (id) {
+        var i = nodeInfo(f, v, nodeById(id));
+        if (i.rank !== null || i.grade !== null) fails.push('F-4 コスト系ノードに順位/判定 ' + id);
+        if (i.value === undefined || i.text === undefined) fails.push('F-4 コスト系ノードの値が非表示 ' + id);
       });
     });
     // ツリーの carcassWt の計算経路に dg が含まれない（dgは傍系＝anchor接続のみ）

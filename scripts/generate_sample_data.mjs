@@ -33,7 +33,7 @@ export const METRICS = [
   { metric_id:'ordP',       label:'経常利益率',        unit:'%',    group:'econ', dir: 1, add: 1, formula:'経常利益 ÷ 売上高 × 100', source:'決算書（損益計算書）' },
   { metric_id:'debtEbitda', label:'有利子負債/EBITDA', unit:'年',   group:'econ', dir:-1, formula:'有利子負債残高 ÷ EBITDA', source:'決算書' },
   { metric_id:'feedRatio',  label:'売上高飼料費比率',  unit:'%',    group:'econ', dir:-1, formula:'1頭飼料費（肥育日数×550円/日）÷ 1頭売上（枝肉重量×枝肉単価）× 100', source:'導出（params.json の飼料係数）' },
-  { metric_id:'vetCost',    label:'出荷1頭当たり衛生費', unit:'円/頭', group:'econ', dir:-1, formula:'その他変動費 3万円/頭 の内訳（ワクチン・抗生剤・獣医療費。シェアは事故率に連動 0.35〜0.55）', source:'導出（その他変動費の内訳）' },
+  { metric_id:'vetCost',    label:'出荷1頭当たり衛生費', unit:'円/頭', group:'econ', dir:-1, formula:'その他変動費 3万円/頭 の内訳（ワクチン・抗生剤・獣医療費）。シェア0.35〜0.55は農場ごとの衛生管理への投資姿勢を表し、事故率とは独立', source:'その他変動費の内訳（サンプル）' },
   { metric_id:'gpPerWorker',label:'従業員1人当たり粗利', unit:'万円/人', group:'econ', dir: 1, formula:'1頭限界利益 × 年間出荷頭数 ÷ 従業員数（粗利＝限界利益ベース）', source:'導出（1頭経済モデル）' },
   // 繁殖KPI（繁殖・一貫のみ。肥育は素牛を市場購入するため持たない。黒毛和種は単胎のため産子数は使わない）
   { metric_id:'calvingInterval',       label:'分娩間隔',   unit:'ヶ月', group:'repro', dir:-1, formula:'分娩から次の分娩までの平均月数', source:'繁殖台帳' },
@@ -166,15 +166,23 @@ export function generate(){
     // ---- D-3: 導出指標（乱数を使わず、既存値・係数から算出。定義上、既存指標と矛盾しない）----
     f.shipPerYear=Math.round(f.head*f.invTurn);               // 年間出荷頭数＝頭数×在庫回転（丸め後の回転率と画面上一致）
     f.feedRatio=+(f.fatDays*FEED_YEN/sYen*100).toFixed(1);    // 売上高飼料費比率（1頭ベース）
-    // 衛生費＝その他変動費3万円の内訳。シェアは事故率に連動（事故が多い農場ほど獣医療費がかさむ）0.35〜0.55
-    f.vetShare=Math.max(0.35,Math.min(0.55,0.35+0.04*(f.mort-1)));
-    f.vetCost=Math.round(OTHER_VAR_YEN*f.vetShare/100)*100;   // 100円単位
     f.gpPerWorker=Math.round(margin0*f.shipPerYear/f.workers/1e4); // 従業員1人当たり粗利（万円・限界利益ベース）
     // ---- D-4: 母牛1頭当たり年間子牛販売額（繁殖・一貫のみ。分娩間隔・子牛生存率からの導出）----
     if(f.ku!=='肥育'){
       f.calfRevPerCow=+(CALF_SALE_YEN[f.ku]*(12/f.calvingInterval)*(f.calfSurvival/100)/1e4).toFixed(1);
     }
     delete f.debtMult; delete f.debtTarget; delete f.calfNoise; delete f.feedNoise;
+  });
+
+  // ---- F-2: 衛生費＝事故率から独立させる（Cowork検算 2026-09-10 差し戻し）----
+  // 旧実装（シェア＝事故率連動）は vetCost と mort の相関が1.000になり、全45農場で順位が完全一致していた。
+  // 「衛生費をケチって事故率が上がっている農場」が構造上存在できない＝反証不能（B-2と同型）。
+  // シェアは農場ごとの衛生管理への投資姿勢として独立に振る（弱い負の相関も意図的に作らない——因果の埋め込みはB-2と同じ誤り）。
+  // 既存の乱数ストリームを乱さないよう、別シードの独立ストリームで末尾に付与する（D系合格済みの他の全数値は不変）。
+  const rndVet=rng(SEED+1);
+  farms.forEach(f=>{
+    f.vetShare=0.35+rndVet()*0.20;                            // 0.35〜0.55・一様・他指標と独立
+    f.vetCost=Math.round(OTHER_VAR_YEN*f.vetShare/100)*100;   // 100円単位。0 < vetCost ≤ その他変動費3万円
   });
 
   // ---- 時系列（36ヶ月・月次） ----
@@ -198,7 +206,7 @@ export function generate(){
   farms.forEach(f=>{
     f.ts.shipPerYear=f.ts.invTurn.map(v=>f.head*v);
     f.ts.feedRatio=f.ts.fatDays.map((fd,i)=>fd*FEED_YEN/(f.ts.carcassWt[i]*f.ts.price[i])*100);
-    f.ts.vetCost=f.ts.mort.map(mv=>OTHER_VAR_YEN*Math.max(0.35,Math.min(0.55,0.35+0.04*(mv-1))));
+    f.ts.vetCost=f.ts.mort.map(()=>f.vetCost*(1+(rndVet()-0.5)*0.05)); // F-2: 事故率と独立（自値まわりの小さな揺らぎのみ）
     f.ts.gpPerWorker=f.ts.shipPerYear.map((sp,i)=>{
       const sT=f.ts.carcassWt[i]*f.ts.price[i];
       return sT*f.r0*sp/f.workers/1e4;

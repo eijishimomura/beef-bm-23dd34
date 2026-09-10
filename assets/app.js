@@ -11,8 +11,9 @@
   function quantile(s, q) { var p = (s.length - 1) * q, b = Math.floor(p), r = p - b; return s[b + 1] !== undefined ? s[b] + r * (s[b + 1] - s[b]) : s[b]; }
 
   var METRICS = {}, PROD = [], ECON = [], SCORE = [], REPRO = [];
-  // D-3: 散布図の軸に新4指標を追加。繁殖KPIは追加しない（肥育を含む母集団で欠損軸になるため。C-2の判断を維持）
-  var AXES = ['carcassWt', 'price', 'dg', 'shipPerYear', 'ebitdaM', 'invTurn', 'capTurn', 'equity', 'ordP', 'feedRatio', 'vetCost', 'gpPerWorker'];
+  // D-3: 散布図の軸に新指標を追加。繁殖KPIは追加しない（肥育を含む母集団で欠損軸になるため。C-2の判断を維持）
+  // F-1: shipPerYear は軸から外す（規模フィルタ「全」では規模の散布図にしかならないため）
+  var AXES = ['carcassWt', 'price', 'dg', 'ebitdaM', 'invTurn', 'capTurn', 'equity', 'ordP', 'feedRatio', 'vetCost', 'gpPerWorker'];
   var KUS = ['繁殖', '肥育', '一貫'];
   var farms = [], STATS = {}, BENCH = {}, RULES = [], NP = 0, PARAMS = null;
   var kuC = { '繁殖': '#0e7c86', '肥育': '#3b5bdb', '一貫': '#7048e8' };
@@ -25,7 +26,7 @@
       // E系：生産性ツリー（描画・検査は assets/tree.js。ここでは文脈だけ渡す）
       window.TreeView.init({
         farms: farms, PARAMS: PARAMS, rk: rk, bf: bf, gr: gr, gc: gc,
-        statN: function (m) { return STATS[m].all.length; }
+        statN: function (m, f) { return popOf(f, m).length; } // F-1: shipPerYear は規模帯内のn
       }, t[9], t[10]);
       init();
     })
@@ -77,8 +78,21 @@
                  : { hi10: b.p10, hi25: b.p25, med: b.p50, lo25: b.p75, lo10: b.p90, n: b.n };
   }
 
-  function bf(f, m) { var d = METRICS[m].dir, v = f[m], a = STATS[m].all, c = 0, i; for (i = 0; i < a.length; i++) if (d > 0 ? a[i] <= v : a[i] >= v) c++; return c / a.length; }
-  function rk(f, m) { var d = METRICS[m].dir, v = f[m], c = 1; farms.forEach(function (g) { if (g[m] === undefined) return; if (d > 0 ? g[m] > v : g[m] < v) c++; }); return c; }
+  // F-1: shipPerYear（年間出荷頭数）だけは母集団を「同じ規模帯」に切り替える。
+  // 全体母集団だと上位10%/下位10%が13.6倍＝規模の分布そのものになり、「小さい＝E判定」が機械的に出るため。
+  // 順位・判定・分位点・データ数のすべてが規模帯内（小n=16／中n=10／大n=19）。総合判定の分母は15のまま。
+  var BAND_SCOPED = { shipPerYear: 1 };
+  function popOf(f, m) {
+    var pop = BAND_SCOPED[m] ? farms.filter(function (g) { return g.band === f.band; }) : farms;
+    return pop.filter(function (g) { return g[m] !== undefined; });
+  }
+  function bf(f, m) {
+    var d = METRICS[m].dir, v = f[m], c = 0;
+    var a = BAND_SCOPED[m] ? popOf(f, m).map(function (g) { return g[m]; }) : STATS[m].all;
+    for (var i = 0; i < a.length; i++) if (d > 0 ? a[i] <= v : a[i] >= v) c++;
+    return c / a.length;
+  }
+  function rk(f, m) { var d = METRICS[m].dir, v = f[m], c = 1; popOf(f, m).forEach(function (g) { if (d > 0 ? g[m] > v : g[m] < v) c++; }); return c; }
   function gr(b) { return b >= .9 ? 'A' : b >= .75 ? 'B' : b >= .5 ? 'C' : b >= .25 ? 'D' : b >= .1 ? 'E' : 'F'; }
   function gc(g) { return cvar({ A: '--gA', B: '--gB', C: '--gC', D: '--gD', E: '--gE', F: '--gF' }[g]); }
   // 農場が値を持つ指標のみで採点する（肥育15指標／繁殖・一貫は繁殖KPIを含む22指標。分母が区分で異なる）
@@ -207,6 +221,7 @@
     var ctx = {
       n: farms.length, occ: occ, spare: spare, perW: perW, head: f.head, barnCap: f.barnCap, workers: f.workers,
       feedSelf: f.feedSelf, age: f.age, succ: f.succ, debt: f.debt,
+      vetCost: f.vetCost, vetGrade: gr(bf(f, 'vetCost')),
       price: f.price, priceRank: rk(f, 'price'), priceGrade: gr(bf(f, 'price')),
       carcassWt: f.carcassWt, priceUp100: Math.round(f.carcassWt * 100 / 1000),
       mort: f.mort, mortGrade: gr(bf(f, 'mort')),
@@ -363,7 +378,8 @@
     // E-3: 自農場の値を項目名の直後に置く（JASVの列順に合わせる。自分の値が一番遠い最右列だと読みにくい）
     var h = '<thead><tr><th style="text-align:left">指標</th><th>自農場</th><th>データ数</th><th>順位</th><th>判定</th><th>位置</th><th>上位10%</th><th>上位25%</th><th>中央値</th><th>下位25%</th><th>下位10%</th></tr></thead><tbody>';
     function row(m) {
-      var s = benchOf(m, 'all'), g = gr(bf(f, m)), lo = s.lo10, hi = s.hi10;
+      // F-1: shipPerYear は同じ規模帯のベンチ（band:小/中/大）と母集団を使う
+      var s = benchOf(m, BAND_SCOPED[m] ? 'band:' + f.band : 'all'), g = gr(bf(f, m)), lo = s.lo10, hi = s.hi10;
       var pos = Math.max(2, Math.min(98, (f[m] - lo) / ((hi - lo) || 1) * 100)), mp = Math.max(0, Math.min(100, (s.med - lo) / ((hi - lo) || 1) * 100));
       return '<tr class="mrow" data-m="' + m + '" style="cursor:pointer"><td class="k">' + METRICS[m].lb + ' <span style="font-weight:400;color:#8595a8">' + METRICS[m].u + (METRICS[m].dir < 0 ? ' ↓良' : '') + '</span></td>' +
         '<td class="self">' + f[m] + '</td>' +
@@ -404,7 +420,7 @@
       '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px">' +
       '<div style="font-size:12.5px;font-weight:800">' + METRICS[m].lb + ' <span style="font-weight:600;color:var(--muted)">' + METRICS[m].u + (METRICS[m].dir < 0 ? '・低いほど良い' : '') + '</span></div>' +
       '<div style="display:flex;align-items:center;gap:8px"><span style="font-size:19px;font-weight:800">' + f[m] + METRICS[m].u + '</span>' +
-      '<span class="gchip" style="background:' + gc(g) + '">' + g + '</span><span style="font-size:11px;color:var(--muted)">' + rk(f, m) + '位/' + STATS[m].all.length + '農場</span>' +
+      '<span class="gchip" style="background:' + gc(g) + '">' + g + '</span><span style="font-size:11px;color:var(--muted)">' + rk(f, m) + '位/' + popOf(f, m).length + '農場' + (BAND_SCOPED[m] ? '（同じ規模帯内）' : '') + '</span>' +
       '<button id="mdClose" style="border:1px solid var(--line);background:#fff;border-radius:7px;font-size:11px;padding:3px 10px;cursor:pointer">閉じる</button></div></div>' +
       '<div class="grid2">' +
       '<div><div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:4px">推移（12ヶ月ローリング）</div><div id="mdTs">' + (hasTs ? '' : '<div class="note">この指標の月次時系列は未取得（繁殖KPIは直近値のみ）。</div>') + '</div>' +
@@ -418,8 +434,9 @@
       for (i = 0; i < NP; i++) { var q = gapAt(i, m); hi.push(q.hi); md.push(q.med); lo.push(q.lo); }
       lineChart(document.getElementById('mdTs'), [{ data: hi, c: '#1e8f5b' }, { data: md, c: '#5f7085', w: 1.8 }, { data: lo, c: '#c0392b' }, { data: f.rl[m], c: '#3b5bdb', w: 2.6 }], { h: 210 });
     }
-    // ヒストグラム（12ビン・SVG手描き）
-    var vals = STATS[m].all, mn = vals[0], mx = vals[vals.length - 1], nb = 12, bw = (mx - mn) / nb || 1, bins = [];
+    // ヒストグラム（12ビン・SVG手描き）。shipPerYear は同じ規模帯の分布（F-1）
+    var vals = popOf(f, m).map(function (g) { return g[m]; }).sort(function (a, b) { return a - b; });
+    var mn = vals[0], mx = vals[vals.length - 1], nb = 12, bw = (mx - mn) / nb || 1, bins = [];
     for (i = 0; i < nb; i++) bins.push(0);
     vals.forEach(function (v) { bins[Math.min(nb - 1, Math.floor((v - mn) / bw))]++; });
     var W = 420, H = 210, p = { l: 8, r: 8, t: 20, b: 22 }, bmax = Math.max.apply(0, bins);
@@ -630,6 +647,30 @@
       var expect = f.head < 100 ? '小' : f.head < 300 ? '中' : '大';
       if (f.band !== expect) fails.push('B-1 規模帯と頭数の不整合 ' + f.name + ' head=' + f.head + ' band=' + f.band + '（正: ' + expect + '）');
     });
+    // F-1: shipPerYear の順位・判定・分位点・データ数が「同じ規模帯」の母集団で算出されている
+    var bandN = {}; farms.forEach(function (f) { bandN[f.band] = (bandN[f.band] || 0) + 1; });
+    farms.forEach(function (f) {
+      var n1 = popOf(f, 'shipPerYear').length;
+      if (n1 !== bandN[f.band]) fails.push('F-1 shipPerYear の母集団が規模帯と不一致 ' + f.name);
+      if ([16, 10, 19].indexOf(n1) < 0) fails.push('F-1 shipPerYear のデータ数が16/10/19以外 ' + f.name + ' n=' + n1);
+      var seg1 = BENCH['band:' + f.band] && BENCH['band:' + f.band].shipPerYear;
+      if (!seg1 || seg1.n !== n1) fails.push('F-1 benchmarks の band セグメント不一致 ' + f.name);
+    });
+    if (AXES.indexOf('shipPerYear') >= 0) fails.push('F-1 散布図の軸候補に shipPerYear が残っている');
+    // F-2: 衛生費が事故率から独立していること（相関 |r|<0.3、順位の不一致が10農場以上）
+    (function () {
+      var xs = farms.map(function (f) { return f.vetCost; }), ys = farms.map(function (f) { return f.mort; });
+      var n2 = xs.length, mx = 0, my = 0, i;
+      for (i = 0; i < n2; i++) { mx += xs[i]; my += ys[i]; } mx /= n2; my /= n2;
+      var sxy = 0, sxx = 0, syy = 0;
+      for (i = 0; i < n2; i++) { sxy += (xs[i] - mx) * (ys[i] - my); sxx += (xs[i] - mx) * (xs[i] - mx); syy += (ys[i] - my) * (ys[i] - my); }
+      var r2 = sxy / Math.sqrt(sxx * syy);
+      if (Math.abs(r2) >= 0.3) fails.push('F-2 vetCost と mort の相関が |r|=' + Math.abs(r2).toFixed(2) + '（<0.3 必須）');
+      var diff = farms.filter(function (f) { return rk(f, 'vetCost') !== rk(f, 'mort'); }).length;
+      if (diff < 10) fails.push('F-2 vetCost と mort の順位不一致が' + diff + '農場（10以上必須）');
+      if (PARAMS.other_var_cost_yen_per_head !== 30000) fails.push('F-2 その他変動費の総額が変更されている');
+      farms.forEach(function (f) { if (!(f.vetCost > 0 && f.vetCost <= PARAMS.other_var_cost_yen_per_head)) fails.push('F-2 vetCost 範囲外 ' + f.name); });
+    })();
     // C: 繁殖KPIの出し分け — 肥育は値を持たない／母集団に肥育を含まない／指標間の不自然な逆転がない
     var reproFarms = farms.filter(function (f) { return f.ku !== '肥育'; });
     farms.forEach(function (f) {
@@ -731,9 +772,13 @@
   // 「全部A」の優等生でも「全部F」の脱落農場でもなく、強みと弱みが混在するギザギザな
   // プロファイル（PigINFO 日高牧場型：量は出るが単価で負ける、等）を最初に見せる。
   // D-2: 母集団は肥育に限定する（組合員の8割が肥育。初期画面は肥育農家の景色にする）。
+  // 意図的な異常値2農場（巨牛ファーム=5・匠牧場=12）は散布図の山場用の極端例なので、
+  // 「典型的な農場の個票」であるべき初期表示の候補からは除外する。
+  var ANOMALY_IDS = { 5: 1, 12: 1 };
   function pickDefaultFarm() {
-    var bestMix = -1, best = farms.filter(function (f) { return f.ku === '肥育'; })[0] || farms[0];
-    farms.filter(function (f) { return f.ku === '肥育'; }).forEach(function (f) {
+    var cand = farms.filter(function (f) { return f.ku === '肥育' && !ANOMALY_IDS[f.id]; });
+    var bestMix = -1, best = cand[0] || farms[0];
+    cand.forEach(function (f) {
       var good = 0, bad = 0, ranks = [];
       scoreKeys(f).forEach(function (m) {
         var g = gr(bf(f, m)); ranks.push(rk(f, m));
