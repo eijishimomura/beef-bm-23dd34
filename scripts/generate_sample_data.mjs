@@ -12,7 +12,29 @@ function rng(s){return function(){s|=0;s=s+0x6D2B79F5|0;var t=Math.imul(s^s>>>15
 
 export const SEED = 20260709;
 
+// 経済係数（data/params.json と一致させること。ズレると導出指標とシミュレーションが矛盾する）
+export const FEED_YEN=550;                                  // 飼料費 円/日・頭
+export const OTHER_VAR_YEN=30000;                           // その他変動費 円/頭（衛生費はこの内訳）
+export const CALF_SALE_YEN={'繁殖':700000,'一貫':500000};   // 子牛換算値（繁殖=販売額／一貫=内製化価値）
+export const MARGIN_BASE=0.06, MARGIN_COEF=0.05, MARGIN_CAP=0.175, MARGIN_FLOOR=0.055; // 1頭限界利益率レンジ
+
+// D-1: 表示順の正はこの配列（生産 → 経営 → 繁殖）。成績表・ダッシュボードのセレクタは metrics.json の並びに従う。
 export const METRICS = [
+  { metric_id:'carcassWt',  label:'枝肉重量',          unit:'kg',   group:'prod', dir: 1, formula:'出荷牛の平均枝肉重量', source:'と畜成績（枝肉証明書）' },
+  { metric_id:'price',      label:'枝肉単価',          unit:'円/kg', group:'prod', dir: 1, formula:'枝肉売上 ÷ 枝肉重量', source:'市場データ' },
+  { metric_id:'dg',         label:'増体 DG',           unit:'g/日',  group:'prod', dir: 1, formula:'(出荷体重 − 導入体重) ÷ 飼養日数', source:'飼養記録' },
+  { metric_id:'mort',       label:'事故率',            unit:'%',    group:'prod', dir:-1, formula:'事故頭数 ÷ 飼養頭数 × 100', source:'飼養記録' },
+  { metric_id:'fatDays',    label:'肥育日数',          unit:'日',   group:'prod', dir:-1, formula:'導入から出荷までの平均日数', source:'飼養記録' },
+  { metric_id:'shipPerYear',label:'年間出荷頭数',      unit:'頭/年', group:'prod', dir: 1, formula:'常時飼養頭数 × 在庫回転(牛群)。回転率と定義上一致する導出値', source:'出荷実績' },
+  { metric_id:'ebitdaM',    label:'EBITDAマージン',    unit:'%',    group:'econ', dir: 1, formula:'EBITDA ÷ 売上高 × 100', source:'決算書（損益計算書）' },
+  { metric_id:'invTurn',    label:'在庫回転(牛群)',    unit:'回',   group:'econ', dir: 1, formula:'年間出荷頭数 ÷ 平均飼養頭数', source:'飼養記録・出荷実績' },
+  { metric_id:'capTurn',    label:'総資本回転',        unit:'回',   group:'econ', dir: 1, formula:'売上高 ÷ 総資本', source:'決算書（貸借対照表）' },
+  { metric_id:'equity',     label:'自己資本比率',      unit:'%',    group:'econ', dir: 1, formula:'自己資本 ÷ 総資本 × 100', source:'決算書（貸借対照表）' },
+  { metric_id:'ordP',       label:'経常利益率',        unit:'%',    group:'econ', dir: 1, add: 1, formula:'経常利益 ÷ 売上高 × 100', source:'決算書（損益計算書）' },
+  { metric_id:'debtEbitda', label:'有利子負債/EBITDA', unit:'年',   group:'econ', dir:-1, formula:'有利子負債残高 ÷ EBITDA', source:'決算書' },
+  { metric_id:'feedRatio',  label:'売上高飼料費比率',  unit:'%',    group:'econ', dir:-1, formula:'1頭飼料費（肥育日数×550円/日）÷ 1頭売上（枝肉重量×枝肉単価）× 100', source:'導出（params.json の飼料係数）' },
+  { metric_id:'vetCost',    label:'出荷1頭当たり衛生費', unit:'円/頭', group:'econ', dir:-1, formula:'その他変動費 3万円/頭 の内訳（ワクチン・抗生剤・獣医療費。シェアは事故率に連動 0.35〜0.55）', source:'導出（その他変動費の内訳）' },
+  { metric_id:'gpPerWorker',label:'従業員1人当たり粗利', unit:'万円/人', group:'econ', dir: 1, formula:'1頭限界利益 × 年間出荷頭数 ÷ 従業員数（粗利＝限界利益ベース）', source:'導出（1頭経済モデル）' },
   // 繁殖KPI（繁殖・一貫のみ。肥育は素牛を市場購入するため持たない。黒毛和種は単胎のため産子数は使わない）
   { metric_id:'calvingInterval',       label:'分娩間隔',   unit:'ヶ月', group:'repro', dir:-1, formula:'分娩から次の分娩までの平均月数', source:'繁殖台帳' },
   { metric_id:'firstCalvingAge',       label:'初産月齢',   unit:'ヶ月', group:'repro', dir:-1, formula:'初回分娩時の月齢', source:'繁殖台帳' },
@@ -20,23 +42,15 @@ export const METRICS = [
   { metric_id:'servicesPerConception', label:'授精回数',   unit:'回',  group:'repro', dir:-1, formula:'妊娠成立までの平均授精回数', source:'授精記録' },
   { metric_id:'calvingRate',           label:'分娩率',     unit:'%',   group:'repro', dir: 1, formula:'年間分娩頭数 ÷ 母牛頭数 × 100', source:'繁殖台帳' },
   { metric_id:'calfSurvival',          label:'子牛生存率', unit:'%',   group:'repro', dir: 1, formula:'100 − 哺乳期間の死亡率', source:'飼養記録' },
-  { metric_id:'carcassWt',  label:'枝肉重量',          unit:'kg',   group:'prod', dir: 1, formula:'出荷牛の平均枝肉重量', source:'と畜成績（枝肉証明書）' },
-  { metric_id:'price',      label:'枝肉単価',          unit:'円/kg', group:'prod', dir: 1, formula:'枝肉売上 ÷ 枝肉重量', source:'市場データ' },
-  { metric_id:'dg',         label:'増体 DG',           unit:'g/日',  group:'prod', dir: 1, formula:'(出荷体重 − 導入体重) ÷ 飼養日数', source:'飼養記録' },
-  { metric_id:'mort',       label:'事故率',            unit:'%',    group:'prod', dir:-1, formula:'事故頭数 ÷ 飼養頭数 × 100', source:'飼養記録' },
-  { metric_id:'fatDays',    label:'肥育日数',          unit:'日',   group:'prod', dir:-1, formula:'導入から出荷までの平均日数', source:'飼養記録' },
-  { metric_id:'ebitdaM',    label:'EBITDAマージン',    unit:'%',    group:'econ', dir: 1, formula:'EBITDA ÷ 売上高 × 100', source:'決算書（損益計算書）' },
-  { metric_id:'invTurn',    label:'在庫回転(牛群)',    unit:'回',   group:'econ', dir: 1, formula:'年間出荷頭数 ÷ 平均飼養頭数', source:'飼養記録・出荷実績' },
-  { metric_id:'capTurn',    label:'総資本回転',        unit:'回',   group:'econ', dir: 1, formula:'売上高 ÷ 総資本', source:'決算書（貸借対照表）' },
-  { metric_id:'equity',     label:'自己資本比率',      unit:'%',    group:'econ', dir: 1, formula:'自己資本 ÷ 総資本 × 100', source:'決算書（貸借対照表）' },
-  { metric_id:'ordP',       label:'経常利益率',        unit:'%',    group:'econ', dir: 1, add: 1, formula:'経常利益 ÷ 売上高 × 100', source:'決算書（損益計算書）' },
-  { metric_id:'debtEbitda', label:'有利子負債/EBITDA', unit:'年',   group:'econ', dir:-1, formula:'有利子負債残高 ÷ EBITDA', source:'決算書' }
+  { metric_id:'calfRevPerCow',         label:'母牛1頭当たり年間子牛販売額', unit:'万円/頭・年', group:'repro', dir: 1, formula:'子牛換算値（区分別：繁殖70万/一貫50万）×（12 ÷ 分娩間隔）×（子牛生存率 ÷ 100）。分娩間隔・子牛生存率からの導出値', source:'導出（繁殖KPI）' }
 ];
 const MMAP = Object.fromEntries(METRICS.map(m=>[m.metric_id,m]));
-const REPRO=['calvingInterval','firstCalvingAge','conceptionRate','servicesPerConception','calvingRate','calfSurvival'];
-const PROD=['carcassWt','price','dg','mort','fatDays'];
-const ECON=['ebitdaM','invTurn','capTurn','equity','ordP','debtEbitda'];
+const REPRO=['calvingInterval','firstCalvingAge','conceptionRate','servicesPerConception','calvingRate','calfSurvival','calfRevPerCow'];
+const PROD=['carcassWt','price','dg','mort','fatDays','shipPerYear'];
+const ECON=['ebitdaM','invTurn','capTurn','equity','ordP','debtEbitda','feedRatio','vetCost','gpPerWorker'];
 const SCORE=PROD.concat(ECON); // 時系列・格差推移の対象。繁殖KPIは直近値のみ（REPRO）
+// D-3: 新指標は既存値から導出する（乱数で独立生成しない。B-1= band/head 不整合と同型の事故防止）
+const DERIVED=['shipPerYear','feedRatio','vetCost','gpPerWorker'];
 
 const KUS=['繁殖','肥育','一貫'], REGS=['北海道','東北','関東','中国','九州'];
 // 架空名のみ。実在農場を想起させる名前は使わない。45件目（ほしぞら）は重複回避のため追加。
@@ -102,6 +116,10 @@ export function generate(){
   // farms[20] は繁殖経営（関東）。個票のギザギザなプロファイルのデフォルト表示に使う。
   Object.assign(farms[20],{carcassWt:506,price:2020,dg:965,mort:2.4,fatDays:600,skill:0.55,
     calvingInterval:12.4,firstCalvingAge:23.4,conceptionRate:68,servicesPerConception:1.4,calvingRate:92,calfSurvival:96});
+  // D-2: 「上位判定と下位判定が混在する肥育農場」を必ず1件保証する（個票の初期表示候補）。
+  // farms[22] は肥育（関東）。枝肉重量・増体・事故率は上位A、単価は下位圏——肥育版の日高牧場型。
+  // 単価が低いため経営指標（EBITDAマージン・1人当たり粗利）も下位圏に落ち、A×E/Fのギザギザになる。
+  Object.assign(farms[22],{carcassWt:508,price:1985,dg:980,mort:1.8,fatDays:592,skill:0.55});
 
   // 規模帯（band）は頭数から派生させる（独立に持たない）。異常値の頭数上書き後に必ず再計算し、
   // 「層別の中央値」「規模フィルタ」と頭数表示が矛盾しないことを保証する（巨牛=大規模／匠=小規模）。
@@ -134,6 +152,28 @@ export function generate(){
     f.debtEbitda=+(f.debt/ebitda).toFixed(1);                 // 有利子負債/EBITDA
     // 経常利益率＝EBITDAマージン −（減価償却＋支払利息）/売上
     f.ordP=+((ebitda-fixed*0.055-f.debt*0.02)/salesM*100).toFixed(1);
+
+    // ---- 実効素牛費（シミュレーション・導出指標が共用する1頭限界利益の基礎）----
+    // 1頭限界利益率 r0 を薄利レンジ（5.5〜17.5%）に収まるよう先に決め、素牛費を1頭売上から逆算する
+    // （B-2で明記した循環構造。生成時に確定して context.json に持たせ、アプリ側は再計算しない）。
+    const sYen=f.carcassWt*f.price;                           // 1頭売上（円）
+    const rMax=MARGIN_CAP-(90*FEED_YEN)/sYen;                 // Δd=90日でも上限を超えない天井
+    const r0=Math.max(MARGIN_FLOOR,Math.min(MARGIN_BASE+MARGIN_COEF*f.skill,rMax));
+    f.calfCostEff=Math.round(sYen*(1-r0)-f.fatDays*FEED_YEN-OTHER_VAR_YEN); // 実効素牛費（円/頭）
+    const margin0=sYen-f.calfCostEff-f.fatDays*FEED_YEN-OTHER_VAR_YEN;      // 1頭限界利益（円・現状肥育日数）
+    f.r0=margin0/sYen;
+
+    // ---- D-3: 導出指標（乱数を使わず、既存値・係数から算出。定義上、既存指標と矛盾しない）----
+    f.shipPerYear=Math.round(f.head*f.invTurn);               // 年間出荷頭数＝頭数×在庫回転（丸め後の回転率と画面上一致）
+    f.feedRatio=+(f.fatDays*FEED_YEN/sYen*100).toFixed(1);    // 売上高飼料費比率（1頭ベース）
+    // 衛生費＝その他変動費3万円の内訳。シェアは事故率に連動（事故が多い農場ほど獣医療費がかさむ）0.35〜0.55
+    f.vetShare=Math.max(0.35,Math.min(0.55,0.35+0.04*(f.mort-1)));
+    f.vetCost=Math.round(OTHER_VAR_YEN*f.vetShare/100)*100;   // 100円単位
+    f.gpPerWorker=Math.round(margin0*f.shipPerYear/f.workers/1e4); // 従業員1人当たり粗利（万円・限界利益ベース）
+    // ---- D-4: 母牛1頭当たり年間子牛販売額（繁殖・一貫のみ。分娩間隔・子牛生存率からの導出）----
+    if(f.ku!=='肥育'){
+      f.calfRevPerCow=+(CALF_SALE_YEN[f.ku]*(12/f.calvingInterval)*(f.calfSurvival/100)/1e4).toFixed(1);
+    }
     delete f.debtMult; delete f.debtTarget; delete f.calfNoise; delete f.feedNoise;
   });
 
@@ -144,15 +184,26 @@ export function generate(){
   //   （収束は差の縮小であり反転させない）。ノイズによる近傍農場同士の入替は自然変動の範囲で残る。
   // CONV=過去に閉じていた格差の割合（財務指標は大きく、生産指標は小さく）
   const CONV={ebitdaM:0.3,ordP:0.3,debtEbitda:0.25,mort:0.25,price:0.28,invTurn:0.2,capTurn:0.12,equity:0.12,carcassWt:0.1,dg:0.1,fatDays:0.1};
+  const BASE_TS=SCORE.filter(m=>!DERIVED.includes(m)); // 導出指標の時系列は下で成分から合成する
   const MED={};
-  SCORE.forEach(m=>{const v=farms.map(f=>f[m]).sort((a,b)=>a-b);MED[m]=quantile(v,.5);});
+  BASE_TS.forEach(m=>{const v=farms.map(f=>f[m]).sort((a,b)=>a-b);MED[m]=quantile(v,.5);});
   function mkTS(base,add,med,conv){
     const wob=(rnd()-0.5)*0.03; // 農場固有の揺らぎ（トレンドを機械的に見せない）
     const a=[];for(let t=0;t<36;t++){const p=(35-t)/35;
       const core=base+(med-base)*conv*p;
       a.push(add? core+wob*3*p+(rnd()-0.5)*0.8 : core*(1+wob*p)*(1+(rnd()-0.5)*0.08));}
     return a;}
-  farms.forEach(f=>{f.ts={};SCORE.forEach(m=>{f.ts[m]=mkTS(f[m],MMAP[m].add,MED[m],CONV[m]||0.12);});});
+  farms.forEach(f=>{f.ts={};BASE_TS.forEach(m=>{f.ts[m]=mkTS(f[m],MMAP[m].add,MED[m],CONV[m]||0.12);});});
+  // D-3: 導出指標の時系列も乱数を足さず、成分指標の時系列から同じ算式で合成する
+  farms.forEach(f=>{
+    f.ts.shipPerYear=f.ts.invTurn.map(v=>f.head*v);
+    f.ts.feedRatio=f.ts.fatDays.map((fd,i)=>fd*FEED_YEN/(f.ts.carcassWt[i]*f.ts.price[i])*100);
+    f.ts.vetCost=f.ts.mort.map(mv=>OTHER_VAR_YEN*Math.max(0.35,Math.min(0.55,0.35+0.04*(mv-1))));
+    f.ts.gpPerWorker=f.ts.shipPerYear.map((sp,i)=>{
+      const sT=f.ts.carcassWt[i]*f.ts.price[i];
+      return sT*f.r0*sp/f.workers/1e4;
+    });
+  });
 
   // ---- 年次（決算3期分）— 財務は月次で遡及できないため年次の二層で持つ ----
   // 直近期=現在値。過去2期は EBITDAマージンの時系列ドリフトと整合させて導出する。
@@ -193,7 +244,7 @@ export function generate(){
   const period=ymList[ymList.length-1];
   const tables={
     farms: farms.map(f=>({farm_id:f.id,name:f.name,ku:f.ku,region:f.reg,band:f.band,head:f.head})),
-    context: farms.map(f=>({farm_id:f.id,barn_cap:f.barnCap,workers:f.workers,calf_source:f.calfSrc,feed_self_pct:f.feedSelf,debt_myen:f.debt,owner_age:f.age,successor:f.succ})),
+    context: farms.map(f=>({farm_id:f.id,barn_cap:f.barnCap,workers:f.workers,calf_source:f.calfSrc,feed_self_pct:f.feedSelf,debt_myen:f.debt,owner_age:f.age,successor:f.succ,calf_cost_eff_yen:f.calfCostEff})),
     metrics: METRICS,
     farm_metrics: farms.flatMap(f=>SCORE.concat(REPRO).filter(m=>f[m]!==undefined).map(m=>({farm_id:f.id,metric_id:m,value:f[m],period}))),
     timeseries: farms.flatMap(f=>SCORE.flatMap(m=>f.ts[m].map((v,i)=>({farm_id:f.id,metric_id:m,ym:ymList[i],value:r3(v)})))),

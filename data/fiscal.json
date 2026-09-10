@@ -596,28 +596,28 @@
  {
   "farm_id": 22,
   "fy": 2023,
-  "sales": 499,
-  "ebitda": 90.8,
-  "ebitda_margin": 18.2,
-  "debt": 256,
+  "sales": 451,
+  "ebitda": 70.8,
+  "ebitda_margin": 15.7,
+  "debt": 191,
   "equity_ratio": 45
  },
  {
   "farm_id": 22,
   "fy": 2024,
-  "sales": 512,
-  "ebitda": 94.7,
-  "ebitda_margin": 18.5,
-  "debt": 255,
+  "sales": 463,
+  "ebitda": 72.7,
+  "ebitda_margin": 15.7,
+  "debt": 190,
   "equity_ratio": 47
  },
  {
   "farm_id": 22,
   "fy": 2025,
-  "sales": 531,
-  "ebitda": 101.4,
-  "ebitda_margin": 19.1,
-  "debt": 245,
+  "sales": 480,
+  "ebitda": 75.8,
+  "ebitda_margin": 15.8,
+  "debt": 183,
   "equity_ratio": 48
  },
  {

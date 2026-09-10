@@ -11,7 +11,8 @@
   function quantile(s, q) { var p = (s.length - 1) * q, b = Math.floor(p), r = p - b; return s[b + 1] !== undefined ? s[b] + r * (s[b + 1] - s[b]) : s[b]; }
 
   var METRICS = {}, PROD = [], ECON = [], SCORE = [], REPRO = [];
-  var AXES = ['carcassWt', 'price', 'dg', 'ebitdaM', 'invTurn', 'capTurn', 'equity', 'ordP'];
+  // D-3: 散布図の軸に新4指標を追加。繁殖KPIは追加しない（肥育を含む母集団で欠損軸になるため。C-2の判断を維持）
+  var AXES = ['carcassWt', 'price', 'dg', 'shipPerYear', 'ebitdaM', 'invTurn', 'capTurn', 'equity', 'ordP', 'feedRatio', 'vetCost', 'gpPerWorker'];
   var KUS = ['繁殖', '肥育', '一貫'];
   var farms = [], STATS = {}, BENCH = {}, RULES = [], NP = 0, PARAMS = null;
   var kuC = { '繁殖': '#0e7c86', '肥育': '#3b5bdb', '一貫': '#7048e8' };
@@ -36,7 +37,7 @@
 
     var byId = {};
     farmsT.forEach(function (r) { byId[r.farm_id] = { id: r.farm_id, name: r.name, ku: r.ku, reg: r.region, band: r.band, head: r.head, ts: {}, rl: {}, fiscal: [] }; });
-    contextT.forEach(function (r) { var f = byId[r.farm_id]; f.barnCap = r.barn_cap; f.workers = r.workers; f.calfSrc = r.calf_source; f.feedSelf = r.feed_self_pct; f.debt = r.debt_myen; f.age = r.owner_age; f.succ = r.successor; });
+    contextT.forEach(function (r) { var f = byId[r.farm_id]; f.barnCap = r.barn_cap; f.workers = r.workers; f.calfSrc = r.calf_source; f.feedSelf = r.feed_self_pct; f.debt = r.debt_myen; f.age = r.owner_age; f.succ = r.successor; f.calfCostEff = r.calf_cost_eff_yen; });
     fmT.forEach(function (r) { byId[r.farm_id][r.metric_id] = r.value; });
     tsT.forEach(function (r) { var f = byId[r.farm_id]; (f.ts[r.metric_id] = f.ts[r.metric_id] || []).push(r); });
     fiscalT.forEach(function (r) { byId[r.farm_id].fiscal.push(r); });
@@ -72,7 +73,7 @@
   function rk(f, m) { var d = METRICS[m].dir, v = f[m], c = 1; farms.forEach(function (g) { if (g[m] === undefined) return; if (d > 0 ? g[m] > v : g[m] < v) c++; }); return c; }
   function gr(b) { return b >= .9 ? 'A' : b >= .75 ? 'B' : b >= .5 ? 'C' : b >= .25 ? 'D' : b >= .1 ? 'E' : 'F'; }
   function gc(g) { return cvar({ A: '--gA', B: '--gB', C: '--gC', D: '--gD', E: '--gE', F: '--gF' }[g]); }
-  // 農場が値を持つ指標のみで採点する（繁殖・一貫は繁殖KPIを含む17指標、肥育は11指標）
+  // 農場が値を持つ指標のみで採点する（肥育15指標／繁殖・一貫は繁殖KPIを含む22指標。分母が区分で異なる）
   function scoreKeys(f) { return SCORE.concat(REPRO.filter(function (m) { return f[m] !== undefined; })); }
   function ov(f) { var ks = scoreKeys(f), s = 0; ks.forEach(function (m) { s += bf(f, m); }); return s / ks.length; }
   function gapAt(i, m) {
@@ -171,7 +172,10 @@
     });
     var lg = '', kk;
     if (st.col === 'ku') { for (kk in kuC) lg += '<b><span class="dot" style="background:' + kuC[kk] + '"></span>' + kk + '</b>'; }
-    else ['A', 'B', 'C', 'D', 'E', 'F'].forEach(function (g) { lg += '<b><span class="dot" style="background:' + gc(g) + '"></span>' + g + '</b>'; });
+    else {
+      ['A', 'B', 'C', 'D', 'E', 'F'].forEach(function (g) { lg += '<b><span class="dot" style="background:' + gc(g) + '"></span>' + g + '</b>'; });
+      lg += '<b style="color:var(--muted)">判定＝区分が持つ指標で採点（肥育15／繁殖・一貫22指標）</b>'; // D-3: 分母が区分で違う
+    }
     lg += '<b style="color:var(--muted)">○大きさ＝規模</b>';
     document.getElementById('legend').innerHTML = lg;
     var xM = STATS[xm].med, yM = STATS[ym].med;
@@ -197,13 +201,17 @@
       feedSelf: f.feedSelf, age: f.age, succ: f.succ, debt: f.debt,
       price: f.price, priceRank: rk(f, 'price'), priceGrade: gr(bf(f, 'price')),
       carcassWt: f.carcassWt, priceUp100: Math.round(f.carcassWt * 100 / 1000),
-      mort: f.mort, mortGrade: gr(bf(f, 'mort')), mortAddHead: Math.round(f.head * 365 / f.fatDays * 0.01),
+      mort: f.mort, mortGrade: gr(bf(f, 'mort')),
       fatDays: f.fatDays, fatGrade: gr(bf(f, 'fatDays')),
       invTurn: f.invTurn, turnGrade: gr(bf(f, 'invTurn')),
       turnAfter30: (f.invTurn * f.fatDays / (f.fatDays - 30)).toFixed(2),
       debtEbitda: f.debtEbitda, ebitdaM: f.ebitdaM,
       hasRepro: f.calvingInterval !== undefined
     };
+    // D-7: 事故率1pt改善の出荷増。小数第1位で表示し、0.0頭に丸まる小規模農場では token を未定義に
+    // することでルール自体を非適用にする（fillTemplate の「根拠が揃わない指摘は出さない」ガードが効く）
+    var mortGain = f.head * 365 / f.fatDays * 0.01;
+    if (mortGain >= 0.05) ctx.mortAddHead = mortGain.toFixed(1);
     // 繁殖KPI（繁殖・一貫のみ）。肥育では token が用意されないため、繁殖ルールは fillTemplate 段階でも弾かれる（二重ガード）
     if (ctx.hasRepro) {
       ctx.calvingInterval = f.calvingInterval; ctx.ciRank = rk(f, 'calvingInterval'); ctx.ciGrade = gr(bf(f, 'calvingInterval'));
@@ -357,11 +365,12 @@
           '<td class="self">' + f[m] + '</td></tr>';
       });
     }
-    // 繁殖セクション：繁殖・一貫のみ実数を表示。肥育は「該当なし」の1行（非表示にしない＝モデルの透明性）
+    // D-1: セクション順は 生産 → 経営 → 繁殖（組合員の8割が肥育。肥育農家が最初に見るのは自分の成績）
+    sec('生産', PROD); sec('経営', ECON);
+    // 繁殖セクション：繁殖・一貫のみ実数を表示。肥育は「該当なし」の1行を末尾に（非表示にしない＝モデルの透明性）
     if (f.calvingInterval !== undefined) sec('繁殖', REPRO);
     else h += '<tr><td colspan="11" style="text-align:left;background:var(--ink);color:#fff;font-weight:800;font-size:10.5px;letter-spacing:.06em">繁殖</td></tr>' +
       '<tr><td colspan="11" style="text-align:left;color:var(--muted)">該当なし（肥育経営。素牛は市場購入のため繁殖成績を持たない）</td></tr>';
-    sec('生産', PROD); sec('経営', ECON);
     h += '</tbody>'; document.getElementById('scoreTbl').innerHTML = h;
   }
 
@@ -399,50 +408,46 @@
   }
 
   // 改善シミュレーション：1頭限界利益ベース（モデルは assets/sim_model.js、係数は data/params.json）
+  // D-6: 表示は displayBreakdown() の値をそのまま使う。頭数を先に丸め、丸めた頭数×丸めた単価＝表示金額が
+  //      全レバー・全位置で厳密に一致する（runChecks も同じ関数を検算する）。
   function initSim(f, occ) {
     var sF = document.getElementById('sFat'), sM = document.getElementById('sMort'), sC = document.getElementById('sCi');
     sF.value = 0; sM.value = 0; sC.value = 0;
     var hasRepro = f.calvingInterval !== undefined;
     document.getElementById('ciLever').style.display = hasRepro ? '' : 'none'; // 繁殖レバーは繁殖・一貫のみ
-    var ovVal = ov(f);
     function disp(v) { return (v < 0 ? '−' : '+') + '¥' + Math.abs(v).toLocaleString() + '万'; }
     function run() {
       var dF = +sF.value, dM = +sM.value / 10, dC = hasRepro ? +sC.value / 10 : 0;
       document.getElementById('lbFat').textContent = dF; document.getElementById('lbMort').textContent = dM.toFixed(1);
       if (hasRepro) document.getElementById('lbCi').textContent = dC.toFixed(1);
-      var r = window.SimModel.simulate(f, PARAMS, ovVal, dF, dM, dC);
-      var addTotal = r.addTurn + r.saved;
+      var d = window.SimModel.displayBreakdown(f, PARAMS, dF, dM, dC), r = d.sim, w = d.rows;
       var baseE = f.sales * 1e6 * f.ebitdaM / 100;                 // 現状EBITDA（円）
-      var newE = baseE + r.netGain;
-      // 分母：子牛増は繁殖では実売上、一貫では素牛費の内製化（費用減）のため売上には足さない
-      var newSales = f.sales * 1e6 + r.salesInc + (f.ku === '繁殖' ? r.calfGain : 0);
+      var newE = baseE + w.net * 1e4;                              // EBITDA増＝表示の純増益（画面と数字を一致させる）
+      // 分母：売上増＋（繁殖のみ）子牛販売額。一貫の子牛増は将来の自家肥育（内製化）のため売上に足さない
+      var newSales = f.sales * 1e6 + w.sales * 1e4 + (f.ku === '繁殖' && d.nCalf > 0 ? d.nCalf * PARAMS.calf_sale_yen['繁殖'] : 0);
       var ne = newE / newSales * 100;
       var nd = newE > 0 ? (f.debt * 1e6 / newE) : Infinity;
-      // 表示は万円に丸めた各行の加減算が厳密に一致するよう、丸め後の値から純増益を組み立てる
-      var rSales = Math.round(r.salesInc / 1e4), rCalf = Math.round(r.calfInc / 1e4),
-        rFeed = Math.round(r.feedIncNet / 1e4), rOther = Math.round(r.otherInc / 1e4),
-        rCalfGain = Math.round(r.calfGain / 1e4);
-      var rNet = rSales - rCalf - rFeed - rOther + rCalfGain;
-      document.getElementById('oHead').textContent = '+' + Math.round(addTotal) + ' 頭/年';
-      document.getElementById('oYen').innerHTML = disp(rNet) + '<span style="font-size:11px">/年</span>';
+      document.getElementById('oHead').textContent = '+' + (d.nTurn + d.nSaved) + ' 頭/年';
+      document.getElementById('oYen').innerHTML = disp(w.net) + '<span style="font-size:11px">/年</span>';
       document.getElementById('oEbit').innerHTML = f.ebitdaM + '% <span class="up">→ ' + ne.toFixed(1) + '%</span>';
       document.getElementById('oDebt').innerHTML = f.debtEbitda + '年 <span class="up">→ ' + (isFinite(nd) ? nd.toFixed(1) : '—') + '年</span>';
-      // 内訳表：売上増 − 素牛費増 − 飼料費増減 − その他変動費増 ＋ 子牛増 = 純増益（画面上で検算できる）
+      // 内訳表：売上増 − 素牛費増 − 飼料費増減 − その他変動費増 ＋ 子牛増の限界利益 = 純増益（頭数×単価が画面上で検算できる）
       var h =
         '<thead><tr><th style="text-align:left">項目</th><th>金額/年</th><th style="text-align:left">内容</th></tr></thead><tbody>' +
-        '<tr><td class="k">売上増</td><td>' + disp(rSales) + '</td><td style="text-align:left">追加出荷 ' + Math.round(addTotal) + '頭（回転' + Math.round(r.addTurn) + '＋救命' + Math.round(r.saved) + '）× 1頭売上 ' + Math.round(r.eco.s / 1e4) + '万円</td></tr>' +
-        '<tr><td class="k">素牛費 増</td><td>' + disp(-rCalf) + '</td><td style="text-align:left">回転増 ' + Math.round(r.addTurn) + '頭 × ' + Math.round(r.eco.calf / 1e4) + '万円/頭（救命牛は投下済みのため除く）</td></tr>' +
-        '<tr><td class="k">飼料費 増減</td><td>' + disp(-rFeed) + '</td><td style="text-align:left">既存出荷の短縮削減 − 追加飼養分</td></tr>' +
-        '<tr><td class="k">その他変動費 増</td><td>' + disp(-rOther) + '</td><td style="text-align:left">追加出荷 ' + Math.round(addTotal) + '頭（回転＋救命）× ' + Math.round(PARAMS.other_var_cost_yen_per_head / 1e4) + '万円/頭（敷料・診療 等）</td></tr>';
+        '<tr><td class="k">売上増</td><td>' + disp(w.sales) + '</td><td style="text-align:left">追加出荷 ' + (d.nTurn + d.nSaved) + '頭（回転' + d.nTurn + '＋救命' + d.nSaved + '）× 1頭売上 ' + d.uSales + '万円</td></tr>' +
+        '<tr><td class="k">素牛費 増</td><td>' + disp(-w.calfInc) + '</td><td style="text-align:left">回転増 ' + d.nTurn + '頭 × ' + d.uCalf + '万円/頭（救命牛は投下済みのため除く）</td></tr>' +
+        '<tr><td class="k">飼料費 増減</td><td>' + disp(-w.feed) + '</td><td style="text-align:left">既存出荷の短縮削減 − 追加飼養分</td></tr>' +
+        '<tr><td class="k">その他変動費 増</td><td>' + disp(-w.other) + '</td><td style="text-align:left">追加出荷 ' + (d.nTurn + d.nSaved) + '頭（回転＋救命）× ' + d.uOther + '万円/頭（敷料・診療 等）</td></tr>';
       if (hasRepro) h +=
-        '<tr><td class="k">子牛増（分娩間隔短縮）</td><td>' + disp(rCalfGain) + '</td><td style="text-align:left">追加子牛 ' + Math.round(r.calfAdd) + '頭 × ' + Math.round(PARAMS.calf_sale_yen[f.ku] / 1e4) + '万円（' + (f.ku === '繁殖' ? '市場販売額' : '素牛費の内製化価値') + '）</td></tr>';
-      h += '<tr style="font-weight:800;background:#eef3fb"><td class="k">純増益（EBITDA増）</td><td>' + disp(rNet) + '</td><td style="text-align:left">1頭限界利益率 ' + (r.marginRatio * 100).toFixed(1) + '%（薄利構造）</td></tr></tbody>';
+        '<tr><td class="k">子牛増の限界利益（分娩間隔短縮）</td><td>' + disp(w.calfGain) + '</td><td style="text-align:left">追加子牛 ' + d.nCalf + '頭 × 1頭限界利益 ' + d.uCalfMargin + '万円（' +
+        (f.ku === '繁殖' ? '繁殖＝販売額' + Math.round(PARAMS.calf_sale_yen['繁殖'] / 1e4) + '万−育成原価' + Math.round(PARAMS.calf_cost_yen['繁殖'] / 1e4) + '万' : '一貫＝将来の自家肥育出荷1頭の限界利益と同額') + '）</td></tr>';
+      h += '<tr style="font-weight:800;background:#eef3fb"><td class="k">純増益（EBITDA増）</td><td>' + disp(w.net) + '</td><td style="text-align:left">1頭限界利益率 ' + (r.marginRatio * 100).toFixed(1) + '%（薄利構造）</td></tr></tbody>';
       document.getElementById('simBreak').innerHTML = h;
       document.getElementById('simNote').innerHTML =
         '※係数は data/params.json のサンプル値（飼料費' + PARAMS.feed_yen_per_day_head + '円/日・頭）。素牛費は、1頭限界利益率が肉牛肥育の薄利レンジ' +
-        '（売上比5〜18%）に収まるよう農場の枝肉売上から逆算した実効値（区分基準値は params.json の目安）。' +
-        '救命牛の素牛費は死亡時点で投下済み（サンクコスト）のため、事故率低減の増益は「売上−飼料費」で近似。' +
-        (hasRepro ? '分娩間隔短縮の追加子牛＝母牛数×(12/(短縮後間隔)−12/(現間隔))×子牛生存率。短縮後の分娩間隔は12.0ヶ月を下限（妊娠期間の生物学的限界の目安）。' : '');
+        '（売上比5〜18%）に収まるよう農場の枝肉売上から逆算した実効値。頭数は丸めた値で金額を計算（頭数×単価＝表示金額）。' +
+        '救命牛の素牛費は死亡時点で投下済み（サンクコスト）のため、事故率低減の増益は「売上−飼料費−その他変動費」で近似。' +
+        (hasRepro ? '子牛増は販売額でなく限界利益で計上（繁殖＝販売額−育成原価／一貫＝自家肥育に回るため肥育1頭の限界利益と同額）。短縮後の分娩間隔は12.0ヶ月を下限（妊娠期間の生物学的限界の目安）。' : '');
       var cw = document.getElementById('capWarn');
       if (r.blocked && dF > 0) { cw.style.display = 'block'; cw.textContent = '⚠ 稼働率' + occ + '%で満床のため増頭できません。肥育日数短縮の効果は飼料費削減のみ反映（追加出荷0頭）。'; }
       else cw.style.display = 'none';
@@ -511,23 +516,33 @@
   function runChecks() {
     var fails = [];
     farms.forEach(function (f) {
-      var o = ov(f), occRaw = f.head / f.barnCap * 100;
+      var occRaw = f.head / f.barnCap * 100;
       var dcs = f.calvingInterval !== undefined ? [0, 0.5, 1.0, 1.5] : [0]; // 繁殖レバーは繁殖・一貫のみ
       for (var dd = 0; dd <= 90; dd += 5) for (var dm = 0; dm <= 3; dm += 0.5) for (var k = 0; k < dcs.length; k++) {
         var dc = dcs[k];
-        var r = window.SimModel.simulate(f, PARAMS, o, dd, dm, dc);
+        var d = window.SimModel.displayBreakdown(f, PARAMS, dd, dm, dc), r = d.sim, w = d.rows;
         if (r.marginRatio < 0.05 - 1e-9 || r.marginRatio > 0.18 + 1e-9) fails.push('A-1 限界利益率範囲外 ' + f.name + ' dd=' + dd + ' → ' + (r.marginRatio * 100).toFixed(1) + '%');
         if (Math.abs(r.salesInc - r.calfInc - r.feedIncNet - r.otherInc + r.calfGain - r.netGain) > 1) fails.push('A-1 内訳不一致 ' + f.name);
         if (occRaw >= PARAMS.capacity_block_occupancy_pct && dd > 0 && r.addTurn !== 0) fails.push('A-1 満床でも増頭 ' + f.name);
         if (f.calvingInterval === undefined && r.calfGain !== 0) fails.push('C 肥育農場に子牛増益が発生 ' + f.name);
+        // D-6: 表示値そのものの検算 — 丸めた頭数 × 丸めた単価（万円）が表示金額と一致し、行の加減算が純増益と一致
+        if (w.sales !== (d.nTurn + d.nSaved) * d.uSales) fails.push('D-6 売上増の頭数×単価不一致 ' + f.name);
+        if (w.calfInc !== d.nTurn * d.uCalf) fails.push('D-6 素牛費増の頭数×単価不一致 ' + f.name);
+        if (w.other !== (d.nTurn + d.nSaved) * d.uOther) fails.push('D-6 その他変動費の頭数×単価不一致 ' + f.name);
+        if (w.calfGain !== d.nCalf * d.uCalfMargin) fails.push('D-6 子牛増の頭数×単価不一致 ' + f.name);
+        if (w.net !== w.sales - w.calfInc - w.feed - w.other + w.calfGain) fails.push('D-6 内訳の加減算不一致 ' + f.name);
+        // D-5: 繁殖レバーは限界利益ベース（繁殖＝販売額70万−育成原価50万＝20万／一貫＝その農場の1頭限界利益）
+        if (f.ku === '繁殖' && d.uCalfMargin !== Math.round((PARAMS.calf_sale_yen['繁殖'] - PARAMS.calf_cost_yen['繁殖']) / 1e4)) fails.push('D-5 繁殖の子牛限界利益が20万でない ' + f.name);
+        if (f.ku === '一貫' && d.uCalfMargin !== Math.round(r.eco.margin0 / 1e4)) fails.push('D-5 一貫の子牛限界利益が1頭限界利益と不一致 ' + f.name);
         // 独立再計算：修正仕様の式（①(a)飼料費削減＋①(b)追加出荷×1頭限界利益＋②救命×(売上−飼料費−その他)
-        // ＋③追加子牛×子牛換算値）を simulate() の内部変数を使わずに組み直し、純増益と突合する
-        var E = window.SimModel.farmEconomy(f, PARAMS, o);
+        // ＋③追加子牛×子牛1頭の限界利益）を simulate() の内部変数を使わずに組み直し、純増益と突合する
+        var E = window.SimModel.farmEconomy(f, PARAMS);
         var bs = f.head * 365 / f.fatDays * (1 - f.mort / 100);
         var effDm = Math.min(dm, Math.max(0, f.mort - 0.3));
         var addT = (occRaw >= PARAMS.capacity_block_occupancy_pct || dd === 0) ? 0 : f.head * 365 / (f.fatDays - dd) * (1 - f.mort / 100) - bs;
         var effDc = f.calvingInterval !== undefined ? Math.min(dc, Math.max(0, f.calvingInterval - 12)) : 0;
-        var calfT = effDc > 0 ? f.head * (12 / (f.calvingInterval - effDc) - 12 / f.calvingInterval) * f.calfSurvival / 100 * PARAMS.calf_sale_yen[f.ku] : 0;
+        var pcm = f.ku === '繁殖' ? PARAMS.calf_sale_yen['繁殖'] - PARAMS.calf_cost_yen['繁殖'] : (E.s - E.calf - f.fatDays * E.feed - E.other);
+        var calfT = effDc > 0 ? f.head * (12 / (f.calvingInterval - effDc) - 12 / f.calvingInterval) * f.calfSurvival / 100 * pcm : 0;
         var expected = bs * dd * E.feed
           + addT * (E.s - E.calf - (f.fatDays - dd) * E.feed - E.other)
           + f.head * 365 / f.fatDays * (effDm / 100) * (E.s - (f.fatDays - dd) * E.feed - E.other)
@@ -580,11 +595,58 @@
       return RULES.some(function (r) { return (r.condition.all || []).some(function (c) { return c.var === 'hasRepro'; }) && evalCond(r.condition, c2); });
     });
     if (!anyReproRuleFires) fails.push('C 繁殖ルールがどの繁殖/一貫農場でも発火しない');
+    // D-3: 導出指標の整合 — 既存値からの再計算と全農場で一致（乱数の独立生成をしていないことの証明）
+    farms.forEach(function (f) {
+      if (f.shipPerYear !== Math.round(f.head * f.invTurn)) fails.push('D-3 年間出荷頭数≠head×invTurn ' + f.name);
+      var fr = +(f.fatDays * PARAMS.feed_yen_per_day_head / (f.carcassWt * f.price) * 100).toFixed(1);
+      if (Math.abs(f.feedRatio - fr) > 0.051) fails.push('D-3 飼料費比率の導出不一致 ' + f.name);
+      if (!(f.vetCost <= PARAMS.other_var_cost_yen_per_head)) fails.push('D-3 衛生費がその他変動費を超過 ' + f.name);
+      if (!(f.vetCost >= PARAMS.other_var_cost_yen_per_head * 0.35 - 100)) fails.push('D-3 衛生費が下限未満 ' + f.name);
+      var E3 = window.SimModel.farmEconomy(f, PARAMS);
+      var gp = Math.round(E3.margin0 * f.shipPerYear / f.workers / 1e4);
+      if (Math.abs(f.gpPerWorker - gp) > 1) fails.push('D-3 1人当たり粗利の導出不一致 ' + f.name + ' ' + f.gpPerWorker + '≠' + gp);
+    });
+    // D-4: 母牛1頭当たり年間子牛販売額 — 繁殖・一貫のみ、導出一致、benchmarks に肥育セグメントなし
+    reproFarms.forEach(function (f) {
+      var cr = +(PARAMS.calf_sale_yen[f.ku] * (12 / f.calvingInterval) * (f.calfSurvival / 100) / 1e4).toFixed(1);
+      if (Math.abs(f.calfRevPerCow - cr) > 0.051) fails.push('D-4 子牛販売額の導出不一致 ' + f.name);
+    });
+    if (BENCH['ku:肥育'] && BENCH['ku:肥育'].calfRevPerCow) fails.push('D-4 benchmarks に肥育×calfRevPerCow が存在');
+    // D-3/D-4: 指標数 — 肥育15（生産6＋経営9）／繁殖・一貫22（＋繁殖7）
+    farms.forEach(function (f) {
+      var nKeys = scoreKeys(f).length, want = f.ku === '肥育' ? 15 : 22;
+      if (nKeys !== want) fails.push('D 指標数不一致 ' + f.name + ' ' + nKeys + '≠' + want);
+    });
+    // D-7: 丸めゼロの文言（「約+0頭」等）が全45農場のどのルール出力にも現れない
+    farms.forEach(function (f) {
+      var c7 = buildPenContext(f);
+      RULES.forEach(function (r) {
+        if (!evalCond(r.condition, c7)) return;
+        var t = fillTemplate(r.template.title, c7), b = fillTemplate(r.template.body, c7);
+        if (t === null || b === null) return;
+        if (/[+＋]0(\.0)?(頭|回|万|%)/.test(t + b)) fails.push('D-7 丸めゼロ文言 ' + f.name + ' ' + r.rule_id);
+      });
+    });
     var f0 = pickDefaultFarm(), grades = scoreKeys(f0).map(function (m) { return gr(bf(f0, m)); });
+    if (f0.ku !== '肥育') fails.push('D-2 デフォルト農場が肥育でない（' + f0.ku + '）');
     if (grades.indexOf('A') < 0 && grades.indexOf('B') < 0) fails.push('A-3 デフォルト農場に上位判定がない');
     if (!grades.some(function (g) { return 'DEF'.indexOf(g) >= 0; })) fails.push('A-3 デフォルト農場に下位判定がない');
     var pctx = buildPenContext(f0);
     if (!RULES.some(function (r) { return r.priority === 1 && evalCond(r.condition, pctx); })) fails.push('A-3 デフォルト農場に最優先指摘が出ない');
+    // D-2: デフォルト農場の赤ペン指摘が、その区分に存在する指標（トークン）だけで構成されている
+    //      （肥育なら hasRepro=false のため繁殖ルールは evalCond/fillTemplate の二重ガードで出ない）
+    if (f0.ku === '肥育') {
+      RULES.forEach(function (r) {
+        var isRepro = (r.condition.all || []).some(function (c) { return c.var === 'hasRepro'; });
+        if (isRepro && evalCond(r.condition, pctx)) fails.push('D-2 肥育デフォルト農場に繁殖ルール ' + r.rule_id);
+      });
+    }
+    // D-1: 成績表の先頭セクションが「生産」（デフォルト農場を実レンダリングしてDOMで確認）
+    renderScore(f0);
+    var firstSec = document.querySelector('#scoreTbl td[colspan]');
+    if (!firstSec || firstSec.textContent !== '生産') fails.push('D-1 成績表の先頭セクションが生産でない（' + (firstSec && firstSec.textContent) + '）');
+    var secs = Array.prototype.map.call(document.querySelectorAll('#scoreTbl td[colspan]'), function (td) { return td.textContent; }).filter(function (t) { return ['生産', '経営', '繁殖'].indexOf(t) >= 0; });
+    if (secs.join('→') !== '生産→経営→繁殖') fails.push('D-1 セクション順不正 ' + secs.join('→'));
     return {
       pass: fails.length === 0, failures: fails, defaultFarm: f0.name, defaultGrades: grades.join(''),
       gapGrowthPct: { ebitdaM: +(gapGrowth('ebitdaM') * 100).toFixed(1), price: +(gapGrowth('price') * 100).toFixed(1), invTurn: +(gapGrowth('invTurn') * 100).toFixed(1) }
@@ -594,9 +656,10 @@
   // 個票のデフォルト農場＝上位判定（A/B）と下位判定（D〜F）の混在度が最大の農場。
   // 「全部A」の優等生でも「全部F」の脱落農場でもなく、強みと弱みが混在するギザギザな
   // プロファイル（PigINFO 日高牧場型：量は出るが単価で負ける、等）を最初に見せる。
+  // D-2: 母集団は肥育に限定する（組合員の8割が肥育。初期画面は肥育農家の景色にする）。
   function pickDefaultFarm() {
-    var bestMix = -1, best = farms[0];
-    farms.forEach(function (f) {
+    var bestMix = -1, best = farms.filter(function (f) { return f.ku === '肥育'; })[0] || farms[0];
+    farms.filter(function (f) { return f.ku === '肥育'; }).forEach(function (f) {
       var good = 0, bad = 0, ranks = [];
       scoreKeys(f).forEach(function (m) {
         var g = gr(bf(f, m)); ranks.push(rk(f, m));

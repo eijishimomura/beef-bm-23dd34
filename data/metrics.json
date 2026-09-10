@@ -1,59 +1,5 @@
 [
  {
-  "metric_id": "calvingInterval",
-  "label": "分娩間隔",
-  "unit": "ヶ月",
-  "group": "repro",
-  "dir": -1,
-  "formula": "分娩から次の分娩までの平均月数",
-  "source": "繁殖台帳"
- },
- {
-  "metric_id": "firstCalvingAge",
-  "label": "初産月齢",
-  "unit": "ヶ月",
-  "group": "repro",
-  "dir": -1,
-  "formula": "初回分娩時の月齢",
-  "source": "繁殖台帳"
- },
- {
-  "metric_id": "conceptionRate",
-  "label": "受胎率",
-  "unit": "%",
-  "group": "repro",
-  "dir": 1,
-  "formula": "受胎数 ÷ 人工授精回数 × 100",
-  "source": "授精記録"
- },
- {
-  "metric_id": "servicesPerConception",
-  "label": "授精回数",
-  "unit": "回",
-  "group": "repro",
-  "dir": -1,
-  "formula": "妊娠成立までの平均授精回数",
-  "source": "授精記録"
- },
- {
-  "metric_id": "calvingRate",
-  "label": "分娩率",
-  "unit": "%",
-  "group": "repro",
-  "dir": 1,
-  "formula": "年間分娩頭数 ÷ 母牛頭数 × 100",
-  "source": "繁殖台帳"
- },
- {
-  "metric_id": "calfSurvival",
-  "label": "子牛生存率",
-  "unit": "%",
-  "group": "repro",
-  "dir": 1,
-  "formula": "100 − 哺乳期間の死亡率",
-  "source": "飼養記録"
- },
- {
   "metric_id": "carcassWt",
   "label": "枝肉重量",
   "unit": "kg",
@@ -97,6 +43,15 @@
   "dir": -1,
   "formula": "導入から出荷までの平均日数",
   "source": "飼養記録"
+ },
+ {
+  "metric_id": "shipPerYear",
+  "label": "年間出荷頭数",
+  "unit": "頭/年",
+  "group": "prod",
+  "dir": 1,
+  "formula": "常時飼養頭数 × 在庫回転(牛群)。回転率と定義上一致する導出値",
+  "source": "出荷実績"
  },
  {
   "metric_id": "ebitdaM",
@@ -152,5 +107,95 @@
   "dir": -1,
   "formula": "有利子負債残高 ÷ EBITDA",
   "source": "決算書"
+ },
+ {
+  "metric_id": "feedRatio",
+  "label": "売上高飼料費比率",
+  "unit": "%",
+  "group": "econ",
+  "dir": -1,
+  "formula": "1頭飼料費（肥育日数×550円/日）÷ 1頭売上（枝肉重量×枝肉単価）× 100",
+  "source": "導出（params.json の飼料係数）"
+ },
+ {
+  "metric_id": "vetCost",
+  "label": "出荷1頭当たり衛生費",
+  "unit": "円/頭",
+  "group": "econ",
+  "dir": -1,
+  "formula": "その他変動費 3万円/頭 の内訳（ワクチン・抗生剤・獣医療費。シェアは事故率に連動 0.35〜0.55）",
+  "source": "導出（その他変動費の内訳）"
+ },
+ {
+  "metric_id": "gpPerWorker",
+  "label": "従業員1人当たり粗利",
+  "unit": "万円/人",
+  "group": "econ",
+  "dir": 1,
+  "formula": "1頭限界利益 × 年間出荷頭数 ÷ 従業員数（粗利＝限界利益ベース）",
+  "source": "導出（1頭経済モデル）"
+ },
+ {
+  "metric_id": "calvingInterval",
+  "label": "分娩間隔",
+  "unit": "ヶ月",
+  "group": "repro",
+  "dir": -1,
+  "formula": "分娩から次の分娩までの平均月数",
+  "source": "繁殖台帳"
+ },
+ {
+  "metric_id": "firstCalvingAge",
+  "label": "初産月齢",
+  "unit": "ヶ月",
+  "group": "repro",
+  "dir": -1,
+  "formula": "初回分娩時の月齢",
+  "source": "繁殖台帳"
+ },
+ {
+  "metric_id": "conceptionRate",
+  "label": "受胎率",
+  "unit": "%",
+  "group": "repro",
+  "dir": 1,
+  "formula": "受胎数 ÷ 人工授精回数 × 100",
+  "source": "授精記録"
+ },
+ {
+  "metric_id": "servicesPerConception",
+  "label": "授精回数",
+  "unit": "回",
+  "group": "repro",
+  "dir": -1,
+  "formula": "妊娠成立までの平均授精回数",
+  "source": "授精記録"
+ },
+ {
+  "metric_id": "calvingRate",
+  "label": "分娩率",
+  "unit": "%",
+  "group": "repro",
+  "dir": 1,
+  "formula": "年間分娩頭数 ÷ 母牛頭数 × 100",
+  "source": "繁殖台帳"
+ },
+ {
+  "metric_id": "calfSurvival",
+  "label": "子牛生存率",
+  "unit": "%",
+  "group": "repro",
+  "dir": 1,
+  "formula": "100 − 哺乳期間の死亡率",
+  "source": "飼養記録"
+ },
+ {
+  "metric_id": "calfRevPerCow",
+  "label": "母牛1頭当たり年間子牛販売額",
+  "unit": "万円/頭・年",
+  "group": "repro",
+  "dir": 1,
+  "formula": "子牛換算値（区分別：繁殖70万/一貫50万）×（12 ÷ 分娩間隔）×（子牛生存率 ÷ 100）。分娩間隔・子牛生存率からの導出値",
+  "source": "導出（繁殖KPI）"
  }
 ]
